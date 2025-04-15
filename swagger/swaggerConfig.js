@@ -12,11 +12,7 @@ const options = {
     },
     servers: [
       {
-<<<<<<< HEAD
-        url: 'http://localhost:3000',
-=======
         url: 'http://localhost:3000/',
->>>>>>> ca687bc6cae8675ba519c94827d425bac366f6ea
       },
     ],
   },

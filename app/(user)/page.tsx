@@ -205,9 +205,11 @@ export default function Home() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full gap-1 text-white hover:text-[#063a1e]/90 hover:bg-[#063a1e]/20">
-                  Consulter <ArrowRight className="h-4 w-4" />
-                </Button>
+              <Link href="/textes-juridiques#administrations">
+                  <Button className="w-full gap-1 text-white hover:text-[#063a1e]/90 hover:bg-[#063a1e]/20">
+                    Consulter <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
 
@@ -239,9 +241,11 @@ export default function Home() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full gap-1  text-white hover:text-[#063a1e]/90 hover:bg-[#063a1e]/20">
-                  Consulter <ArrowRight className="h-4 w-4" />
-                </Button>
+              <Link href="/textes-juridiques#pme">
+                  <Button className="w-full gap-1 text-white hover:text-[#063a1e]/90 hover:bg-[#063a1e]/20">
+                    Consulter <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
 
@@ -271,9 +275,11 @@ export default function Home() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full gap-1 text-white hover:text-[#063a1e]/90 hover:bg-[#063a1e]/20">
-                  Consulter <ArrowRight className="h-4 w-4" />
-                </Button>
+                <Link href="/textes-juridiques#internationaux">
+                  <Button className="w-full gap-1 text-white hover:text-[#063a1e]/90 hover:bg-[#063a1e]/20">
+                    Consulter <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           </div>
@@ -410,7 +416,6 @@ export default function Home() {
                     className="w-full text-[#063a1e] hover:text-[#063a1e]/90 hover:bg-[#063a1e]/10"
                   >
                     <Link href="#lien">Voir les liens</Link>
-                    
                   </Button>
                 </Link>
               </CardFooter>
@@ -608,7 +613,7 @@ export default function Home() {
                         className=" bg-[#063a1e] relative hover:bg-white"
                       >
                         <span className="absolute inset-0 w-full h-full bg-[#dcdaa4] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></span>
-                        <span  className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
+                        <span className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
                           <p>S'abonner à la newsletter</p>
                         </span>
                       </Button>

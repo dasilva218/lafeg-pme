@@ -3,7 +3,7 @@ import Footer from "@/components/section/footer";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <body className=" ">
+    <body className="">
       <Nav />
       {children}
       <Footer />
