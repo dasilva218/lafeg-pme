@@ -15,7 +15,8 @@ export interface SEA {
   site_web?: string | null;
   rs_1?: string | null;
   rs_2?: string | null;
-  logo?: string | null;
+  logo_url?: string | null;
+  logo_nom?: string | null;
   fichier?: File | null;
   partenaire_feg?: boolean;
   createdAt: string;
@@ -49,7 +50,21 @@ export async function fetchAllSEAs(): Promise<SEA[]> {
     throw new Error(`Erreur HTTP! statut: ${response.status}`);
   }
 
-  return response.json();
+  // const data = await response.json();
+  // console.log("✅ Données reçues :", data); // Pour le débogage, tu peux garder ça
+  
+
+  const raw = await response.json();
+  console.log("✅ Données brutes reçues :", raw);
+
+  // Cas où la réponse est enveloppée
+  const data = Array.isArray(raw) ? raw : raw.data;
+
+  if (!Array.isArray(data)) {
+    throw new Error("❌ Les données récupérées ne sont pas un tableau !");
+  }
+
+  return data; // Assurez-vous que la structure de la réponse est correcte
 }
 
 // READ - Récupérer une SEA par ID

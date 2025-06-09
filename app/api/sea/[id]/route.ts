@@ -69,12 +69,12 @@ import { NextResponse } from "next/server";
  *             description: Permet l'accès depuis n'importe quelle origine (CORS)
  */
 
-export async function GET(request: Request,
-  { params }: { params: { id: string } }) {
-
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-
-    const id = params.id
+    const id = params.id;
 
     // Recherche de l'élément par ID dans la base de données MongoDB via Prisma
     const sea = await prisma.sEA.findUnique({
@@ -85,7 +85,10 @@ export async function GET(request: Request,
 
     // Si l'élément n'est pas trouvé, retournez une erreur 404
     if (!sea) {
-      const response = NextResponse.json({ error: 'SEA introuvable' }, { status: 404 });
+      const response = NextResponse.json(
+        { error: "SEA introuvable" },
+        { status: 404 }
+      );
       response.headers.set("Access-Control-Allow-Origin", "*");
       return response;
     }
@@ -93,18 +96,16 @@ export async function GET(request: Request,
     const response = NextResponse.json(sea, { status: 200 });
     response.headers.set("Access-Control-Allow-Origin", "*");
     return response;
-
   } catch (error) {
-
     // En cas d'erreur serveur, retournez un message d'erreur 500
-    const response = NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
+    const response = NextResponse.json(
+      { error: "Erreur serveur" },
+      { status: 500 }
+    );
     response.headers.set("Access-Control-Allow-Origin", "*");
     return response;
   }
-  
 }
-
-
 
 /**
  * @swagger
@@ -198,7 +199,6 @@ export async function GET(request: Request,
  *                   example: "Erreur lors de la mise à jour"
  */
 
-
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
@@ -234,7 +234,6 @@ export async function PATCH(
     );
   }
 }
-
 
 /**
  * @swagger
@@ -298,11 +297,11 @@ export async function DELETE(
     // Supprimer le logo de Supabase Storage s'il existe
     if (existingSea.logo_nom) {
       const { error: deleteError } = await supabase.storage
-        .from('feg')
+        .from("feg")
         .remove([`sea/${existingSea.logo_nom}`]);
 
       if (deleteError) {
-        console.error('Erreur lors de la suppression du logo:', deleteError);
+        console.error("Erreur lors de la suppression du logo:", deleteError);
       }
     }
 
@@ -320,7 +319,6 @@ export async function DELETE(
     );
   }
 }
-
 
 /**
  * @swagger
@@ -442,10 +440,10 @@ export async function PUT(
     const id = params.id;
 
     // Vérifier que la requête est bien de type multipart/form-data
-    const contentType = request.headers.get('content-type');
-    if (!contentType || !contentType.includes('multipart/form-data')) {
+    const contentType = request.headers.get("content-type");
+    if (!contentType || !contentType.includes("multipart/form-data")) {
       return NextResponse.json(
-        { error: 'Le contenu doit être de type multipart/form-data' },
+        { error: "Le contenu doit être de type multipart/form-data" },
         { status: 400 }
       );
     }
@@ -464,7 +462,18 @@ export async function PUT(
     const updates: any = {};
 
     // Mise à jour des champs texte
-    const textFields = ['nom', 'description', 'type_sea', 'categorie', 'adresse', 'contact', 'mail', 'site_web', 'rs_1', 'rs_2'];
+    const textFields = [
+      "nom",
+      "description",
+      "type_sea",
+      "categorie",
+      "adresse",
+      "contact",
+      "mail",
+      "site_web",
+      "rs_1",
+      "rs_2",
+    ];
     for (const field of textFields) {
       const value = formData.get(field);
       if (value !== null) {
@@ -473,24 +482,24 @@ export async function PUT(
     }
 
     // Traitement des services (tableau)
-    const servicesStr = formData.get('services');
+    const servicesStr = formData.get("services");
     if (servicesStr) {
       updates.services = JSON.parse(servicesStr as string);
     }
 
     // Traitement du champ booléen
-    const partenaire_feg = formData.get('partenaire_feg');
+    const partenaire_feg = formData.get("partenaire_feg");
     if (partenaire_feg !== null) {
-      updates.partenaire_feg = partenaire_feg === 'true';
+      updates.partenaire_feg = partenaire_feg === "true";
     }
 
     // Traitement du logo s'il est fourni
-    const logo = formData.get('logo') as File;
+    const logo = formData.get("logo") as File;
     if (logo) {
       // Vérification du type de fichier
       if (!logo.type.match(/^image\/(jpeg|png)$/)) {
         return NextResponse.json(
-          { error: 'Le logo doit être au format JPEG ou PNG' },
+          { error: "Le logo doit être au format JPEG ou PNG" },
           { status: 400 }
         );
       }
@@ -498,41 +507,46 @@ export async function PUT(
       // Supprimer l'ancien logo s'il existe
       if (existingSea.logo_nom) {
         const { error: deleteError } = await supabase.storage
-          .from('feg')
+          .from("feg")
           .remove([`sea/${existingSea.logo_nom}`]);
 
         if (deleteError) {
-          console.error('Erreur lors de la suppression de l\'ancien logo:', deleteError);
+          console.error(
+            "Erreur lors de la suppression de l'ancien logo:",
+            deleteError
+          );
         }
       }
 
       // Upload du nouveau logo
       const timestamp = Date.now();
-      const fileName = `${timestamp}-${logo.name.replace(/\s+/g, '-')}`;
+      const fileName = `${timestamp}-${logo.name.replace(/\s+/g, "-")}`;
       const filePath = `sea/${fileName}`;
 
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('feg')
+        .from("feg")
         .upload(filePath, logo, {
-          cacheControl: '3600',
-          upsert: false
+          cacheControl: "3600",
+          upsert: false,
         });
 
       if (uploadError) {
-        console.error('Erreur lors de l\'upload du logo:', uploadError);
+        console.error("Erreur lors de l'upload du logo:", uploadError);
         return NextResponse.json(
-          { error: 'Erreur lors de l\'upload du logo' },
+          { error: "Erreur lors de l'upload du logo" },
           { status: 500 }
         );
       }
 
       // Récupération de l'URL publique
       const { data: urlData } = supabase.storage
-        .from('feg')
+        .from("feg")
         .getPublicUrl(filePath);
 
-      updates.logo = urlData.publicUrl;
-      updates.logo_nom = fileName;
+      updates.image_url = urlData.publicUrl;
+      updates.image_nom = fileName;
+      updates.taille_image = logo.size;
+      updates.image_mime_type = logo.type;
     }
 
     // Ajout de la date de mise à jour

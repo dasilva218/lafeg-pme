@@ -1,6 +1,6 @@
-import prisma from '@/lib/prisma';
+import prisma from "@/lib/prisma";
 import { supabase } from "@/lib/supabase";
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * @swagger
@@ -56,13 +56,18 @@ import { NextRequest, NextResponse } from 'next/server';
  *                   example: "Erreur interne du serveur."
  */
 
-
-export async function GET(request: NextRequest, { params }: { params: { id_institution: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id_institution: string } }
+) {
   const { id_institution } = params;
 
   // Vérifie que l'ID est bien un ObjectId MongoDB
   if (!/^[a-fA-F0-9]{24}$/.test(id_institution)) {
-    return NextResponse.json({ error: 'ID invalide (format MongoDB attendu).' }, { status: 400 });
+    return NextResponse.json(
+      { error: "ID invalide (format MongoDB attendu)." },
+      { status: 400 }
+    );
   }
 
   try {
@@ -73,17 +78,21 @@ export async function GET(request: NextRequest, { params }: { params: { id_insti
 
     // Vérifie si l'institution existe
     if (!institution) {
-      return NextResponse.json({ error: 'Institution non trouvée.' }, { status: 404 });
+      return NextResponse.json(
+        { error: "Institution non trouvée." },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(institution, { status: 200 });
   } catch (error) {
-    console.error('Erreur GET /api/institutions/[id_institution]:', error);
-    return NextResponse.json({ error: 'Erreur interne du serveur.' }, { status: 500 });
+    console.error("Erreur GET /api/institutions/[id_institution]:", error);
+    return NextResponse.json(
+      { error: "Erreur interne du serveur." },
+      { status: 500 }
+    );
   }
 }
-
-
 
 /**
  * @swagger
@@ -196,15 +205,18 @@ export async function GET(request: NextRequest, { params }: { params: { id_insti
  *                     serverError:
  *                       value: "Erreur Interne du Serveur"
  */
-export async function PUT(request: NextRequest, { params }: { params: { id_institution: string } }) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id_institution: string } }
+) {
   try {
-    const {id_institution} = params;
+    const { id_institution } = params;
 
     // Vérifier que la requête est bien de type multipart/form-data
-    const contentType = request.headers.get('content-type');
-    if (!contentType || !contentType.includes('multipart/form-data')) {
+    const contentType = request.headers.get("content-type");
+    if (!contentType || !contentType.includes("multipart/form-data")) {
       return NextResponse.json(
-        { error: 'Le contenu doit être de type multipart/form-data' },
+        { error: "Le contenu doit être de type multipart/form-data" },
         { status: 400 }
       );
     }
@@ -216,7 +228,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id_insti
 
     if (!existingInstitution) {
       return NextResponse.json(
-        { error: 'Institution non trouvée' },
+        { error: "Institution non trouvée" },
         { status: 404 }
       );
     }
@@ -226,7 +238,19 @@ export async function PUT(request: NextRequest, { params }: { params: { id_insti
     const updates: any = {};
 
     // Mise à jour des champs texte
-    for (const field of ['nom', 'categorie', 'type_institution', 'description', 'adresse', 'contact', 'mail', 'site_web', 'rs_1', 'rs_2', 'service']) {
+    for (const field of [
+      "nom",
+      "categorie",
+      "type_institution",
+      "description",
+      "adresse",
+      "contact",
+      "mail",
+      "site_web",
+      "rs_1",
+      "rs_2",
+      "service",
+    ]) {
       const value = formData.get(field);
       if (value !== null) {
         updates[field] = value as string;
@@ -234,18 +258,18 @@ export async function PUT(request: NextRequest, { params }: { params: { id_insti
     }
 
     // Traitement du champ booléen
-    const partenaire_feg = formData.get('partenaire_feg');
+    const partenaire_feg = formData.get("partenaire_feg");
     if (partenaire_feg !== null) {
-      updates.partenaire_feg = partenaire_feg === 'true';
+      updates.partenaire_feg = partenaire_feg === "true";
     }
 
     // Traitement du logo s'il est fourni
-    const logo = formData.get('image') as File;
+    const logo = formData.get("image") as File;
     if (logo) {
       // Vérification du type de fichier
       if (!logo.type.match(/^image\/(jpeg|png)$/)) {
         return NextResponse.json(
-          { error: 'Le logo doit être au format JPEG ou PNG' },
+          { error: "Le logo doit être au format JPEG ou PNG" },
           { status: 400 }
         );
       }
@@ -253,59 +277,63 @@ export async function PUT(request: NextRequest, { params }: { params: { id_insti
       // Supprimer l'ancien logo s'il existe
       if (existingInstitution.image_nom) {
         const { error: deleteError } = await supabase.storage
-          .from('feg')
+          .from("feg")
           .remove([`institution-financiere/${existingInstitution.image_nom}`]);
 
         if (deleteError) {
-          console.error('Erreur lors de la suppression de l\'ancien logo:', deleteError);
+          console.error(
+            "Erreur lors de la suppression de l'ancien logo:",
+            deleteError
+          );
         }
       }
 
       // Upload du nouveau logo
       const timestamp = Date.now();
-      const fileName = `${timestamp}-${logo.name.replace(/\s+/g, '-')}`;
+      const fileName = `${timestamp}-${logo.name.replace(/\s+/g, "-")}`;
       const filePath = `institution-financiere/${fileName}`;
 
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('feg')
+        .from("feg")
         .upload(filePath, logo, {
-          cacheControl: '3600',
-          upsert: false
+          cacheControl: "3600",
+          upsert: false,
         });
 
       if (uploadError) {
-        console.error('Erreur lors de l\'upload du logo:', uploadError);
+        console.error("Erreur lors de l'upload du logo:", uploadError);
         return NextResponse.json(
-          { error: 'Erreur lors de l\'upload du logo' },
+          { error: "Erreur lors de l'upload du logo" },
           { status: 500 }
         );
       }
 
       // Récupération de l'URL publique
       const { data: urlData } = supabase.storage
-        .from('feg')
+        .from("feg")
         .getPublicUrl(filePath);
 
-      updates.logo = urlData.publicUrl;
-      updates.logo_nom = fileName;
+      updates.image_url = urlData.publicUrl;
+      updates.image_nom = fileName;
+      updates.taille_image = logo.size;
+      updates.image_mime_type = logo.type;
     }
 
     // Mise à jour en base de données
     const updatedInstitution = await prisma.institutions.update({
       where: { id_institution },
-      data: updates
+      data: updates,
     });
 
     return NextResponse.json(updatedInstitution);
   } catch (error) {
-    console.error('Erreur PUT /api/institutions/[id]:', error);
+    console.error("Erreur PUT /api/institutions/[id]:", error);
     return NextResponse.json(
-      { error: 'Erreur Interne du Serveur' },
+      { error: "Erreur Interne du Serveur" },
       { status: 500 }
     );
   }
 }
-
 
 /**
  * @swagger
@@ -355,12 +383,17 @@ export async function PUT(request: NextRequest, { params }: { params: { id_insti
  *                   example: "Erreur serveur ou ID non trouvé"
  */
 
-
-export async function DELETE(request: NextRequest, { params }: { params: { id_institution: string } }) {
-  const {id_institution} = params;
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id_institution: string } }
+) {
+  const { id_institution } = params;
 
   if (!/^[a-fA-F0-9]{24}$/.test(id_institution)) {
-    return NextResponse.json({ error: 'ID Mongo invalide (format).' }, { status: 400 });
+    return NextResponse.json(
+      { error: "ID Mongo invalide (format)." },
+      { status: 400 }
+    );
   }
 
   try {
@@ -368,9 +401,15 @@ export async function DELETE(request: NextRequest, { params }: { params: { id_in
       where: { id_institution },
     });
 
-    return NextResponse.json({ message: 'Institution supprimée' }, { status: 200 });
+    return NextResponse.json(
+      { message: "Institution supprimée" },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error('Erreur DELETE:', error);
-    return NextResponse.json({ error: 'Erreur serveur ou ID non trouvé' }, { status: 500 });
+    console.error("Erreur DELETE:", error);
+    return NextResponse.json(
+      { error: "Erreur serveur ou ID non trouvé" },
+      { status: 500 }
+    );
   }
 }

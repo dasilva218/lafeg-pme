@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Advert } from "@/components/ads/Advert";
-import  AutoCarousel  from "@/components/section/AutoCarousel";
+import AutoCarousel from "@/components/section/AutoCarousel";
 import {
   Card,
   CardContent,
@@ -30,14 +30,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
 import {
   fetchFinancialInstitutions,
-  FinancialInstitution,
+  Institutions,
 } from "@/app/services/institution/api";
 
 export default function InstitutionsFinancieres() {
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("banque");
 
-  const [institutions, setInstitutions] = useState<FinancialInstitution[]>([]);
+  const [institutions, setInstitutions] = useState<Institutions[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,6 +45,10 @@ export default function InstitutionsFinancieres() {
     const loadData = async () => {
       try {
         const data = await fetchFinancialInstitutions();
+        if (!Array.isArray(data)) {
+          console.error("Les données ne sont pas un tableau :", data);
+          return;
+        }
         setInstitutions(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Erreur de chargement");
@@ -165,7 +169,7 @@ export default function InstitutionsFinancieres() {
                       {/* Banque 1 */}
                       {filteredBanque.map((item) => (
                         <Card
-                          key={item.id_institutionFinanciere}
+                          key={item.id_institution}
                           className="hover:shadow-md transition-shadow"
                         >
                           <CardHeader className="pb-3">
@@ -173,7 +177,7 @@ export default function InstitutionsFinancieres() {
                               <div className="flex items-center gap-3">
                                 <div className="w-12 h-12 bg-[#063a1e]/10 rounded-md flex items-center justify-center">
                                   <Image
-                                    src={item.logo}
+                                    src={item.image_url}
                                     alt="Logo banque"
                                     width={1000}
                                     height={1000}
@@ -278,7 +282,7 @@ export default function InstitutionsFinancieres() {
                   {/* Microfinance 1 */}
                   {filteredMicro.map((item) => (
                     <Card
-                      key={item.id_institutionFinanciere}
+                      key={item.id_institution}
                       className="hover:shadow-md transition-shadow"
                     >
                       <CardHeader className="pb-3">
@@ -286,7 +290,7 @@ export default function InstitutionsFinancieres() {
                           <div className="flex items-center gap-3">
                             <div className="w-12 h-12 bg-[#063a1e]/10 rounded-md flex items-center justify-center">
                               <Image
-                                src={item.logo}
+                                src={item.image_url}
                                 alt="Logo banque"
                                 width={1000}
                                 height={1000}
@@ -380,7 +384,7 @@ export default function InstitutionsFinancieres() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {filteredFond.map((item) => (
                     <Card
-                      key={item.id_institutionFinanciere}
+                      key={item.id_institution}
                       className="hover:shadow-md transition-shadow"
                     >
                       <CardHeader className="pb-3">
@@ -388,7 +392,7 @@ export default function InstitutionsFinancieres() {
                           <div className="flex items-center gap-3">
                             <div className="w-12 h-12 bg-[#063a1e]/10 rounded-md flex items-center justify-center">
                               <Image
-                                src={item.logo}
+                                src={item.image_url}
                                 alt="Logo banque"
                                 width={1000}
                                 height={1000}

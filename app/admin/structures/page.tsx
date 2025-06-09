@@ -115,7 +115,8 @@ export default function StructuresPage() {
     services: [],
     rs_1: null,
     rs_2: null,
-    logo: null,
+    logo_url: null,
+    logo_nom: null,
     partenaire_feg: false,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -475,7 +476,7 @@ export default function StructuresPage() {
                           reader.onloadend = () => {
                             setNewStructure({
                               ...newStructure,
-                              logo: reader.result as string, // Stocke l'URL base64 dans le state
+                              logo_url: reader.result as string, // Stocke l'URL base64 dans le state
                             });
                           };
                           reader.readAsDataURL(file);
@@ -732,9 +733,9 @@ export default function StructuresPage() {
                     <TableRow key={structure.id_sea}>
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-3">
-                          {structure.logo && (
+                          {structure.logo_url && (
                             <Image
-                              src={structure.logo}
+                              src={structure.logo_url}
                               alt={structure.nom}
                               width={50}
                               height={50}
@@ -952,7 +953,7 @@ export default function StructuresPage() {
                         reader.onloadend = () => {
                           const base64String = reader.result as string;
 
-                          handleEditStructureChange("logo", base64String); // utilise ton setter
+                          handleEditStructureChange("logo_url", base64String); // utilise ton setter
                         };
                         reader.readAsDataURL(file); // convertit en base64
                       }
@@ -1179,9 +1180,9 @@ export default function StructuresPage() {
 
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex items-start gap-6">
-                  {selectedStructure.logo ? (
+                  {selectedStructure.logo_url ? (
                     <Image
-                      src={selectedStructure.logo}
+                      src={selectedStructure.logo_url}
                       alt={`Logo de ${selectedStructure.nom}`}
                       width={50}
                       height={50}

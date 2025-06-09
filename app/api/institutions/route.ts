@@ -106,7 +106,7 @@ export async function GET(request: Request) {
     
     // Paramètres de pagination avec valeurs par défaut
     const page = Math.max(1, parseInt(searchParams.get('page') || '1'));
-    const limit = Math.max(1, Math.min(100, parseInt(searchParams.get('limit') || '10')));
+    const limit = Math.max(1, Math.min(100, parseInt(searchParams.get('limit') || '100')));
     const skip = (page - 1) * limit;
     
     // Paramètres de tri avec valeurs par défaut
