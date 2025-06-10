@@ -1,14 +1,17 @@
 // src/services/api.ts
-const API_BASE_URL = "/api/FinancialInstitution";
+const API_BASE_URL = "/api/institutions";
 
-export interface FinancialInstitution {
-  id_institutionFinanciere: string;
+export interface Institutions {
+  id_institution: string;
   nom: string;
   categorie: string;
   type_institution?: string;
   partenaire_feg?: boolean;
   description: string;
-  logo: string;
+  image_url: string;
+  image_nom: string;
+  taille_image: number;
+  image_mime_type: "image/jpeg";
   adresse: string;
   contact: string;
   mail: string;
@@ -18,12 +21,13 @@ export interface FinancialInstitution {
   service?: string;
   createdAt: string;
   updatedAt: string;
+  imageFile: File | null;
 }
 
 // CREATE - Créer une nouvelle institution
 export async function createFinancialInstitution(
-  data: Omit<FinancialInstitution, 'id_institutionFinanciere' | 'createdAt' | 'updatedAt'>
-): Promise<FinancialInstitution> {
+  data: Omit<Institutions, 'id_institution' | 'createdAt' | 'updatedAt'>
+): Promise<Institutions> {
   const response = await fetch(API_BASE_URL, {
     method: 'POST',
     headers: {
@@ -40,24 +44,27 @@ export async function createFinancialInstitution(
 }
 
 // READ - Récupérer toutes les institutions
-export async function fetchFinancialInstitutions(): Promise<FinancialInstitution[]> {
+export async function fetchFinancialInstitutions(): Promise<Institutions[]> {
   const response = await fetch(API_BASE_URL);
   
   if (!response.ok) {
     throw new Error(`Erreur HTTP! statut: ${response.status}`);
   }
   
-  return response.json();
+  const json = await response.json();
+ // console.log("✅ Données reçues :", json);  Tu peux garder ça pour test
+  // return json.data;
+  return json.content;
 }
 
 // READ - Récupérer une institution par ID
 export async function fetchFinancialInstitutionById(
-  id: number
-): Promise<FinancialInstitution> {
-  const response = await fetch(`${API_BASE_URL}/${id}`);
+  id_institution: number
+): Promise<Institutions> {
+  const response = await fetch(`${API_BASE_URL}/${id_institution}`);
   
   if (!response.ok) {
-    throw new Error(`Institution non trouvée (ID: ${id})`);
+    throw new Error(`Institution non trouvée (ID: ${id_institution})`);
   }
   
   return response.json();
@@ -65,10 +72,10 @@ export async function fetchFinancialInstitutionById(
 
 // UPDATE - Mettre à jour une institution
 export async function updateFinancialInstitution(
-  id: string,
-  data: Partial<FinancialInstitution>
-): Promise<FinancialInstitution> {
-  const response = await fetch(`${API_BASE_URL}/${id}`, {
+  id_institution: string,
+  data: Partial<Institutions>
+): Promise<Institutions> {
+  const response = await fetch(`${API_BASE_URL}/${id_institution}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -99,11 +106,11 @@ export async function deleteFinancialInstitution(
 // Recherche avancée avec filtres optionnels
 export async function searchFinancialInstitutions(
   filters: {
-    categorie?: FinancialInstitution['categorie'];
+    categorie?: Institutions['categorie'];
     searchTerm?: string;
     partenaireFeg?: boolean;
   }
-): Promise<FinancialInstitution[]> {
+): Promise<Institutions[]> {
   const params = new URLSearchParams();
   
   if (filters.categorie) params.append('categorie', filters.categorie);

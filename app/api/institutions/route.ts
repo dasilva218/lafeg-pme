@@ -1,21 +1,22 @@
 import prisma from '@/lib/prisma';
 import { supabase } from '@/lib/supabase';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// }
+
 
 /**
  * @swagger
- * /api/sea:
+ * /api/institutions:
  *   get:
- *     summary: Récupère une liste paginée des données SEA
- *     description: Retourne une liste paginée des enregistrements SEA avec options de filtrage et de tri
+ *     summary: Récupère une liste paginée des institutions
+ *     description: Retourne une liste paginée des institutions avec options de filtrage et de tri
  *     tags:
- *       - SEA
+ *       - Institutions
  *     parameters:
  *       - in: query
  *         name: page
@@ -46,22 +47,30 @@ export const config = {
  *           default: desc
  *         description: Ordre de tri (ascendant ou descendant)
  *       - in: query
+ *         name: nom
+ *         schema:
+ *           type: string
+ *         description: Filtre par nom d'institution (recherche partielle)
+ *       - in: query
  *         name: type
  *         schema:
  *           type: string
- *         description: Filtre par type de SEA
+ *         description: Filtre par type d'institution
  *     responses:
  *       200:
- *         description: Liste des données SEA récupérée avec succès
+ *         description: Liste des institutions récupérée avec succès
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 data:
+ *                 message:
+ *                   type: string
+ *                   example: Liste des institutions récupérée avec succès
+ *                 content:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/SEAt'
+ *                     $ref: '#/components/schemas/Institutionfinanciere'
  *                 pagination:
  *                   type: object
  *                   properties:
@@ -78,7 +87,7 @@ export const config = {
  *                       type: integer
  *                       example: 5
  *       500:
- *         description: Erreur lors de la récupération des données
+ *         description: Erreur lors de la récupération des institutions
  *         content:
  *           application/json:
  *             schema:
@@ -86,8 +95,9 @@ export const config = {
  *               properties:
  *                 error:
  *                   type: string
- *                   example: Erreur lors de la récupération des données SEA
+ *                   example: Erreur lors de la récupération des institutions
  */
+
 export async function GET(request: Request) {
   try {
     // Récupération des paramètres de l'URL
@@ -100,28 +110,40 @@ export async function GET(request: Request) {
     const skip = (page - 1) * limit;
     
     // Paramètres de tri avec valeurs par défaut
-    const sortField = searchParams.get('sort') || 'createdAt'; // Ajustez selon votre schéma
+    const sortField = searchParams.get('sort') || 'createdAt';
     const sortOrder = searchParams.get('order') === 'asc' ? 'asc' : 'desc';
     
-    // Construction du filtre (exemple avec un champ 'type')
+    // Construction du filtre
     const where: any = {};
+    
+    // Filtrage par nom (recherche partielle)
+    const nom = searchParams.get('nom');
+    if (nom) {
+      where.nom = {
+        contains: nom,
+        mode: 'insensitive'
+      };
+    }
+    
+    // Filtrage par type d'institution
     const type = searchParams.get('type');
     if (type) where.type = type;
     
     // Exécution des requêtes en parallèle
-    const [data, total] = await Promise.all([
-      prisma.sEA.findMany({
+    const [institutions, total] = await Promise.all([
+      prisma.institutions.findMany({
         where,
         skip,
         take: limit,
         orderBy: { [sortField]: sortOrder }
       }),
-      prisma.sEA.count({ where })
+      prisma.institutions.count({ where })
     ]);
     
-    // Réponse structurée avec données et pagination
+    // Réponse structurée avec message, contenu et pagination
     return NextResponse.json({
-      data,
+      message: "Liste des institutions récupérée avec succès",
+      content: institutions,
       pagination: { 
         page, 
         limit, 
@@ -131,22 +153,23 @@ export async function GET(request: Request) {
     }, { status: 200 });
     
   } catch (error) {
-    console.error('Erreur lors de la récupération des données SEA:', error);
+    console.error('Erreur lors de la récupération des institutions:', error);
     return NextResponse.json(
-      { error: 'Erreur lors de la récupération des données SEA' }, 
+      { error: 'Erreur lors de la récupération des institutions' },
       { status: 500 }
     );
   }
 }
 
 
+
 /**
  * @swagger
- * /api/sea:
+ * /api/institutions:
  *   post:
- *     summary: Crée un nouveau SEA
- *     description: Ajoute un nouveau Système Economique Alternatif (SEA) avec possibilité d'uploader un logo
- *     tags: [SEA]
+ *     summary: Crée une nouvelle institution avec image
+ *     description: Ajoute une nouvelle institution financière avec téléchargement obligatoire d'image
+ *     tags: [Institutions]
  *     consumes:
  *       - multipart/form-data
  *     requestBody:
@@ -157,58 +180,64 @@ export async function GET(request: Request) {
  *             type: object
  *             required:
  *               - nom
- *               - type_sea
  *               - categorie
+ *               - type_institution
+ *               - image
  *             properties:
  *               nom:
  *                 type: string
- *                 description: Nom du SEA
- *               type_sea:
- *                 type: string
- *                 description: Type de SEA
+ *                 description: Nom de l'institution financière
  *               categorie:
  *                 type: string
- *                 description: Catégorie du SEA
+ *                 description: Catégorie de l'institution
+ *               type_institution:
+ *                 type: string
+ *                 description: Type d'institution
+ *               partenaire_feg:
+ *                 type: string
+ *                 enum: ['true', 'false']
+ *                 description: Indique si l'institution est partenaire FEG (envoyé comme "true" ou "false")
  *               description:
  *                 type: string
- *                 description: Description détaillée du SEA
- *               services:
- *                 type: string
- *                 description: Liste des services au format JSON string (sera parsé en array)
- *                 example: '["Service 1", "Service 2"]'
+ *                 description: Description détaillée de l'institution
  *               adresse:
  *                 type: string
- *                 description: Adresse physique du SEA
+ *                 description: Adresse physique de l'institution
  *               contact:
  *                 type: string
- *                 description: Numéro de contact du SEA
+ *                 description: Numéro de contact de l'institution
  *               mail:
  *                 type: string
- *                 description: Adresse email du SEA
+ *                 description: Adresse email de l'institution
  *               site_web:
  *                 type: string
- *                 description: Site web du SEA
+ *                 description: Site web de l'institution
  *               rs_1:
  *                 type: string
  *                 description: Lien vers le premier réseau social
  *               rs_2:
  *                 type: string
  *                 description: Lien vers le deuxième réseau social
- *               partenaire_feg:
+ *               service:
  *                 type: string
- *                 enum: ['true', 'false']
- *                 description: Indique si le SEA est partenaire FEG (envoyé comme "true" ou "false")
+ *                 description: Services offerts par l'institution
  *               image:
  *                 type: string
  *                 format: binary
- *                 description: Fichier image du logo du SEA (JPEG ou PNG uniquement)
+ *                 description: Fichier image du logo de l'institution (JPEG ou PNG uniquement)
  *     responses:
  *       201:
- *         description: SEA créé avec succès
+ *         description: Institution créée avec succès
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/SEAS'
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Institution créée avec succès"
+ *                 institution:
+ *                   $ref: '#/components/schemas/Institution'
  *       400:
  *         description: Données invalides
  *         content:
@@ -220,7 +249,9 @@ export async function GET(request: Request) {
  *                   type: string
  *                   examples:
  *                     champsManquants:
- *                       value: "Les champs nom, type_sea et categorie sont requis."
+ *                       value: "Les champs nom, categorie et type_institution sont requis."
+ *                     logoManquant:
+ *                       value: "Logo requis"
  *                     formatInvalide:
  *                       value: "Le logo doit être au format JPEG ou PNG"
  *                     contentType:
@@ -238,13 +269,15 @@ export async function GET(request: Request) {
  *                     uploadError:
  *                       value: "Erreur lors de l'upload du logo"
  *                     serverError:
- *                       value: "Erreur lors de la création"
+ *                       value: "Erreur Interne du Serveur"
  */
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+
   try {
     // Vérifier que la requête est bien de type multipart/form-data
     const contentType = request.headers.get('content-type');
+
     if (!contentType || !contentType.includes('multipart/form-data')) {
       return NextResponse.json(
         { error: 'Le contenu doit être de type multipart/form-data' },
@@ -254,52 +287,59 @@ export async function POST(request: Request) {
 
     // Traitement du formulaire
     const formData = await request.formData();
-    
+    const file = formData.get('image') as File;
+
+    if (!file) {
+      return NextResponse.json(
+        { error: 'Logo requis' },
+        { status: 400 }
+      );
+    }
+
+    // Traitement du logo s'il est fourni
+    if (!file.type.match(/^image\/(jpeg|png)$/)) {
+      return NextResponse.json(
+        { error: 'Le logo doit être au format JPEG ou PNG' },
+        { status: 400 }
+      );
+    }
+
     // Récupération des données du formulaire
     const nom = formData.get('nom') as string;
-    const type_sea = formData.get('type_sea') as string;
     const categorie = formData.get('categorie') as string;
-    const description = formData.get('description') as string || '';
-    const services = JSON.parse(formData.get('services') as string || '[]');
-    const adresse = formData.get('adresse') as string || '';
+    const type_institution = formData.get('type_institution') as string;
+    const partenaire_feg = formData.get('partenaire_feg') === 'true';
+    const description = formData.get('description') as string || null;
+    const adresse = formData.get('adresse') as string || null;
     const contact = formData.get('contact') as string || null;
     const mail = formData.get('mail') as string || null;
     const site_web = formData.get('site_web') as string || null;
     const rs_1 = formData.get('rs_1') as string || null;
     const rs_2 = formData.get('rs_2') as string || null;
-    const partenaire_feg = formData.get('partenaire_feg') === 'true';
+    const service = formData.get('service') as string || null;
 
-    // Validation des champs requis
-    if (!nom || !type_sea || !categorie) {
+    // Validation minimale
+    if (!nom || !categorie || !type_institution) {
       return NextResponse.json(
-        { error: 'Les champs nom, type_sea et categorie sont requis.' },
+        { error: 'Les champs nom, categorie et type_institution sont requis.' },
         { status: 400 }
       );
     }
 
-    let logo_url = null;
-    let logo_nom = null;
+    let image_url = null;
+    let image_nom = null;
 
-    // Traitement du logo s'il est fourni
-    const logo = formData.get('image') as File;
-    if (logo) {
-      // Vérification du type de fichier
-      if (!logo.type.match(/^image\/(jpeg|png)$/)) {
-        return NextResponse.json(
-          { error: 'Le logo doit être au format JPEG ou PNG' },
-          { status: 400 }
-        );
-      }
-
+    // Traitement du logo s'il est fourni 
+    if (file) {
       // Création d'un nom unique pour le fichier
       const timestamp = Date.now();
-      const fileName = `${timestamp}-${logo.name.replace(/\s+/g, '-')}`;
-      const filePath = `sea/${fileName}`;
+      const fileName = `${timestamp}-${file.name.replace(/\s+/g, '-')}`;
+      const filePath = `institution-financiere/${fileName}`;
 
       // Upload du fichier vers Supabase Storage
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('feg')
-        .upload(filePath, logo, {
+        .upload(filePath, file, {
           cacheControl: '3600',
           upsert: false
         });
@@ -307,7 +347,7 @@ export async function POST(request: Request) {
       if (uploadError) {
         console.error('Erreur lors de l\'upload du logo:', uploadError);
         return NextResponse.json(
-          { error: 'Erreur lors de l\'upload du logo' },
+          { error: "Erreur lors de l'upload du logo" },
           { status: 500 }
         );
       }
@@ -317,38 +357,46 @@ export async function POST(request: Request) {
         .from('feg')
         .getPublicUrl(filePath);
 
-      logo_url = urlData.publicUrl;
-      logo_nom = logo.name;
+      image_url = urlData.publicUrl;
+      image_nom = file.name;
     }
 
     // Création dans la base de données
-    const newSea = await prisma.sEA.create({
+    const newInstitution = await prisma.institutions.create({
       data: {
         nom,
-        description,
-        type_sea,
         categorie,
-        services,
+        type_institution,
+        partenaire_feg,
+        description,
+        image_url,
+        image_nom,
+        taille_image: file.size,
+        image_mime_type: file.type,
         adresse,
         contact,
         mail,
         site_web,
         rs_1,
         rs_2,
-        logo_url,
-        logo_nom,
-        partenaire_feg,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        service,
       },
     });
 
-    return NextResponse.json(newSea, { status: 201 });
-  } catch (error) {
-    console.error('Erreur lors de la création:', error);
     return NextResponse.json(
-      { error: 'Erreur lors de la création' },
+      { message: "Institution créée avec succès", institution: newInstitution },
+      { status: 201 }
+    );
+
+  } catch (error) {
+
+    console.error('Erreur lors de la création de l\'institution:', error);
+
+    return NextResponse.json(
+      { error: 'Erreur Interne du Serveur' },
       { status: 500 }
     );
+
   }
 }
+

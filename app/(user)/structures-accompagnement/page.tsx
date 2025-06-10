@@ -22,23 +22,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Advert } from "@/components/ads/Advert";
-import  AutoCarousel  from "@/components/section/AutoCarousel";
+import AutoCarousel from "@/components/section/AutoCarousel";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
 import { fetchAllSEAs, SEA } from "@/app/services/sea/api";
 
-export default function InstitutionsFinancieres() {
+export default function Structure() {
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("incubateurs");
   const [sea, setSea] = useState<SEA[]>([]);
   const [loading, setLoading] = useState(true);
-
+ 
   useEffect(() => {
+    
     const loadData = async () => {
       try {
         setLoading(true);
         const data = await fetchAllSEAs();
+         console.log("SEA data:", data);
+        console.log("✅ Données SEA reçues :", data.map((d) => d.categorie));
         setSea(data);
       } catch (error) {
         console.error("Erreur lors du chargement des données:", error);
@@ -50,19 +53,26 @@ export default function InstitutionsFinancieres() {
     loadData();
   }, []);
 
-  const filtrerSeas = (category: string) => {
+  
+  const filtrerSeas = (categorie: string) => {
+    
+    if (!Array.isArray(sea)) return [];
+
+
     return sea.filter(
+      
       (item) =>
-        item.categorie === category &&
-        item.nom.toLowerCase().includes(search.toLowerCase())
+        item.categorie === categorie &&
+        item.nom?.includes(search)
     );
   };
 
   const incubateursFiltres = filtrerSeas("incubateurs");
   const centresFormationFiltres = filtrerSeas("centresFormation");
   const cabinetsConseilFiltres = filtrerSeas("cabinetsConseil");
+  
   const structuresPubliquesFiltrees = filtrerSeas("structuresPubliques");
-
+ 
   const obtenirResultatsAutresSections = () => {
     const resultats = [];
 
@@ -111,14 +121,14 @@ export default function InstitutionsFinancieres() {
     : [];
 
   const renderCarteInstitution = (item: any) => (
-    <Card key={item.id} className="hover:shadow-md transition-shadow">
+    <Card key={item.id_sea} className="hover:shadow-md transition-shadow">
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-[#063a1e]/10 rounded-md flex items-center justify-center">
-              {item.logo && (
+              {item.logo_url && (
                 <Image
-                  src={item.logo}
+                  src={item.logo_url}
                   alt={`Logo ${item.nom}`}
                   width={48}
                   height={48}
