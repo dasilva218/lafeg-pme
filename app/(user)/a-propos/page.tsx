@@ -127,7 +127,7 @@ export default function APropos() {
                 Ressource Essentielle
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-[#dcdaa4]">
-                Guide Numérique des PME
+                Répertoire des textes Juridiques
               </h2>
               <p className="text-white sm:text-lg text-muted-foreground max-w-2xl mx-auto">
                 Un outil complet pour accompagner les entreprises gabonaises
@@ -141,11 +141,11 @@ export default function APropos() {
                   <BookOpen className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-[#063a1e]" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-[#063a1e]">
-                  Qu'est-ce que le Guide Numérique des PME ?
+                  Qu'est-ce que le Répertoire des textes Juridiques ?
                 </h3>
                 <div className="space-y-3 sm:space-y-4">
                   <p className="text-sm sm:text-base text-gray-700">
-                    Le "Guide Numérique des PME" est une ressource complète
+                    Le "Répertoire des textes Juridiques" est une ressource complète
                     développée par la Fédération des Entreprises du Gabon pour
                     aider les petites et moyennes entreprises à naviguer dans
                     l'écosystème économique et juridique gabonais.
@@ -169,7 +169,7 @@ export default function APropos() {
                   Ce que vous y trouverez
                 </h3>
                 <p className="mb-4 sm:mb-6 text-sm sm:text-base text-gray-700">
-                  Notre Guide Numérique des PME offre de nombreuses ressources
+                  Notre Répertoire des textes Juridiques offre de nombreuses ressources
                   pour soutenir votre entreprise :
                 </p>
                 <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-gray-700">

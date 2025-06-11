@@ -142,7 +142,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const {id} = params;
 
     // Vérifier si le texte juridique existe
     const existingTexte = await prisma.texteJuridique.findUnique({
