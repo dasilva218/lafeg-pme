@@ -470,7 +470,7 @@ const filteredTextes = textes.filter((texte: TexteJuridique) => {
                   <div className="mt-2">
                   <Badge variant="outline" className="text-xs font-extralight">
                   <FileText className="h-4 w-4 inline-block mr-1" />
-                  {(texte.taille_fichier / 1024).toFixed(2)} Mo
+                  {(texte.taille_fichier / 1024).toFixed(2)} Ko
                     </Badge>
                     
                   </div>

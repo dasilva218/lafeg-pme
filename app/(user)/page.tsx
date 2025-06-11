@@ -1,22 +1,27 @@
-"use client"
+"use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react"
-import Image from "next/image"
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import Form from "@/components/section/form";
-import {AdBanvideo} from "@/components/ads/AdBanvideo"
-import { ArrowRight, FileText, BookOpen, ExternalLink } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { AdBanvideo } from "@/components/ads/AdBanvideo";
+import { ArrowRight, FileText, BookOpen, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import TickerTextes from "@/components/section/TickerTextes";
 
 // import AddressAutocomplete from "@/components/AddressAutocomplete"
 
 import TextSearch from "@/components/section/search";
-import NewText from "@/components/section/new_text"
-
-
+import NewText from "@/components/section/new_text";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -38,28 +43,36 @@ export default function Home() {
 
   if (loading) {
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
-            <div className="flex flex-col items-center">
-              <div className="relative w-16 h-16 mb-4">
-                <div className="absolute inset-0 rounded-full border-4 border-[#063a1e]/20"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-t-[#063a1e] animate-spin"></div>
-              </div>
-      
-              <div className="flex flex-col items-center">
-                <Image src="/images/logo-feg.png" alt="Logo FEG" width={60} height={60} className="h-12 w-auto mb-2" />
-                <h2 className="text-lg font-bold text-[#063a1e]">GUIDE NUMERIQUE DES PME</h2>
-              </div>
-              <div className="mt-4 h-1 w-48 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] animate-pulse"></div>
-              </div>
-            </div>
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <div className="flex flex-col items-center">
+          <div className="relative w-16 h-16 mb-4">
+            <div className="absolute inset-0 rounded-full border-4 border-[#063a1e]/20"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-t-[#063a1e] animate-spin"></div>
           </div>
+
+          <div className="flex flex-col items-center">
+            <Image
+              src="/images/logo-feg.png"
+              alt="Logo FEG"
+              width={60}
+              height={60}
+              className="h-12 w-auto mb-2"
+            />
+            <h2 className="text-lg font-bold text-[#063a1e]">
+              Répertoire des textes Juridiques
+            </h2>
+          </div>
+          <div className="mt-4 h-1 w-48 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] animate-pulse"></div>
+          </div>
+        </div>
+      </div>
     );
   }
 
   return (
     <div className="">
-        <TickerTextes />
+      <TickerTextes />
       {/* Scrolling News Ticker */}
 
       {/* Flash News */}
@@ -72,7 +85,9 @@ export default function Home() {
             >
               NOUVEAU
             </Badge>
-            <p className="text-sm">Mise à jour des textes relatifs à la fiscalité des PME - Mai 2025</p>
+            <p className="text-sm">
+              Mise à jour des textes relatifs à la fiscalité des PME - Mai 2025
+            </p>
           </div>
         </div>
       </div>
@@ -86,7 +101,8 @@ export default function Home() {
                 Les textes juridiques pour votre PME au Gabon
               </h2>
               <p className="text-white/90 text-center md:text-left text-lg">
-                Accédez facilement aux textes juridiques, lois et règlements concernant les PME gabonaises.
+                Accédez facilement aux textes juridiques, lois et règlements
+                concernant les PME gabonaises.
               </p>
               <div className="flex flex-col sm:flex-row sm:justify-center md:justify-normal gap-4">
                 <Link href="/textes-juridiques">
@@ -104,7 +120,7 @@ export default function Home() {
                 <Link href="/a-propos">
                   <Button
                     size="lg"
-                     className="hover:text-[#063a1e] duration-300 ease-in-out hover:bg-white border-none font-medium min-w-[200px]"
+                    className="hover:text-[#063a1e] duration-300 ease-in-out hover:bg-white border-none font-medium min-w-[200px]"
                   >
                     En savoir plus
                   </Button>
@@ -129,13 +145,15 @@ export default function Home() {
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">Recherchez un texte juridique</h2>
+              <h2 className="text-2xl font-bold mb-2">
+                Recherchez un texte juridique
+              </h2>
               <p className="text-muted-foreground">
-                Trouvez rapidement les textes juridiques dont vous avez besoin pour votre entreprise
+                Trouvez rapidement les textes juridiques dont vous avez besoin
+                pour votre entreprise
               </p>
             </div>
-            <TextSearch/>
-          
+            <TextSearch />
           </div>
         </div>
       </section>
@@ -151,17 +169,23 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e]  flex items-center justify-center mb-3">
                   <FileText className="h-6 w-6 text-[#063a1e]" />
                 </div>
-                <CardTitle>Textes législatifs et règlementaires des administrations publiques</CardTitle>
-                <CardDescription>
-                  Réglementations et lois encadrant les activités des administrations publiques.
+                <CardTitle>
+                  Textes législatifs et règlementaires des administrations
+                  publiques
+                </CardTitle>
+                <CardDescription className="text-black">
+                  Réglementations et lois encadrant les activités des
+                  administrations publiques.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-1 text-sm">
-                  <li className="text-muted-foreground">• Loi sur les sociétés commerciales</li>
-                  <li className="text-muted-foreground">• Acte uniforme OHADA</li>
-                  <li className="text-muted-foreground">• Formalités d'immatriculation</li>
-                  </ul>
+                  <li className="text-black">
+                    • Loi sur les sociétés commerciales
+                  </li>
+                  <li className="text-black">• Acte uniforme OHADA</li>
+                  <li className="text-black">• Formalités d'immatriculation</li>
+                </ul>
               </CardContent>
               <CardFooter>
                 <Link href="/textes-juridiques#administrations">
@@ -178,16 +202,21 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e]  flex items-center justify-center mb-3">
                   <FileText className="h-6 w-6 text-[#063a1e]" />
                 </div>
-                <CardTitle>Textes législatifs et règlementaires pour les PME</CardTitle>
-                <CardDescription>
-                  Normes et obligations légales spécifiques aux petites et moyennes entreprises.
+                <CardTitle>
+                  Textes législatifs et règlementaires pour les PME
+                </CardTitle>
+                <CardDescription className="text-black">
+                  Normes et obligations légales spécifiques aux petites et
+                  moyennes entreprises.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-1 text-sm">
-                  <li className="text-muted-foreground">• Code général des impôts</li>
-                  <li className="text-muted-foreground">• TVA et droits d'accises</li>
-                  <li className="text-muted-foreground">• Avantages fiscaux pour les PME</li>
+                  <li className="text-black">• Code général des impôts</li>
+                  <li className="text-black">• TVA et droits d'accises</li>
+                  <li className="text-black">
+                    • Avantages fiscaux pour les PME
+                  </li>
                 </ul>
               </CardContent>
               <CardFooter>
@@ -205,16 +234,19 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e]  flex items-center justify-center mb-3">
                   <FileText className="h-6 w-6 text-[#063a1e]" />
                 </div>
-                <CardTitle>Textes juridiques régionaux et internationaux</CardTitle>
-                <CardDescription>
-                  Accords, conventions et traités influençant le droit des affaires au niveau mondial.
+                <CardTitle>
+                  Textes juridiques régionaux et internationaux
+                </CardTitle>
+                <CardDescription className="text-black">
+                  Accords, conventions et traités influençant le droit des
+                  affaires au niveau mondial.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-1 text-sm">
-                  <li className="text-muted-foreground">• Code du travail</li>
-                  <li className="text-muted-foreground">• Conventions collectives</li>
-                  <li className="text-muted-foreground">• Protection sociale</li>
+                  <li className="text-black">• Code du travail</li>
+                  <li className="text-black">• Conventions collectives</li>
+                  <li className="text-black">• Protection sociale</li>
                 </ul>
               </CardContent>
               <CardFooter>
@@ -228,23 +260,240 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="py-12 bg-[#063a1e]">
+        <div className="container">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+            <div>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] bg-clip-text text-transparent">
+                Institutions Financières
+              </h2>
+              <p className="text-white mt-2">
+                Découvrez les institutions qui peuvent financer votre entreprise
+              </p>
+            </div>
+
+            <Link
+              className="flex justify-center"
+              href="/institutions-financieres"
+            >
+              <Button
+                variant="secondary"
+                size="lg"
+                className="bg-[#063a1e] relative hover:bg-white"
+              >
+                <span className="absolute inset-0 w-full h-full bg-[#dcdaa4] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></span>
+                <span className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
+                  <p className="flex items-center justify-center">
+                    Voir toutes les institutions{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </p>
+                </span>
+              </Button>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Banques */}
+            <div className="group relative overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:shadow-xl">
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src="/images/bank.jpeg?height=300&width=400"
+                  alt="Banques commerciales"
+                  width={400}
+                  height={300}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#063a1e] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-70"></div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="rounded-full bg-white/90 p-3 shadow-lg">
+                   <Link  href="/institutions-financieres?tab=banques">
+                      {" "}
+                      <ArrowRight className="h-6 w-6 text-[#063a1e]" />
+                    </Link>
+                    {/* <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-[#063a1e]"
+                    >
+                      <path d="M4 10V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2" />
+                      <path d="M10 16h4" />
+                      <path d="M10 12h4" />
+                      <path d="M6 8h.01" />
+                      <path d="M6 12h.01" />
+                      <path d="M6 16h.01" />
+                    </svg> */}
+                  </div>
+                </div>
+              </div>
+              <div className="p-5">
+                <h3 className="mb-1 text-xl font-bold text-[#063a1e]">
+                  Banques
+                </h3>
+                <p className="mb-3 text-sm text-gray-500">
+                  Banques commerciales et de développement
+                </p>
+                <ul className="mb-4 space-y-1 text-sm">
+                  <li className="text-gray-600">• Prêts d'investissement</li>
+                  <li className="text-gray-600">• Lignes de crédit</li>
+                  <li className="text-gray-600">
+                    • Services bancaires aux entreprises
+                  </li>
+                </ul>
+                <Link
+                  href="/institutions-financieres?tab=banques"
+                  className="inline-flex items-center text-sm font-medium text-[#063a1e] hover:underline"
+                >
+                  Explorer <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Microfinance */}
+            <div className="group relative overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:shadow-xl">
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src="/images/micro.jpeg?height=300&width=400"
+                  alt="Institutions de microfinance"
+                  width={400}
+                  height={300}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#063a1e] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-70"></div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="rounded-full bg-white/90 p-3 shadow-lg">
+                   <Link  href="/institutions-financieres?tab=microfinance">
+                      {" "}
+                      <ArrowRight className="h-6 w-6 text-[#063a1e]" />
+                    </Link>
+                    {/* <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-[#063a1e]"
+                    >
+                      <path d="M12 2v20" />
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                    </svg> */}
+                  </div>
+                </div>
+              </div>
+              <div className="p-5">
+                <h3 className="mb-1 text-xl font-bold text-[#063a1e]">
+                  Microfinance
+                </h3>
+                <p className="mb-3 text-sm text-gray-500">
+                  Institutions de microfinance
+                </p>
+                <ul className="mb-4 space-y-1 text-sm">
+                  <li className="text-gray-600">• Microcrédits</li>
+                  <li className="text-gray-600">• Épargne et crédit</li>
+                  <li className="text-gray-600">
+                    • Accompagnement de proximité
+                  </li>
+                </ul>
+                <Link
+                  href="/institutions-financieres?tab=microfinance"
+                  className="inline-flex items-center text-sm font-medium text-[#063a1e] hover:underline"
+                >
+                  Explorer <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Fonds d'investissement */}
+            <div className="group relative overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:shadow-xl">
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src="/images/fond.jpeg?height=300&width=400"
+                  alt="Fonds d'investissement"
+                  width={400}
+                  height={300}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#063a1e] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-70"></div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="rounded-full bg-white/90 p-3 shadow-lg">
+                    <Link href="/institutions-financieres?tab=fonds">
+                      {" "}
+                      <ArrowRight className="h-6 w-6 text-[#063a1e]" />
+                    </Link>
+
+                    {/* <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-[#063a1e]"
+                    >
+                      <path d="M2 20h.01" />
+                      <path d="M7 20v-4" />
+                      <path d="M12 20v-8" />
+                      <path d="M17 20V8" />
+                      <path d="M22 4v16" />
+                    </svg> */}
+                  </div>
+                </div>
+              </div>
+              <div className="p-5">
+                <h3 className="mb-1 text-xl font-bold text-[#063a1e]">
+                  Fonds d'investissement
+                </h3>
+                <p className="mb-3 text-sm text-gray-500">
+                  Capital-risque et investissements
+                </p>
+                <ul className="mb-4 space-y-1 text-sm">
+                  <li className="text-gray-600">• Capital-risque</li>
+                  <li className="text-gray-600">
+                    • Investissements stratégiques
+                  </li>
+                  <li className="text-gray-600">• Financement de croissance</li>
+                </ul>
+                <Link
+                  href="/institutions-financieres?tab=fonds"
+                  className="inline-flex items-center text-sm font-medium text-[#063a1e] hover:underline"
+                >
+                  Explorer <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Recent Updates */}
       <NewText />
       {/* Sidebar Video Ad */}
-            <div className="hidden lg:flex justify-center items-center w-full bg-[#eaeeeb]">
-              <AdBanvideo
-                type="video"
-                size="skyscraper"
-                position="sidebar"
-                content={{
-                  title: "BGFI BANK Gabon",
-                  videoUrl: "/BGFIBank.mp4",
-                  imageUrl: "/BGFIBank Gabon COMPLETE LIBERTY - Spot.gif",
-                  advertiser: "Institut de Formation Juridique",
-                }}
-              />
-            </div>
+      <div className="hidden lg:flex justify-center items-center w-full bg-[#eaeeeb]">
+        <AdBanvideo
+          type="video"
+          size="skyscraper"
+          position="sidebar"
+          content={{
+            title: "BGFI BANK Gabon",
+            videoUrl: "/BGFIBank.mp4",
+            imageUrl: "/BGFIBank Gabon COMPLETE LIBERTY - Spot.gif",
+            advertiser: "Institut de Formation Juridique",
+          }}
+        />
+      </div>
       {/* Resources Section */}
       <section className="hidden py-12">
         <div className="container">
@@ -257,16 +506,21 @@ export default function Home() {
                   <BookOpen className="h-6 w-6 text-[#063a1e]" />
                 </div>
                 <CardTitle>Guides pratiques</CardTitle>
-                <CardDescription>Guides d'application des textes juridiques</CardDescription>
+                <CardDescription>
+                  Guides d'application des textes juridiques
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Des guides explicatifs pour comprendre et appliquer correctement les textes juridiques dans votre
-                  entreprise.
+                  Des guides explicatifs pour comprendre et appliquer
+                  correctement les textes juridiques dans votre entreprise.
                 </p>
               </CardContent>
               <CardFooter>
-                <Button variant="ghost" className="w-full text-[#063a1e] hover:text-[#063a1e]/90 hover:bg-[#063a1e]/10">
+                <Button
+                  variant="ghost"
+                  className="w-full text-[#063a1e] hover:text-[#063a1e]/90 hover:bg-[#063a1e]/10"
+                >
                   Consulter les guides
                 </Button>
               </CardFooter>
@@ -279,16 +533,21 @@ export default function Home() {
                   <FileText className="h-6 w-6 text-[#063a1e]" />
                 </div>
                 <CardTitle>Modèles de documents</CardTitle>
-                <CardDescription>Documents types pour votre entreprise</CardDescription>
+                <CardDescription>
+                  Documents types pour votre entreprise
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Téléchargez des modèles de documents juridiques prêts à l'emploi pour votre PME (statuts, contrats,
-                  etc.).
+                  Téléchargez des modèles de documents juridiques prêts à
+                  l'emploi pour votre PME (statuts, contrats, etc.).
                 </p>
               </CardContent>
               <CardFooter>
-                <Button variant="ghost" className="w-full text-[#063a1e] hover:text-[#063a1e]/90 hover:bg-[#063a1e]/10">
+                <Button
+                  variant="ghost"
+                  className="w-full text-[#063a1e] hover:text-[#063a1e]/90 hover:bg-[#063a1e]/10"
+                >
                   Télécharger les modèles
                 </Button>
               </CardFooter>
@@ -301,11 +560,14 @@ export default function Home() {
                   <ExternalLink className="h-6 w-6 text-[#063a1e]" />
                 </div>
                 <CardTitle>Liens utiles</CardTitle>
-                <CardDescription>Sites officiels et ressources externes</CardDescription>
+                <CardDescription>
+                  Sites officiels et ressources externes
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Accédez aux sites des institutions et organismes officiels liés au droit des affaires au Gabon.
+                  Accédez aux sites des institutions et organismes officiels
+                  liés au droit des affaires au Gabon.
                 </p>
               </CardContent>
               <CardFooter>
@@ -329,10 +591,15 @@ export default function Home() {
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <h2 className="text-3xl font-bold">Liens utiles ?</h2>
             <p className="text-white/90 text-lg">
-              Accédez aux sites des institutions et organismes officiels liés au droit des affaires au Gabon.
+              Accédez aux sites des institutions et organismes officiels liés au
+              droit des affaires au Gabon.
             </p>
             <Link className="flex justify-center" href="/#lien">
-              <Button variant="secondary" size="lg" className="bg-[#063a1e] relative hover:bg-white">
+              <Button
+                variant="secondary"
+                size="lg"
+                className="bg-[#063a1e] relative hover:bg-white"
+              >
                 <span className="absolute inset-0 w-full h-full bg-[#dcdaa4] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></span>
                 <span className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
                   <p>Voir les liens</p>
@@ -353,7 +620,9 @@ export default function Home() {
                   <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] bg-clip-text text-transparent">
                     Restez informé
                   </h2>
-                  <p className="mb-6">Abonnez-vous pour recevoir des alertes :</p>
+                  <p className="mb-6">
+                    Abonnez-vous pour recevoir des alertes :
+                  </p>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-2">
                       <span className="bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] rounded-full h-5 w-5 flex items-center justify-center text-xs font-bold mt-0.5">
@@ -381,8 +650,7 @@ export default function Home() {
                       Formulaire d'abonnement
                     </h3>
                   </div>
-                  <Form
-                        />
+                  <Form />
                 </div>
               </div>
             </div>
@@ -390,5 +658,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  )
+  );
 }

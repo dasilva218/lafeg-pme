@@ -47,23 +47,22 @@ export default function AdminDashboard() {
   }, []);
 
   // fetch SEA
-  useEffect(() => {
-    const fetchSeaData = async () => {
-      try {
-        // Exemple : appel d'une API
-        const response = await fetch("/api/sea");
-        const data = await response.json();
-        setSea(data || []); // assure qu'on a toujours un tableau
-      } catch (error) {
-        console.error("Erreur lors du chargement des données :", error);
-        setSea([]); // fallback
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchSeaData = async () => {
+    try {
+      const data = await fetchAllSEAs(); // ✅ Appelle ta fonction du service
+      setSea(data || []);
+    } catch (error) {
+      console.error("Erreur lors du chargement des données SEA :", error);
+      setSea([]);
+    } finally {
+      setLoadingSea(false); // ✅ Corrigé ici aussi
+    }
+  };
 
-    fetchSeaData();
-  }, []);
+  fetchSeaData();
+}, []);
+
 
   // fetch Institutions
   useEffect(() => {
@@ -112,18 +111,17 @@ export default function AdminDashboard() {
 
   // SEA stats
   const getCategorieSeaCounts = () => {
-  const counts: Record<string, number> = {};
+    const counts: Record<string, number> = {};
 
-  if (Array.isArray(sea)) {
-    sea.forEach((item) => {
-      const categorieSea = item?.categorie || "Autre";
-      counts[categorieSea] = (counts[categorieSea] || 0) + 1;
-    });
-  }
+    if (Array.isArray(sea)) {
+      sea.forEach((item) => {
+        const categorieSea = item?.categorie || "Autre";
+        counts[categorieSea] = (counts[categorieSea] || 0) + 1;
+      });
+    }
 
-  return counts;
-};
-
+    return counts;
+  };
 
   const seaCategorieCounts = getCategorieSeaCounts();
   const totalSea = Array.isArray(sea) ? sea.length : 0;
@@ -262,8 +260,8 @@ export default function AdminDashboard() {
                           backgroundColor: [
                             "#063a1e",
                             "#dcdaa4",
+                            // "#bdbd95",
                             "#bdbd95",
-                            "#888",
                           ][i % 4],
                         }}
                       />

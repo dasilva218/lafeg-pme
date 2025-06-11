@@ -17,7 +17,7 @@ export interface SEA {
   rs_2?: string | null;
   logo_url?: string | null;
   logo_nom?: string | null;
-  fichier?: File | null;
+  logoFile?: File | null;
   partenaire_feg?: boolean;
   createdAt: string;
   updatedAt: string;
