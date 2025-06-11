@@ -11,7 +11,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Guide numérique des PME",
+  title: "Répertoire des textes Juridiques",
   description:
     "Accédez facilement aux textes juridiques, lois et règlements concernant les PME gabonaises.",
   icons: {

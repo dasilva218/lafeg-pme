@@ -543,10 +543,10 @@ export async function PUT(
         .from("feg")
         .getPublicUrl(filePath);
 
-      updates.image_url = urlData.publicUrl;
-      updates.image_nom = fileName;
-      updates.taille_image = logo.size;
-      updates.image_mime_type = logo.type;
+      updates.logo_url = urlData.publicUrl;
+      updates.logo_nom = fileName;
+      updates.taille_logo = logo.size;
+      updates.logo_mime_type = logo.type;
     }
 
     // Ajout de la date de mise à jour

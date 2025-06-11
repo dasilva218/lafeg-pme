@@ -85,7 +85,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               />
               <div className="ml-3">
                 <h1 className="text-lg font-bold text-[#063a1e]">ADMIN</h1>
-                <p className="text-sm text-black">Guide numérique des PME</p>
+                <p className="text-sm text-black">Répertoire des textes Juridiques</p>
               </div>
             </div>
             <div className="mt-8 flex-1 flex flex-col">
@@ -151,7 +151,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   <div className="ml-3">
                     <h1 className="text-lg font-bold text-[#063a1e]">ADMIN</h1>
                     <p className="text-xs text-[#063a1e]">
-                      Guide Numérique des PME
+                      Répertoire des textes Juridiques
                     </p>
                   </div>
                 </div>
