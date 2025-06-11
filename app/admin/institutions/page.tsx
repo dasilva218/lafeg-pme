@@ -74,7 +74,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import {
   fetchFinancialInstitutions,
-  FinancialInstitution,
+  Institutions,
 } from "@/app/services/institution/api";
 import {
   createFinancialInstitution,
@@ -90,9 +90,10 @@ export default function InstitutionsPage({}: {
 }) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [typeFilter, setTypeFilter] = useState<string>("all");
+
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedInstitution, setSelectedInstitution] =
-    useState<FinancialInstitution | null>(null);
+    useState<Institutions | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Tu peux ajuster ce chiffre
 
@@ -101,21 +102,27 @@ export default function InstitutionsPage({}: {
   >(null);
 
   const [editedInstitution, setEditedInstitution] = useState<
-    Partial<FinancialInstitution>
+    Partial<Institutions>
   >({});
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDetailsCardVisible, setIsDetailsCardVisible] =
     useState<boolean>(false);
 
   const [selectedInstitutionDetails, setSelectedInstitutionDetails] =
-    useState<FinancialInstitution | null>(null);
+    useState<Institutions | null>(null);
 
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [institutions, setInstitutions] = useState<FinancialInstitution[]>([]);
+  const [institutions, setInstitutions] = useState<Institutions[]>([]);
   const [newInstitution, setNewInstitution] = useState<
     Omit<
-      FinancialInstitution,
-      "id_institutionFinanciere" | "createdAt" | "updatedAt"
+      Institutions,
+      | "id_institution"
+      | "createdAt"
+      | "updatedAt"
+      | "image_url"
+      | "image_nom"
+      | "taille_image"
+      | "image_mime_type"
     >
   >({
     nom: "",
@@ -127,10 +134,10 @@ export default function InstitutionsPage({}: {
     mail: "",
     site_web: "",
     service: "",
-    logo: "",
     rs_1: "",
     rs_2: "",
     partenaire_feg: false,
+    imageFile: null as File | null, // Ajout pour le fichier image
   });
 
   const resetNewInstitutionForm = () => {
@@ -144,7 +151,7 @@ export default function InstitutionsPage({}: {
       mail: "",
       site_web: "",
       service: "",
-      logo: "",
+      imageFile: null, // Réinitialisation du fichier image
       rs_1: "",
       rs_2: "",
       partenaire_feg: false,
@@ -189,20 +196,20 @@ export default function InstitutionsPage({}: {
   if (loading) return <p>Chargement...</p>;
   if (error) return <p>Erreur : {error}</p>;
 
-  const openEditDialog = (institution: FinancialInstitution) => {
-    setSelectedInstitutionId(institution.id_institutionFinanciere); // nombre
+  const openEditDialog = (institution: Institutions) => {
+    setSelectedInstitutionId(institution.id_institution); // nombre
     setEditedInstitution(institution); // ici pas besoin de changement
     setIsEditDialogOpen(true);
   };
 
-  const openDeleteDialog = (institution: FinancialInstitution) => {
-    setSelectedInstitutionId(institution.id_institutionFinanciere);
+  const openDeleteDialog = (institution: Institutions) => {
+    setSelectedInstitutionId(institution.id_institution);
     setSelectedInstitution(institution);
     setIsDeleteDialogOpen(true);
   };
 
-  const openViewDialog = (institution: FinancialInstitution) => {
-    setSelectedInstitutionId(institution.id_institutionFinanciere);
+  const openViewDialog = (institution: Institutions) => {
+    setSelectedInstitutionId(institution.id_institution);
     setSelectedInstitution(institution);
     setSelectedInstitutionDetails(institution);
     setIsDetailsCardVisible(true);
@@ -227,9 +234,58 @@ export default function InstitutionsPage({}: {
   const handleCreateInstitution = async () => {
     try {
       setLoading(true);
-      console.log("Institution envoyée :", newInstitution);
 
-      await createFinancialInstitution(newInstitution);
+      console.log("🏁 Début création institution");
+      console.log("📦 Données à envoyer :", newInstitution);
+
+      // Vérification des champs requis
+      if (!newInstitution.nom || !newInstitution.categorie) {
+        console.warn("❗ Champs requis manquants !");
+        toast.error("Champs requis manquants");
+        setLoading(false);
+        return;
+      }
+
+      // Création du FormData
+      const formData = new FormData();
+      formData.append("nom", newInstitution.nom);
+      formData.append("categorie", newInstitution.categorie);
+      formData.append(
+        "type_institution",
+        newInstitution.type_institution || ""
+      );
+      formData.append(
+        "partenaire_feg",
+        String(newInstitution.partenaire_feg || false)
+      );
+      formData.append("description", newInstitution.description || "");
+      formData.append("adresse", newInstitution.adresse || "");
+      formData.append("contact", newInstitution.contact || "");
+      formData.append("mail", newInstitution.mail || "");
+      formData.append("site_web", newInstitution.site_web || "");
+      formData.append("rs_1", newInstitution.rs_1 || "");
+      formData.append("rs_2", newInstitution.rs_2 || "");
+      formData.append("service", newInstitution.service || "");
+
+      if (newInstitution.imageFile) {
+        formData.append("image", newInstitution.imageFile); // Assure-toi que c'est bien un File
+      }
+
+      const response = await fetch("/api/institutions", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error("❌ Erreur API :", result.error);
+        toast.error("Erreur serveur : " + result.error);
+        setLoading(false);
+        return;
+      }
+
+      console.log("✅ Institution créée :", result);
       await refreshInstitutions(); // rafraîchit la liste
       resetNewInstitutionForm(); // reset du formulaire
       setIsAddDialogOpen(false); // ferme le dialog
@@ -239,7 +295,8 @@ export default function InstitutionsPage({}: {
     } catch (error) {
       console.error("Erreur création:", error);
       toast.error("Erreur lors de la création de l'institution", {
-        description: "Veuillez vérifier les informations saisies.",});
+        description: "Veuillez vérifier les informations saisies.",
+      });
     } finally {
       setLoading(false);
     }
@@ -253,47 +310,78 @@ export default function InstitutionsPage({}: {
   );
   const totalPages = Math.ceil(filteredInstitutions.length / itemsPerPage);
 
-  const handleEditInstitution = async (institution: FinancialInstitution) => {
+  const handleEditInstitution = (institution: Institutions) => {
+    setSelectedInstitutionId(institution.id_institution);
+    setEditedInstitution({
+      nom: institution.nom,
+      categorie: institution.categorie,
+      type_institution: institution.type_institution || "",
+      partenaire_feg: institution.partenaire_feg || false,
+      description: institution.description || "",
+      adresse: institution.adresse || "",
+      contact: institution.contact || "",
+      mail: institution.mail || "",
+      site_web: institution.site_web || "",
+      rs_1: institution.rs_1 || "",
+      rs_2: institution.rs_2 || "",
+      service: institution.service || "",
+      imageFile: null,
+      image_url: institution.image_url || "",
+    });
+    setIsEditDialogOpen(true);
+  };
+
+  const submitEditInstitution = async () => {
+    console.log("submitEditInstitution called");
+
+    if (!selectedInstitutionId || !editedInstitution) return;
+
     try {
       setLoading(true);
-      setSelectedInstitutionId(institution.id_institutionFinanciere); // Ajoute l'ID de l'institution sélectionnée
-      setEditedInstitution({
-        nom: institution.nom,
-        categorie: institution.categorie,
-        type_institution: institution.type_institution,
-        description: institution.description,
-        adresse: institution.adresse,
-        contact: institution.contact,
-        mail: institution.mail,
-        site_web: institution.site_web,
-        service: institution.service,
-        logo: institution.logo,
-        rs_1: institution.rs_1,
-        rs_2: institution.rs_2,
-        partenaire_feg: institution.partenaire_feg,
-      });
+      console.log("selectedInstitutionId", selectedInstitutionId);
 
-      // Vérifier que l'ID est bien défini avant de procéder
-      if (institution.id_institutionFinanciere) {
-        console.log("ID Institution:", institution.id_institutionFinanciere); // Vérification de l'ID
+      const formData = new FormData();
+      formData.append("nom", editedInstitution.nom ?? "");
+      formData.append("categorie", editedInstitution.categorie ?? "");
+      formData.append(
+        "type_institution",
+        editedInstitution.type_institution ?? ""
+      );
+      formData.append(
+        "partenaire_feg",
+        String(editedInstitution.partenaire_feg)
+      );
+      formData.append("description", editedInstitution.description ?? "");
+      formData.append("adresse", editedInstitution.adresse ?? "");
+      formData.append("contact", editedInstitution.contact ?? "");
+      formData.append("mail", editedInstitution.mail ?? "");
+      formData.append("site_web", editedInstitution.site_web ?? "");
+      formData.append("rs_1", editedInstitution.rs_1 ?? "");
+      formData.append("rs_2", editedInstitution.rs_2 ?? "");
+      formData.append("service", editedInstitution.service ?? "");
 
-        await updateFinancialInstitution(
-          institution.id_institutionFinanciere,
-          editedInstitution
-        );
-      } else {
-        console.error("L'ID de l'institution sélectionnée est manquant.");
+      // Si une nouvelle image a été sélectionnée, on la met dans formData
+      if (editedInstitution.imageFile) {
+        formData.append("image", editedInstitution.imageFile);
       }
+
+      // Envoi PUT vers API (ici, par ex, via fetch)
+      const response = await fetch(
+        `/api/institutions/${selectedInstitutionId}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) throw new Error("Erreur lors de la mise à jour");
+
       await refreshInstitutions();
       setIsEditDialogOpen(false);
-      toast.success("Institution mise à jour avec succès", {
-        description: "Les informations de l'institution ont été modifiées.",
-      });
+      toast.success("Institution mise à jour avec succès");
     } catch (error) {
-      console.error("Erreur lors de la mise à jour :", error);
-      toast.error("Erreur lors de la mise à jour de l'institution", {
-        description: "Veuillez vérifier les informations saisies.",
-      });
+      console.error(error);
+      toast.error("Erreur lors de la mise à jour de l'institution");
     } finally {
       setLoading(false);
     }
@@ -311,7 +399,8 @@ export default function InstitutionsPage({}: {
     } catch (error) {
       console.error("Erreur suppression :", error);
       toast.error("Erreur lors de la suppression de l'institution", {
-        description: "Veuillez réessayer plus tard.",});
+        description: "Veuillez réessayer plus tard.",
+      });
     } finally {
       setLoading(false);
     }
@@ -390,20 +479,13 @@ export default function InstitutionsPage({}: {
                   <Input
                     id="logo"
                     type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onloadend = () => {
-                          setNewInstitution({
-                            ...newInstitution,
-                            logo: reader.result as string, // Stocke l'URL base64 dans le state
-                          });
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    }}
+                    accept="image/png, image/jpeg"
+                    onChange={(e) =>
+                      setNewInstitution({
+                        ...newInstitution,
+                        imageFile: e.target.files?.[0] || null,
+                      })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -735,11 +817,11 @@ export default function InstitutionsPage({}: {
             </TableHeader>
             <TableBody>
               {paginatedInstitutions.map((institution) => (
-                <TableRow key={institution.id_institutionFinanciere}>
+                <TableRow key={institution.id_institution}>
                   <TableCell>
-                    {institution.logo && (
+                    {institution.image_url && (
                       <Image
-                        src={institution.logo}
+                        src={institution.image_url}
                         alt={institution.nom}
                         width={50}
                         height={50}
@@ -869,7 +951,7 @@ export default function InstitutionsPage({}: {
                   </label>
                   <Input
                     id="edit-nom"
-                    value={editedInstitution.nom}
+                    value={editedInstitution.nom ?? ""}
                     onChange={(e) =>
                       setEditedInstitution({
                         ...editedInstitution,
@@ -894,7 +976,8 @@ export default function InstitutionsPage({}: {
                         reader.onloadend = () => {
                           setEditedInstitution({
                             ...editedInstitution,
-                            logo: reader.result as string, // Stocke l'URL base64 dans le state
+                            image_url: reader.result as string,
+                            imageFile: file, // Stocke le fichier ici
                           });
                         };
                         reader.readAsDataURL(file);
@@ -910,7 +993,7 @@ export default function InstitutionsPage({}: {
                     Type d'institution
                   </label>
                   <Select
-                    value={editedInstitution.type_institution}
+                    value={editedInstitution.type_institution ?? ""}
                     onValueChange={(value) =>
                       setEditedInstitution({
                         ...editedInstitution,
@@ -949,7 +1032,7 @@ export default function InstitutionsPage({}: {
                     Catégorie d'institution
                   </label>
                   <Select
-                    value={editedInstitution.categorie}
+                    value={editedInstitution.categorie ?? ""}
                     onValueChange={(value) =>
                       setEditedInstitution({
                         ...editedInstitution,
@@ -984,7 +1067,7 @@ export default function InstitutionsPage({}: {
                   </label>
                   <Input
                     id="edit-telephone"
-                    value={editedInstitution.contact}
+                    value={editedInstitution.contact ?? ""}
                     onChange={(e) =>
                       setEditedInstitution({
                         ...editedInstitution,
@@ -1000,7 +1083,7 @@ export default function InstitutionsPage({}: {
 
                   <Input
                     id="edit-email"
-                    value={editedInstitution.mail}
+                    value={editedInstitution.mail ?? ""}
                     onChange={(e) =>
                       setEditedInstitution({
                         ...editedInstitution,
@@ -1018,7 +1101,7 @@ export default function InstitutionsPage({}: {
 
                 <Input
                   id="edit-adresse"
-                  value={editedInstitution.adresse}
+                  value={editedInstitution.adresse ?? ""}
                   onChange={(e) =>
                     setEditedInstitution({
                       ...editedInstitution,
@@ -1035,7 +1118,7 @@ export default function InstitutionsPage({}: {
 
                 <Input
                   id="edit-site_web"
-                  value={editedInstitution.site_web}
+                  value={editedInstitution.site_web ?? ""}
                   onChange={(e) =>
                     setEditedInstitution({
                       ...editedInstitution,
@@ -1056,7 +1139,7 @@ export default function InstitutionsPage({}: {
                 <Input
                   id="edit-description"
                   className="w-full min-h-[100px] p-2 border rounded-md"
-                  value={editedInstitution.description}
+                  value={editedInstitution.description ?? ""}
                   onChange={(e) =>
                     setEditedInstitution({
                       ...editedInstitution,
@@ -1074,7 +1157,7 @@ export default function InstitutionsPage({}: {
                 <Input
                   id="edit-services"
                   className="w-full min-h-[80px] p-2 border rounded-md"
-                  value={editedInstitution.service}
+                  value={editedInstitution.service ?? ""}
                   onChange={(e) =>
                     setEditedInstitution({
                       ...editedInstitution,
@@ -1089,7 +1172,7 @@ export default function InstitutionsPage({}: {
                 </label>
                 <Input
                   id="rs_1"
-                  value={editedInstitution.rs_1}
+                  value={editedInstitution.rs_1 ?? ""}
                   onChange={(e) =>
                     setEditedInstitution({
                       ...editedInstitution,
@@ -1105,7 +1188,7 @@ export default function InstitutionsPage({}: {
                 </label>
                 <Input
                   id="rs_2"
-                  value={editedInstitution.rs_2}
+                  value={editedInstitution.rs_2 ?? ""}
                   onChange={(e) =>
                     setEditedInstitution({
                       ...editedInstitution,
@@ -1147,13 +1230,13 @@ export default function InstitutionsPage({}: {
               </Button>
               <Button
                 className="bg-[#063a1e] hover:bg-[#063a1e]/90"
+                disabled={loading}
                 onClick={() =>
-                  handleEditInstitution(
-                    editedInstitution as FinancialInstitution
-                  )
+                  //  handleEditInstitution(editedInstitution as Institutions)
+                  submitEditInstitution()
                 }
               >
-                Enregistrer les modifications
+                {loading ? "Enregistrement..." : "Enregistrer les modifications"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -1208,7 +1291,7 @@ export default function InstitutionsPage({}: {
                 <div className="w-12 h-12 bg-[#063a1e]/10 rounded-md flex items-center justify-center">
                   <Image
                     src={
-                      selectedInstitutionDetails?.logo ||
+                      selectedInstitutionDetails?.image_url ||
                       "/images/default-logo.png"
                     }
                     alt="Logo de l'institution"

@@ -95,7 +95,7 @@ export default function StructuresPage() {
   const [isViewDialogOpen, setIsViewDialogOpen] = useState<boolean>(false);
   const [selectedStructure, setSelectedStructure] = useState<SEA | null>(null);
   const [logoUploading, setLogoUploading] = useState<File | null>(null);
-    const [filteredTextes, setFilteredTextes] = useState<SEA[]>([]);
+  const [filteredTextes, setFilteredTextes] = useState<SEA[]>([]);
 
   // Structure par défaut pour la création
   const defaultStructure: Omit<SEA, "id_sea" | "createdAt" | "updatedAt"> & {
@@ -115,7 +115,8 @@ export default function StructuresPage() {
     services: [],
     rs_1: null,
     rs_2: null,
-    logo: null,
+    logo_url: null,
+    logo_nom: null,
     partenaire_feg: false,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -125,10 +126,7 @@ export default function StructuresPage() {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedTexte = filteredTextes.slice(
-    startIndex,
-    endIndex
-  );
+  const paginatedTexte = filteredTextes.slice(startIndex, endIndex);
 
   const totalPages = Math.ceil(filteredTextes.length / itemsPerPage);
   const [newStructure, setNewStructure] = useState<SEA>(defaultStructure);
@@ -144,21 +142,18 @@ export default function StructuresPage() {
     const fetchStructures = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/sea");
-        if (!response.ok) throw new Error("Erreur lors de la récupération");
-        const data = await response.json();
-        
-        setStructures(data);
+        const data = await fetchAllSEAs();
+        setStructures(data || []);
       } catch (error) {
         console.error("Error:", error);
         toast.error("Erreur lors du chargement des structures", {
           description: "Veuillez réessayer plus tard.",
         });
-        // toast({
-        //   title: "Erreur",
-        //   description: "Impossible de charger les structures",
-        //   variant: "destructive",
-        // });
+        //  toast({
+        //    title: "Erreur",
+        //    description: "Impossible de charger les structures",
+        //    variant: "destructive",
+        //  });
       } finally {
         setLoading(false);
       }
@@ -168,24 +163,50 @@ export default function StructuresPage() {
   }, [mounted]);
 
   // Filtrer les structures
-  const filteredStructures = structures.filter((structure) => {
-    const matchesSearch =
-      structure.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      structure.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      structure.categorie.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = typeFilter === "" || structure.type_sea === typeFilter;
-    return matchesSearch && matchesType;
-  });
+  const filteredStructures = Array.isArray(structures)
+    ? structures.filter((structure) => {
+        const matchesSearch =
+          structure.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          structure.description
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          structure.categorie?.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesSearch;
+      })
+    : [];
 
   // Créer une nouvelle structure
   const handleAddStructure = async () => {
     try {
+      const formData = new FormData();
+
+      // Champs simples
+      formData.append("nom", newStructure.nom);
+      formData.append("type_sea", newStructure.type_sea);
+      formData.append("categorie", newStructure.categorie);
+      formData.append("description", newStructure.description || "");
+      formData.append("adresse", newStructure.adresse || "");
+      formData.append("contact", newStructure.contact || "");
+      formData.append("mail", newStructure.mail || "");
+      formData.append("site_web", newStructure.site_web || "");
+      formData.append("rs_1", newStructure.rs_1 || "");
+      formData.append("rs_2", newStructure.rs_2 || "");
+      formData.append(
+        "partenaire_feg",
+        newStructure.partenaire_feg ? "true" : "false"
+      );
+
+      // Services en JSON string
+      formData.append("services", JSON.stringify(newStructure.services));
+
+      // Fichier logo
+      if (newStructure.logoFile) {
+        formData.append("image", newStructure.logoFile);
+      }
+
       const response = await fetch("/api/sea", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newStructure),
+        body: formData, // fetch ajoute automatiquement le Content-Type multipart/form-data
       });
 
       if (!response.ok) {
@@ -199,69 +220,75 @@ export default function StructuresPage() {
       setNewStructure(defaultStructure);
 
       toast.success("Structure créée avec succès", {
-        description: "La structure a été ajoutée à la liste.",});
-      // toast({
-      //   title: "Succès",
-      //   description: "Structure créée avec succès",
-      // });
-    } catch (error: any) {
-      console.error("Error:", error);
-      toast.error("Erreur lors de la création de la structure", {
-        description: error.message || "Veuillez réessayer plus tard.",
+        description: "La structure a été ajoutée à la liste.",
       });
-      // toast({
-      //   title: "Erreur",
-      //   description: error.message || "Erreur lors de la création",
-      //   variant: "destructive",
-      // });
+    } catch (error: unknown) {
+      console.error("Error:", error);
+      const message =
+        error instanceof Error ? error.message : "Erreur inconnue";
+      toast.error("Erreur lors de la création de la structure", {
+        description: message,
+      });
     }
   };
 
   // Mettre à jour une structure
   const handleUpdateStructure = async () => {
-    if (!selectedStructure) return;
+  if (!selectedStructure) return;
 
-    try {
-      const response = await fetch(`/api/sea/${selectedStructure.id_sea}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(selectedStructure),
-      });
+  try {
+    const formData = new FormData();
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Erreur lors de la mise à jour");
-      }
+    // Champs texte
+    formData.append("nom", selectedStructure.nom);
+    formData.append("type_sea", selectedStructure.type_sea);
+    formData.append("categorie", selectedStructure.categorie);
+    formData.append("description", selectedStructure.description || "");
+    formData.append("adresse", selectedStructure.adresse || "");
+    formData.append("contact", selectedStructure.contact || "");
+    formData.append("mail", selectedStructure.mail || "");
+    formData.append("site_web", selectedStructure.site_web || "");
+    formData.append("rs_1", selectedStructure.rs_1 || "");
+    formData.append("rs_2", selectedStructure.rs_2 || "");
+    formData.append("partenaire_feg", selectedStructure.partenaire_feg ? "true" : "false");
 
-      const updatedStructure = await response.json();
-      setStructures(
-        structures.map((s) =>
-          s.id_sea === selectedStructure.id_sea ? updatedStructure : s
-        )
-      );
-      setIsEditDialogOpen(false);
+    // Services en JSON string
+    formData.append("services", JSON.stringify(selectedStructure.services || []));
 
-      toast.success("Structure mise à jour avec succès", {
-        description: "Les informations de la structure ont été mises à jour.",
-      });
-      // toast({
-      //   title: "Succès",
-      //   description: "Structure mise à jour avec succès",
-      // });
-    } catch (error: any) {
-      console.error("Error:", error);
-      toast.error("Erreur lors de la mise à jour de la structure", {
-        description: error.message || "Veuillez réessayer plus tard.",
-      });
-      // toast({
-      //   title: "Erreur",
-      //   description: error.message || "Erreur lors de la mise à jour",
-      //   variant: "destructive",
-      // });
+    // Fichier logo si présent
+    if (selectedStructure.logoFile) {
+      formData.append("logo", selectedStructure.logoFile);
     }
-  };
+
+    const response = await fetch(`/api/sea/${selectedStructure.id_sea}`, {
+      method: "PUT",
+      body: formData,
+      // NE PAS METTRE Content-Type ici, le navigateur le définit automatiquement pour multipart/form-data
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Erreur lors de la mise à jour");
+    }
+
+    const updatedStructure = await response.json();
+    setStructures(
+      structures.map((s) =>
+        s.id_sea === selectedStructure.id_sea ? updatedStructure : s
+      )
+    );
+    setIsEditDialogOpen(false);
+    toast.success("Structure mise à jour avec succès", {
+      description: "Les informations de la structure ont été mises à jour.",
+    });
+  } catch (error: any) {
+    console.error("Error:", error);
+    toast.error("Erreur lors de la mise à jour de la structure", {
+      description: error.message || "Veuillez réessayer plus tard.",
+    });
+  }
+};
+
 
   // Supprimer une structure
   const handleDeleteStructure = async () => {
@@ -277,26 +304,19 @@ export default function StructuresPage() {
         throw new Error(errorData.error || "Erreur lors de la suppression");
       }
 
-      setStructures(structures.filter((s) => s.id_sea !== selectedStructure.id_sea));
+      setStructures(
+        structures.filter((s) => s.id_sea !== selectedStructure.id_sea)
+      );
       setIsDeleteDialogOpen(false);
 
       toast.success("Structure supprimée avec succès", {
         description: "La structure a été retirée de la liste.",
       });
-      // toast({
-      //   title: "Succès",
-      //   description: "Structure supprimée avec succès",
-      // });
     } catch (error: any) {
       console.error("Error:", error);
       toast.error("Erreur lors de la suppression de la structure", {
         description: error.message || "Veuillez réessayer plus tard.",
       });
-      // toast({
-      //   title: "Erreur",
-      //   description: error.message || "Erreur lors de la suppression",
-      //   variant: "destructive",
-      // });
     }
   };
 
@@ -339,7 +359,10 @@ export default function StructuresPage() {
       handleNewStructureChange("services", [...newStructure.services, ""]);
     } else {
       if (!selectedStructure) return;
-      handleEditStructureChange("services", [...selectedStructure.services, ""]);
+      handleEditStructureChange("services", [
+        ...selectedStructure.services,
+        "",
+      ]);
     }
   };
 
@@ -384,6 +407,7 @@ export default function StructuresPage() {
               Gérez les structures d'accompagnement présentes sur la plateforme
             </p>
           </div>
+          {/* Bouton pour ajouter une structure */}
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
               <Button className="bg-[#063a1e] hover:bg-[#063a1e]/90">
@@ -471,14 +495,11 @@ export default function StructuresPage() {
                       onChange={(e) => {
                         const file = e.target.files?.[0];
                         if (file) {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            setNewStructure({
-                              ...newStructure,
-                              logo: reader.result as string, // Stocke l'URL base64 dans le state
-                            });
-                          };
-                          reader.readAsDataURL(file);
+                          setNewStructure({
+                            ...newStructure,
+                            logoFile: file, // stocker l'objet File
+                            logo_url: URL.createObjectURL(file), // optionnel : affichage preview
+                          });
                         }
                       }}
                     />
@@ -494,7 +515,10 @@ export default function StructuresPage() {
                       id="contact"
                       value={newStructure.contact || ""}
                       onChange={(e) =>
-                        handleNewStructureChange("contact", e.target.value || null)
+                        handleNewStructureChange(
+                          "contact",
+                          e.target.value || null
+                        )
                       }
                       placeholder="Ex: +241 77 12 34 56"
                     />
@@ -537,7 +561,10 @@ export default function StructuresPage() {
                     id="site_web"
                     value={newStructure.site_web || ""}
                     onChange={(e) =>
-                      handleNewStructureChange("site_web", e.target.value || null)
+                      handleNewStructureChange(
+                        "site_web",
+                        e.target.value || null
+                      )
                     }
                     placeholder="Ex: https://www.structure.ga"
                   />
@@ -677,7 +704,7 @@ export default function StructuresPage() {
                   />
                 </div>
               </div>
-             
+
               <div className="flex items-end">
                 <Button
                   variant="outline"
@@ -732,14 +759,13 @@ export default function StructuresPage() {
                     <TableRow key={structure.id_sea}>
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-3">
-                          {structure.logo && (
+                          {structure.logo_url && (
                             <Image
-                              src={structure.logo}
+                              src={structure.logo_url}
                               alt={structure.nom}
                               width={50}
                               height={50}
                               className="rounded-md"
-                              
                             />
                           )}
                           <span>{structure.nom}</span>
@@ -810,55 +836,55 @@ export default function StructuresPage() {
               Affichage de {filteredStructures.length} sur {structures.length}{" "}
               structures
             </div>
-           <Pagination>
-                                   <PaginationContent>
-                                     <PaginationItem>
-                                       <PaginationPrevious
-                                         href="#"
-                                         onClick={(e) => {
-                                           e.preventDefault();
-                                           setCurrentPage((prev) => Math.max(prev - 1, 1));
-                                         }}
-                                         className={
-                                           currentPage === 1 ? "pointer-events-none opacity-50" : ""
-                                         }
-                                       />
-                                     </PaginationItem>
-                       
-                                     {[...Array(totalPages)].map((_, index) => {
-                                       const page = index + 1;
-                                       return (
-                                         <PaginationItem key={page}>
-                                           <PaginationLink
-                                             href="#"
-                                             isActive={currentPage === page}
-                                             onClick={(e) => {
-                                               e.preventDefault();
-                                               setCurrentPage(page);
-                                             }}
-                                           >
-                                             {page}
-                                           </PaginationLink>
-                                         </PaginationItem>
-                                       );
-                                     })}
-                       
-                                     <PaginationItem>
-                                       <PaginationNext
-                                         href="#"
-                                         onClick={(e) => {
-                                           e.preventDefault();
-                                           setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-                                         }}
-                                         className={
-                                           currentPage === totalPages
-                                             ? "pointer-events-none opacity-50"
-                                             : ""
-                                         }
-                                       />
-                                     </PaginationItem>
-                                   </PaginationContent>
-                                 </Pagination>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentPage((prev) => Math.max(prev - 1, 1));
+                    }}
+                    className={
+                      currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                    }
+                  />
+                </PaginationItem>
+
+                {[...Array(totalPages)].map((_, index) => {
+                  const page = index + 1;
+                  return (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        href="#"
+                        isActive={currentPage === page}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setCurrentPage(page);
+                        }}
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                    }}
+                    className={
+                      currentPage === totalPages
+                        ? "pointer-events-none opacity-50"
+                        : ""
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </CardFooter>
         </Card>
 
@@ -942,7 +968,6 @@ export default function StructuresPage() {
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Logo</label>
                   <Input
-                    id="logo"
                     type="file"
                     accept="image/*"
                     onChange={(e) => {
@@ -950,11 +975,17 @@ export default function StructuresPage() {
                       if (file) {
                         const reader = new FileReader();
                         reader.onloadend = () => {
-                          const base64String = reader.result as string;
-
-                          handleEditStructureChange("logo", base64String); // utilise ton setter
+                          setSelectedStructure((prev) =>
+                            prev
+                              ? {
+                                  ...prev,
+                                  logo_url: reader.result as string, // base64
+                                  logoFile: file, // le fichier réel
+                                }
+                              : prev
+                          );
                         };
-                        reader.readAsDataURL(file); // convertit en base64
+                        reader.readAsDataURL(file);
                       }
                     }}
                   />
@@ -972,7 +1003,10 @@ export default function StructuresPage() {
                       id="edit-contact"
                       value={selectedStructure.contact || ""}
                       onChange={(e) =>
-                        handleEditStructureChange("contact", e.target.value || null)
+                        handleEditStructureChange(
+                          "contact",
+                          e.target.value || null
+                        )
                       }
                     />
                   </div>
@@ -985,7 +1019,10 @@ export default function StructuresPage() {
                       type="email"
                       value={selectedStructure.mail || ""}
                       onChange={(e) =>
-                        handleEditStructureChange("mail", e.target.value || null)
+                        handleEditStructureChange(
+                          "mail",
+                          e.target.value || null
+                        )
                       }
                     />
                   </div>
@@ -1015,7 +1052,10 @@ export default function StructuresPage() {
                     id="edit-site_web"
                     value={selectedStructure.site_web || ""}
                     onChange={(e) =>
-                      handleEditStructureChange("site_web", e.target.value || null)
+                      handleEditStructureChange(
+                        "site_web",
+                        e.target.value || null
+                      )
                     }
                   />
                 </div>
@@ -1179,9 +1219,9 @@ export default function StructuresPage() {
 
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex items-start gap-6">
-                  {selectedStructure.logo ? (
+                  {selectedStructure.logo_url ? (
                     <Image
-                      src={selectedStructure.logo}
+                      src={selectedStructure.logo_url}
                       alt={`Logo de ${selectedStructure.nom}`}
                       width={50}
                       height={50}
@@ -1192,30 +1232,50 @@ export default function StructuresPage() {
                       <span className="text-sm text-gray-500">Pas de logo</span>
                     </div>
                   )}
-                  
+
                   <div className="grid gap-1.5">
                     <div>
-                      <h3 className="text-lg font-semibold">Informations générales</h3>
+                      <h3 className="text-lg font-semibold">
+                        Informations générales
+                      </h3>
                       <div className="grid grid-cols-2 gap-4 mt-2">
                         <div>
                           <p className="text-sm text-muted-foreground">Type</p>
                           <p>{selectedStructure.type_sea}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-muted-foreground">Catégorie</p>
+                          <p className="text-sm text-muted-foreground">
+                            Catégorie
+                          </p>
                           <p>{selectedStructure.categorie}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-muted-foreground">Partenaire FEG</p>
-                          <p>{selectedStructure.partenaire_feg ? "Oui" : "Non"}</p>
+                          <p className="text-sm text-muted-foreground">
+                            Partenaire FEG
+                          </p>
+                          <p>
+                            {selectedStructure.partenaire_feg ? "Oui" : "Non"}
+                          </p>
                         </div>
                         <div>
-                          <p className="text-sm text-muted-foreground">Date de création</p>
-                          <p>{new Date(selectedStructure.createdAt).toLocaleDateString()}</p>
+                          <p className="text-sm text-muted-foreground">
+                            Date de création
+                          </p>
+                          <p>
+                            {new Date(
+                              selectedStructure.createdAt
+                            ).toLocaleDateString()}
+                          </p>
                         </div>
                         <div>
-                          <p className="text-sm text-muted-foreground">Dernière mise à jour</p>
-                          <p>{new Date(selectedStructure.updatedAt).toLocaleDateString()}</p>
+                          <p className="text-sm text-muted-foreground">
+                            Dernière mise à jour
+                          </p>
+                          <p>
+                            {new Date(
+                              selectedStructure.updatedAt
+                            ).toLocaleDateString()}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -1241,9 +1301,9 @@ export default function StructuresPage() {
                       <p className="text-sm text-muted-foreground">Site web</p>
                       <p>
                         {selectedStructure.site_web ? (
-                          <a 
-                            href={selectedStructure.site_web} 
-                            target="_blank" 
+                          <a
+                            href={selectedStructure.site_web}
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:underline"
                           >
@@ -1259,7 +1319,8 @@ export default function StructuresPage() {
                   <div className="space-y-2">
                     <h3 className="text-lg font-semibold">Description</h3>
                     <p className="whitespace-pre-line">
-                      {selectedStructure.description || "Aucune description disponible"}
+                      {selectedStructure.description ||
+                        "Aucune description disponible"}
                     </p>
                   </div>
                 </div>
@@ -1282,9 +1343,9 @@ export default function StructuresPage() {
                     <h3 className="text-lg font-semibold">Réseaux sociaux</h3>
                     <div className="flex gap-4">
                       {selectedStructure.rs_1 && (
-                        <a 
-                          href={selectedStructure.rs_1} 
-                          target="_blank" 
+                        <a
+                          href={selectedStructure.rs_1}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-600 hover:underline"
                         >
@@ -1292,9 +1353,9 @@ export default function StructuresPage() {
                         </a>
                       )}
                       {selectedStructure.rs_2 && (
-                        <a 
-                          href={selectedStructure.rs_2} 
-                          target="_blank" 
+                        <a
+                          href={selectedStructure.rs_2}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-600 hover:underline"
                         >

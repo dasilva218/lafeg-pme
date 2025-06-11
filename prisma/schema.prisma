@@ -34,23 +34,41 @@ model TexteJuridique {
   @@map("texte_juridique")
 }
 
-model InstitutionFinanciere {
-  id_institutionFinanciere String   @id @default(auto()) @map("_id") @db.ObjectId
+model Publicite {
+  id_publicite   String   @id @default(auto()) @map("_id") @db.ObjectId
+  libelle        String
+  image_url      String   // URL ou chemin vers l'image stockée
+  image_nom      String   // Nom original du fichier image
+  taille_image   Int?     // Taille de l'image en octets
+  mime_type      String   @default("image/jpeg") // Type MIME par défaut pour les images
+  nom_structure  String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("publicite")
+}
+
+model Institutions {
+  id_institution String    @id @default(auto()) @map("_id") @db.ObjectId
   nom                      String
   categorie                String
   type_institution         String
   partenaire_feg           Boolean?
   description              String?
-  logo                     String?
+  // Champs améliorés pour la gestion d'image
+  image_url                 String?   // URL ou chemin vers l'image du logo stockée
+  image_nom                 String?   // Nom original du fichier image
+  taille_image              Int?      // Taille de l'image en octets
+  image_mime_type           String?   @default("image/jpeg") // Type MIME par défaut pour les images
   adresse                  String?
   contact                  String?
   mail                     String?
   site_web                 String?
-  rs_1                     String? // réseau social 1
-  rs_2                     String? // réseau social 2
+  rs_1                     String?   // réseau social 1
+  rs_2                     String?   // réseau social 2
   service                  String?
-  createdAt                DateTime @default(now())
-  updatedAt                DateTime @updatedAt
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
 
   @@map("institution_financiere")
 }
@@ -67,8 +85,13 @@ model SEA {
   mail           String?
   site_web       String?
   rs_1           String? // réseau social 1
-  rs_2           String? // réseau social 2
-  logo           String?
+  rs_2           String? // réseau social 2 
+  // Champs améliorés pour la gestion d'image
+  logo_url       String?  // URL ou chemin vers l'image du logo stockée
+  logo_nom       String?  // Nom original du fichier image
+  taille_logo    Int?     // Taille de l'image en octets
+  logo_mime_type String?  @default("image/jpeg") // Type MIME par défaut pour les images
+  
   partenaire_feg Boolean?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

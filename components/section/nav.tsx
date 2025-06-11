@@ -33,10 +33,10 @@ export default function Nav() {
             />
             <div>
               <h1 className="md:text-2xl md:hidden lg:block font-hyundai font-bold text-[#063a1e]">
-                GUIDE NUMÉRIQUE <br className="md:block xl:hidden" /> DES PME
+                Répertoire des <br className="md:block xl:hidden" /> Textes Juridiques
               </h1>
               <h1 className="md:text-2xl hidden md:block lg:hidden font-hyundai font-bold text-[#063a1e]">
-                GUIDE NUMÉRIQUE DES PME
+                Répertoire des Textes Juridiques
               </h1>
             </div>
           </div>
