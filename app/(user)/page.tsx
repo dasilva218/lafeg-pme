@@ -260,6 +260,24 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+
+      {/* Recent Updates */}
+      <NewText />
+      {/* Sidebar Video Ad */}
+      <div className="hidden lg:flex justify-center items-center w-full bg-[#eaeeeb]">
+        <AdBanvideo
+          type="video"
+          size="skyscraper"
+          position="sidebar"
+          content={{
+            title: "BGFI BANK Gabon",
+            videoUrl: "/BGFIBank.mp4",
+            imageUrl: "/BGFIBank Gabon COMPLETE LIBERTY - Spot.gif",
+            advertiser: "Institut de Formation Juridique",
+          }}
+        />
+      </div>
       <section className="py-12 bg-[#063a1e]">
         <div className="container">
           <div className="flex flex-col md:flex-row justify-between items-center mb-8">
@@ -477,29 +495,12 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Recent Updates */}
-      <NewText />
-      {/* Sidebar Video Ad */}
-      <div className="hidden lg:flex justify-center items-center w-full bg-[#eaeeeb]">
-        <AdBanvideo
-          type="video"
-          size="skyscraper"
-          position="sidebar"
-          content={{
-            title: "BGFI BANK Gabon",
-            videoUrl: "/BGFIBank.mp4",
-            imageUrl: "/BGFIBank Gabon COMPLETE LIBERTY - Spot.gif",
-            advertiser: "Institut de Formation Juridique",
-          }}
-        />
-      </div>
-      {/* Resources Section */}
-      <section className="hidden py-12">
+      {/* Resources Section 
+      <section className=" hidden py-12">
         <div className="container">
           <h2 className="text-2xl font-bold mb-8">Ressources utiles</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Resource 1 */}
+           
             <Card className="hover:shadow-md transition-shadow">
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-[#063a1e]/10 flex items-center justify-center mb-3">
@@ -526,7 +527,7 @@ export default function Home() {
               </CardFooter>
             </Card>
 
-            {/* Resource 2 */}
+           
             <Card className="hover:shadow-md transition-shadow">
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-[#063a1e]/10 flex items-center justify-center mb-3">
@@ -553,7 +554,7 @@ export default function Home() {
               </CardFooter>
             </Card>
 
-            {/* Resource 3 */}
+            
             <Card className="hover:shadow-md transition-shadow">
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-[#063a1e]/10 flex items-center justify-center mb-3">
@@ -583,7 +584,7 @@ export default function Home() {
             </Card>
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* CTA Section */}
       <section className="py-12 bg-[#063a1e] text-white">
