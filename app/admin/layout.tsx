@@ -106,6 +106,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                       <Icon className="mr-3 h-5 w-5" />
                       {item.name}
                     </Link>
+                    
                   );
                 })}
               </nav>
@@ -147,6 +148,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                     width={40}
                     height={40}
                     className="h-10 w-auto"
+                    priority
                   />
                   <div className="ml-3">
                     <h1 className="text-lg font-bold text-[#063a1e]">ADMIN</h1>
@@ -181,8 +183,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   variant="outline"
                   className="w-full justify-start text-white border-white/20 hover:bg-[#063a1e]/50 hover:text-white"
                   onClick={handleLogout}
+                  aria-label="Déconnexion"
                 >
-                  <LogOut className="mr-2 h-4 w-4" />
+                  <LogOut className="mr-2 h-4 w-4" aria-hidden />
                   Déconnexion
                 </Button>
               </div>
