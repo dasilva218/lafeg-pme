@@ -328,25 +328,7 @@ export default function Home() {
                       {" "}
                       <ArrowRight className="h-6 w-6 text-[#063a1e]" />
                     </Link>
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-[#063a1e]"
-                    >
-                      <path d="M4 10V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2" />
-                      <path d="M10 16h4" />
-                      <path d="M10 12h4" />
-                      <path d="M6 8h.01" />
-                      <path d="M6 12h.01" />
-                      <path d="M6 16h.01" />
-                    </svg> */}
+                    
                   </div>
                 </div>
               </div>
@@ -390,21 +372,7 @@ export default function Home() {
                       {" "}
                       <ArrowRight className="h-6 w-6 text-[#063a1e]" />
                     </Link>
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-[#063a1e]"
-                    >
-                      <path d="M12 2v20" />
-                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                    </svg> */}
+                
                   </div>
                 </div>
               </div>
@@ -449,24 +417,6 @@ export default function Home() {
                       <ArrowRight className="h-6 w-6 text-[#063a1e]" />
                     </Link>
 
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-[#063a1e]"
-                    >
-                      <path d="M2 20h.01" />
-                      <path d="M7 20v-4" />
-                      <path d="M12 20v-8" />
-                      <path d="M17 20V8" />
-                      <path d="M22 4v16" />
-                    </svg> */}
                   </div>
                 </div>
               </div>
