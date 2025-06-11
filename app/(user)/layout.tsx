@@ -2,6 +2,7 @@ import Nav from "@/components/section/nav";
 import Footer from "@/components/section/footer";
 import AdBanner from "@/components/ads/AdBanner";
 import LegalChatBot from "@/components/LegalChatBot";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,6 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </section>
       </div>
+      <Analytics />
       <Nav />
       {children}
       <LegalChatBot />
