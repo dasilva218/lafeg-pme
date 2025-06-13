@@ -164,7 +164,7 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-8">Catégories principales</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Category 1 */}
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="shadow-md transition-shadow border-2 border-[#dcdaa4]">
               <CardHeader className="pb-3">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e]  flex items-center justify-center mb-3">
                   <FileText className="h-6 w-6 text-[#063a1e]" />
@@ -197,7 +197,7 @@ export default function Home() {
             </Card>
 
             {/* Category 2 */}
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="shadow-md transition-shadow border-2 border-[#dcdaa4]">
               <CardHeader className="pb-3">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e]  flex items-center justify-center mb-3">
                   <FileText className="h-6 w-6 text-[#063a1e]" />
@@ -229,7 +229,7 @@ export default function Home() {
             </Card>
 
             {/* Category 3 */}
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="shadow-md transition-shadow border-2 border-[#dcdaa4]">
               <CardHeader className="pb-5">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e]  flex items-center justify-center mb-3">
                   <FileText className="h-6 w-6 text-[#063a1e]" />
@@ -565,7 +565,7 @@ export default function Home() {
       <section id="subscription" className="py-16 bg-[#EAEEEB]">
         <div className="md:container">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border-2 border-[#dcdaa4]">
               <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="bg-[#063a1e] p-8 text-white">
                   <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] bg-clip-text text-transparent">
