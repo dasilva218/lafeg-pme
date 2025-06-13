@@ -5,6 +5,7 @@ import { createPublicite } from "@/app/services/publicite/api";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -13,6 +14,7 @@ import {
   SelectValue,
 } from "../ui/select";
 export function FormCreerPublicite({ onSuccess }: { onSuccess: () => void }) {
+    const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState({
     libelle: "",
     nom_structure: "",
@@ -23,6 +25,7 @@ export function FormCreerPublicite({ onSuccess }: { onSuccess: () => void }) {
     e.preventDefault();
 
     try {
+        setLoading(true);
       const formData = new FormData();
       formData.append("libelle", formValues.libelle);
       formData.append("nom_structure", formValues.nom_structure);
@@ -34,6 +37,7 @@ export function FormCreerPublicite({ onSuccess }: { onSuccess: () => void }) {
       toast.success("Publicité créée avec succès !");
       setFormValues({ libelle: "", nom_structure: "", imageFile: null });
       onSuccess();
+        setLoading(false);
     } catch (error) {
       console.error(error);
       toast.error("Erreur lors de la création de la publicité.");
@@ -79,7 +83,15 @@ export function FormCreerPublicite({ onSuccess }: { onSuccess: () => void }) {
         }
       />
       <Button variant="default" type="submit" onClick={handleSubmit}>
-        Créer
+       
+        {loading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Création…
+          </>
+        ) : (
+          "Créer"
+        )}
       </Button>
     </form>
   );

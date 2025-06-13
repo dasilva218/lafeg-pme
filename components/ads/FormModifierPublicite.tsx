@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import {
   updatePubliciteWithImage,
-  patchPublicite,
+
 } from "@/app/services/publicite/api";
+import { Loader2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
@@ -22,14 +23,18 @@ export function FormModifierPublicite({
   publicite: any;
   onSuccess: () => void;
 }) {
+
   const [formValues, setFormValues] = useState({
     libelle: publicite.libelle,
     nom_structure: publicite.nom_structure,
     imageFile: null as File | null,
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
+
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("libelle", formValues.libelle);
     formData.append("nom_structure", formValues.nom_structure);
@@ -37,6 +42,7 @@ export function FormModifierPublicite({
       formData.append("image", formValues.imageFile);
     }
     await updatePubliciteWithImage(publicite.id_publicite, formData);
+    setLoading(false);
     toast.success("Publicité mise à jour avec succès !");
     onSuccess();
   };
@@ -78,7 +84,16 @@ export function FormModifierPublicite({
         <img src={publicite.image_url} alt="Image existante" style={{ maxWidth: 200 }} />
       )}
 
-      <Button variant="default" onClick={handleSubmit} type="submit">Modifier</Button>
+      <Button variant="default" onClick={handleSubmit} type="submit">
+        {loading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Modification…
+          </>
+        ) : (
+          "Modifier"
+        )}
+      </Button>
     </form>
   );
 }
