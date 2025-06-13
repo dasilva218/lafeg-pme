@@ -7,7 +7,7 @@ import Image from "next/image";
 import {
   BarChart3,
   FileText,
-  Settings,
+  Megaphone,
   Bell,
   LogOut,
   Menu,
@@ -65,6 +65,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { name: "Textes juridiques", href: "/admin/textes", icon: FileText },
     { name: "Institution", href: "/admin/institutions", icon: Newspaper },
     { name: "SEA", href: "/admin/structures", icon: Briefcase },
+    { name: "Publicité", href: "/admin/publicites", icon: Megaphone },
     // { name: "Contenu du site", href: "/admin/contenu", icon: FileEdit },
   ];
 

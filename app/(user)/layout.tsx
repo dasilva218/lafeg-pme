@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {" "}
         <section className="py-4 bg-gray-50 border-b">
           <div className="container flex justify-center">
-            <AdBanner />
+            <AdBanner emplacement="HEADER" className="w-full h-36" interval={8000} />
           </div>
         </section>
       </div>
