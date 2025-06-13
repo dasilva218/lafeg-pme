@@ -6,10 +6,10 @@ import {
   Plus,
   Edit,
   Trash2,
-  Eye,
   Download,
   MoreHorizontal,
   X,
+  Loader2,
 } from "lucide-react";
 import {
   Dialog,
@@ -18,7 +18,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,6 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import {
   Table,
   TableBody,
@@ -75,26 +75,22 @@ export default function TextesJuridiquesAdmin() {
   const [filteredTextes, setFilteredTextes] = useState<TexteJuridique[]>([]);
   const [fichier, setFichier] = useState<File | null>(null);
   const [loading, setLoading] = useState(true);
-   const [currentPage, setCurrentPage] = useState(1);
-    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-    const [selectedTexte, setSelectedTexte] =
-      useState<TexteJuridique | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedTexte, setSelectedTexte] = useState<TexteJuridique | null>(
+    null
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("all");
   const [selectedCategorie, setSelectedCategorie] = useState("all");
   const [showAddForm, setShowAddForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-
   const itemsPerPage = 5;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedTexte = filteredTextes.slice(
-    startIndex,
-    endIndex
-  );
-
+  const paginatedTexte = filteredTextes.slice(startIndex, endIndex);
 
   const totalPages = Math.ceil(filteredTextes.length / itemsPerPage);
 
@@ -195,6 +191,7 @@ export default function TextesJuridiquesAdmin() {
     }
 
     try {
+      setLoading(true);
       console.log("Texte à envoyer :", newTexte);
 
       const createdTexte = await createTexteJuridique({
@@ -233,6 +230,9 @@ export default function TextesJuridiquesAdmin() {
       toast.error("Échec de l'ajout du texte", {
         description: "Une erreur est survenue lors de l'ajout du texte.",
       });
+    } finally {
+      setLoading(false);
+      resetNewTexteForm();
     }
   };
 
@@ -249,13 +249,11 @@ export default function TextesJuridiquesAdmin() {
     setSelectedTexteId(String(texte.id_texteJuridique));
     setEditedTexte(texte); // ici pas besoin de changement
     setIsEditDialogOpen(true);
-   
   };
   const openDeleteDialog = (texte: TexteJuridique) => {
     setSelectedTexteId(texte.id_texteJuridique);
     setSelectedTexte(texte);
     setIsDeleteDialogOpen(true);
-
   };
 
   const handleEditTexte = async (texteData: TexteJuridique) => {
@@ -311,32 +309,33 @@ export default function TextesJuridiquesAdmin() {
       console.error("Erreur lors de la modification du texte :", error);
       alert("Une erreur est survenue lors de la modification du texte.");
       toast.error("Échec de la modification du texte", {
-        description: "Une erreur est survenue lors de la modification du texte.",
+        description:
+          "Une erreur est survenue lors de la modification du texte.",
       });
     } finally {
       setLoading(false);
     }
   };
 
-    const handleDeleteTexte = async (id: string) => {
-      try {
-        setLoading(true);
-        await deleteTexteJuridique(id);
-        await refreshTextes();
+  const handleDeleteTexte = async (id: string) => {
+    try {
+      setLoading(true);
+      await deleteTexteJuridique(id);
+      await refreshTextes();
 
-        toast.success("Texte supprimé avec succès", {
-          description: "Le texte juridique a été supprimé avec succès.",
-        });
-        setIsDeleteDialogOpen(false);
-      } catch (error) {
-        console.error("Erreur suppression :", error);
-        toast.error("Échec de la suppression du texte", {
-          description: "Une erreur est survenue lors de la suppression du texte.",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
+      toast.success("Texte supprimé avec succès", {
+        description: "Le texte juridique a été supprimé avec succès.",
+      });
+      setIsDeleteDialogOpen(false);
+    } catch (error) {
+      console.error("Erreur suppression :", error);
+      toast.error("Échec de la suppression du texte", {
+        description: "Une erreur est survenue lors de la suppression du texte.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -489,7 +488,14 @@ export default function TextesJuridiquesAdmin() {
                 className="bg-[#063a1e] hover:bg-[#063a1e]/90"
                 onClick={handleAddTexte}
               >
-                Enregistrer
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Enregistrement…
+                  </>
+                ) : (
+                  " Enregistrer"
+                )}
               </Button>
             </div>
           </div>
@@ -697,54 +703,54 @@ export default function TextesJuridiquesAdmin() {
               textes juridiques
             </p>
             <Pagination>
-                        <PaginationContent>
-                          <PaginationItem>
-                            <PaginationPrevious
-                              href="#"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setCurrentPage((prev) => Math.max(prev - 1, 1));
-                              }}
-                              className={
-                                currentPage === 1 ? "pointer-events-none opacity-50" : ""
-                              }
-                            />
-                          </PaginationItem>
-            
-                          {[...Array(totalPages)].map((_, index) => {
-                            const page = index + 1;
-                            return (
-                              <PaginationItem key={page}>
-                                <PaginationLink
-                                  href="#"
-                                  isActive={currentPage === page}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    setCurrentPage(page);
-                                  }}
-                                >
-                                  {page}
-                                </PaginationLink>
-                              </PaginationItem>
-                            );
-                          })}
-            
-                          <PaginationItem>
-                            <PaginationNext
-                              href="#"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-                              }}
-                              className={
-                                currentPage === totalPages
-                                  ? "pointer-events-none opacity-50"
-                                  : ""
-                              }
-                            />
-                          </PaginationItem>
-                        </PaginationContent>
-                      </Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentPage((prev) => Math.max(prev - 1, 1));
+                    }}
+                    className={
+                      currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                    }
+                  />
+                </PaginationItem>
+
+                {[...Array(totalPages)].map((_, index) => {
+                  const page = index + 1;
+                  return (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        href="#"
+                        isActive={currentPage === page}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setCurrentPage(page);
+                        }}
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                    }}
+                    className={
+                      currentPage === totalPages
+                        ? "pointer-events-none opacity-50"
+                        : ""
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </div>
         </CardContent>
       </Card>
@@ -899,10 +905,15 @@ export default function TextesJuridiquesAdmin() {
               <Button
                 className="bg-[#063a1e] hover:bg-[#063a1e]/90"
                 onClick={() => handleEditTexte(editedTexte as TexteJuridique)}
-                // disabled={loading}
               >
-                {/* {loading ? "Enregistrement..." : "Enregistrer les modifications"} */}
-                Enregistrer les modifications
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Modification…
+                  </>
+                ) : (
+                  "Enregistrer les modifications"
+                )}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -938,7 +949,15 @@ export default function TextesJuridiquesAdmin() {
                   }
                 }}
               >
-                Supprimer
+                
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Suppression…
+                  </>
+                ) : (
+                  "Supprimer"
+                )}
               </Button>
             </DialogFooter>
           </DialogContent>
