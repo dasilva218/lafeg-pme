@@ -11,7 +11,7 @@ import {
   Trash2,
   Eye,
   XCircle,
-  Upload,
+  Loader2,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -67,18 +67,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-  deleteSEA,
-  patchSEA,
-  updateSEA,
-  fetchAllSEAs,
-  fetchSEAById,
-  createSEA,
-  SEA,
-} from "@/app/services/sea/api";
-
-import { cn } from "@/lib/utils";
-// import { toast } from "@/components/ui/use-toast";
+import { fetchAllSEAs, SEA } from "@/app/services/sea/api";
 
 export default function StructuresPage() {
   const { theme, systemTheme } = useTheme();
@@ -149,11 +138,6 @@ export default function StructuresPage() {
         toast.error("Erreur lors du chargement des structures", {
           description: "Veuillez réessayer plus tard.",
         });
-        //  toast({
-        //    title: "Erreur",
-        //    description: "Impossible de charger les structures",
-        //    variant: "destructive",
-        //  });
       } finally {
         setLoading(false);
       }
@@ -178,6 +162,7 @@ export default function StructuresPage() {
   // Créer une nouvelle structure
   const handleAddStructure = async () => {
     try {
+      setLoading(true);
       const formData = new FormData();
 
       // Champs simples
@@ -218,6 +203,7 @@ export default function StructuresPage() {
       setStructures([...structures, createdStructure]);
       setIsAddDialogOpen(false);
       setNewStructure(defaultStructure);
+      setLoading(false);
 
       toast.success("Structure créée avec succès", {
         description: "La structure a été ajoutée à la liste.",
@@ -234,67 +220,75 @@ export default function StructuresPage() {
 
   // Mettre à jour une structure
   const handleUpdateStructure = async () => {
-  if (!selectedStructure) return;
+    if (!selectedStructure) return;
 
-  try {
-    const formData = new FormData();
+    try {
+      setLoading(true);
+      const formData = new FormData();
 
-    // Champs texte
-    formData.append("nom", selectedStructure.nom);
-    formData.append("type_sea", selectedStructure.type_sea);
-    formData.append("categorie", selectedStructure.categorie);
-    formData.append("description", selectedStructure.description || "");
-    formData.append("adresse", selectedStructure.adresse || "");
-    formData.append("contact", selectedStructure.contact || "");
-    formData.append("mail", selectedStructure.mail || "");
-    formData.append("site_web", selectedStructure.site_web || "");
-    formData.append("rs_1", selectedStructure.rs_1 || "");
-    formData.append("rs_2", selectedStructure.rs_2 || "");
-    formData.append("partenaire_feg", selectedStructure.partenaire_feg ? "true" : "false");
+      // Champs texte
+      formData.append("nom", selectedStructure.nom);
+      formData.append("type_sea", selectedStructure.type_sea);
+      formData.append("categorie", selectedStructure.categorie);
+      formData.append("description", selectedStructure.description || "");
+      formData.append("adresse", selectedStructure.adresse || "");
+      formData.append("contact", selectedStructure.contact || "");
+      formData.append("mail", selectedStructure.mail || "");
+      formData.append("site_web", selectedStructure.site_web || "");
+      formData.append("rs_1", selectedStructure.rs_1 || "");
+      formData.append("rs_2", selectedStructure.rs_2 || "");
+      formData.append(
+        "partenaire_feg",
+        selectedStructure.partenaire_feg ? "true" : "false"
+      );
 
-    // Services en JSON string
-    formData.append("services", JSON.stringify(selectedStructure.services || []));
+      // Services en JSON string
+      formData.append(
+        "services",
+        JSON.stringify(selectedStructure.services || [])
+      );
 
-    // Fichier logo si présent
-    if (selectedStructure.logoFile) {
-      formData.append("logo", selectedStructure.logoFile);
+      // Fichier logo si présent
+      if (selectedStructure.logoFile) {
+        formData.append("logo", selectedStructure.logoFile);
+      }
+
+      const response = await fetch(`/api/sea/${selectedStructure.id_sea}`, {
+        method: "PUT",
+        body: formData,
+        // NE PAS METTRE Content-Type ici, le navigateur le définit automatiquement pour multipart/form-data
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erreur lors de la mise à jour");
+      }
+
+      const updatedStructure = await response.json();
+      setStructures(
+        structures.map((s) =>
+          s.id_sea === selectedStructure.id_sea ? updatedStructure : s
+        )
+      );
+      setIsEditDialogOpen(false);
+      setLoading(false);
+      toast.success("Structure mise à jour avec succès", {
+        description: "Les informations de la structure ont été mises à jour.",
+      });
+    } catch (error: any) {
+      console.error("Error:", error);
+      toast.error("Erreur lors de la mise à jour de la structure", {
+        description: error.message || "Veuillez réessayer plus tard.",
+      });
     }
-
-    const response = await fetch(`/api/sea/${selectedStructure.id_sea}`, {
-      method: "PUT",
-      body: formData,
-      // NE PAS METTRE Content-Type ici, le navigateur le définit automatiquement pour multipart/form-data
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Erreur lors de la mise à jour");
-    }
-
-    const updatedStructure = await response.json();
-    setStructures(
-      structures.map((s) =>
-        s.id_sea === selectedStructure.id_sea ? updatedStructure : s
-      )
-    );
-    setIsEditDialogOpen(false);
-    toast.success("Structure mise à jour avec succès", {
-      description: "Les informations de la structure ont été mises à jour.",
-    });
-  } catch (error: any) {
-    console.error("Error:", error);
-    toast.error("Erreur lors de la mise à jour de la structure", {
-      description: error.message || "Veuillez réessayer plus tard.",
-    });
-  }
-};
-
+  };
 
   // Supprimer une structure
   const handleDeleteStructure = async () => {
     if (!selectedStructure) return;
 
     try {
+      setLoading(true);
       const response = await fetch(`/api/sea/${selectedStructure.id_sea}`, {
         method: "DELETE",
       });
@@ -308,7 +302,7 @@ export default function StructuresPage() {
         structures.filter((s) => s.id_sea !== selectedStructure.id_sea)
       );
       setIsDeleteDialogOpen(false);
-
+      setLoading(false);
       toast.success("Structure supprimée avec succès", {
         description: "La structure a été retirée de la liste.",
       });
@@ -678,7 +672,14 @@ export default function StructuresPage() {
                     !newStructure.categorie
                   }
                 >
-                  Ajouter la structure
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Ajout en cours…
+                    </>
+                  ) : (
+                    "Ajouter la structure"
+                  )}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -1170,7 +1171,14 @@ export default function StructuresPage() {
                     !selectedStructure.categorie
                   }
                 >
-                  Enregistrer les modifications
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Modification en cours…
+                    </>
+                  ) : (
+                    "Enregistrer les modifications"
+                  )}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -1199,7 +1207,14 @@ export default function StructuresPage() {
                   Annuler
                 </Button>
                 <Button variant="destructive" onClick={handleDeleteStructure}>
-                  Supprimer
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Suppression…
+                    </>
+                  ) : (
+                    "Supprimer"
+                  )}
                 </Button>
               </DialogFooter>
             </DialogContent>

@@ -16,6 +16,7 @@ import {
   ExternalLink,
   Facebook,
   Linkedin,
+  Loader2,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -310,26 +311,26 @@ export default function InstitutionsPage({}: {
   );
   const totalPages = Math.ceil(filteredInstitutions.length / itemsPerPage);
 
-  const handleEditInstitution = (institution: Institutions) => {
-    setSelectedInstitutionId(institution.id_institution);
-    setEditedInstitution({
-      nom: institution.nom,
-      categorie: institution.categorie,
-      type_institution: institution.type_institution || "",
-      partenaire_feg: institution.partenaire_feg || false,
-      description: institution.description || "",
-      adresse: institution.adresse || "",
-      contact: institution.contact || "",
-      mail: institution.mail || "",
-      site_web: institution.site_web || "",
-      rs_1: institution.rs_1 || "",
-      rs_2: institution.rs_2 || "",
-      service: institution.service || "",
-      imageFile: null,
-      image_url: institution.image_url || "",
-    });
-    setIsEditDialogOpen(true);
-  };
+  // const handleEditInstitution = (institution: Institutions) => {
+  //   setSelectedInstitutionId(institution.id_institution);
+  //   setEditedInstitution({
+  //     nom: institution.nom,
+  //     categorie: institution.categorie,
+  //     type_institution: institution.type_institution || "",
+  //     partenaire_feg: institution.partenaire_feg || false,
+  //     description: institution.description || "",
+  //     adresse: institution.adresse || "",
+  //     contact: institution.contact || "",
+  //     mail: institution.mail || "",
+  //     site_web: institution.site_web || "",
+  //     rs_1: institution.rs_1 || "",
+  //     rs_2: institution.rs_2 || "",
+  //     service: institution.service || "",
+  //     imageFile: null,
+  //     image_url: institution.image_url || "",
+  //   });
+  //   setIsEditDialogOpen(true);
+  // };
 
   const submitEditInstitution = async () => {
     console.log("submitEditInstitution called");
@@ -733,7 +734,14 @@ export default function InstitutionsPage({}: {
                 className="bg-[#063a1e] hover:bg-[#063a1e]/90"
                 onClick={handleCreateInstitution}
               >
-                Ajouter l'institution
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Ajout en cours…
+                  </>
+                ) : (
+                  "Ajouter l'institution"
+                )}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -1231,12 +1239,16 @@ export default function InstitutionsPage({}: {
               <Button
                 className="bg-[#063a1e] hover:bg-[#063a1e]/90"
                 disabled={loading}
-                onClick={() =>
-                  //  handleEditInstitution(editedInstitution as Institutions)
-                  submitEditInstitution()
-                }
+                onClick={() => submitEditInstitution()}
               >
-                {loading ? "Enregistrement..." : "Enregistrer les modifications"}
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Enregistrement...
+                  </>
+                ) : (
+                  "Enregistrer les modifications"
+                )}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -1272,7 +1284,15 @@ export default function InstitutionsPage({}: {
                   }
                 }}
               >
-                Supprimer
+                {loading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Suppression…
+          </>
+        ) : (
+          "Supprimer l'institution"
+        )}
+               
               </Button>
             </DialogFooter>
           </DialogContent>

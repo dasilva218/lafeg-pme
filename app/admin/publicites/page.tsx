@@ -12,7 +12,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -27,7 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Edit, Trash2, Search, ExternalLink } from "lucide-react";
+import { Plus, Edit, Search, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { DeleteConfirmationDialog } from "@/components/ads/DeleteConfirmationDialog";
 
@@ -102,8 +101,6 @@ export default function PublicitesPage({ trigger, onConfirm }: Props) {
     setSelectedPublicite(publicite);
     setIsEditDialogOpen(true);
   };
-
-
 
   const filteredPublicites = publicites.filter((pub) => {
     const matchesSearch =
@@ -205,7 +202,6 @@ export default function PublicitesPage({ trigger, onConfirm }: Props) {
             )}
           </DialogContent>
         </Dialog>
-    
       </div>
 
       {/* Filtres */}
@@ -276,11 +272,19 @@ export default function PublicitesPage({ trigger, onConfirm }: Props) {
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
-                     
+
                         <DeleteConfirmationDialog
                           trigger={
                             <Button variant="destructive" size="sm">
-                              Supprimer
+                              
+                              {loading ? (
+                                <>
+                                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                  Suppression…
+                                </>
+                              ) : (
+                                "Supprimer"
+                              )}
                             </Button>
                           }
                           onConfirm={async () => {
