@@ -242,7 +242,7 @@ export default function PublicitesPage({ trigger, onConfirm }: Props) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Titre</TableHead>
+                  <TableHead>Emplacement</TableHead>
                   <TableHead>Image</TableHead>
                   <TableHead>Nom de la structure</TableHead>
                   <TableHead>Actions</TableHead>

@@ -7,6 +7,13 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export function FormModifierPublicite({
   publicite,
@@ -36,12 +43,25 @@ export function FormModifierPublicite({
 
   return (
     <form className="grid grid-cols-2 gap-5" onSubmit={handleSubmit}>
-      <Input
-        type="text"
+      
+      <Select
         value={formValues.libelle}
-        onChange={(e) => setFormValues({ ...formValues, libelle: e.target.value })}
-        required
-      />
+        onValueChange={(value: string) =>
+          setFormValues({ ...formValues, libelle: value })
+        }
+      >
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="Sélectionnez l’emplacement" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="HEADER">Entête (HEADER)</SelectItem>
+          <SelectItem value="MIDDLE">Section Accueil (MIDDLE)</SelectItem>
+          <SelectItem value="INSTITUTION">
+            Page Institution Financière (INSTITUTION)
+          </SelectItem>
+          <SelectItem value="SEA">Page SEA (SEA)</SelectItem>
+        </SelectContent>
+      </Select>
       <Input
         type="text"
         value={formValues.nom_structure}

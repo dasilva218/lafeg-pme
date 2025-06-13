@@ -4,8 +4,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Form from "@/components/section/form";
-import { AdBanvideo } from "@/components/ads/AdBanvideo";
-import { ArrowRight, FileText, BookOpen, ExternalLink } from "lucide-react";
+import AdBanner from "@/components/ads/AdBanner";
+import { ArrowRight, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -265,18 +265,8 @@ export default function Home() {
       {/* Recent Updates */}
       <NewText />
       {/* Sidebar Video Ad */}
-      <div className="hidden lg:flex justify-center items-center w-full bg-[#eaeeeb]">
-        <AdBanvideo
-          type="video"
-          size="skyscraper"
-          position="sidebar"
-          content={{
-            title: "BGFI BANK Gabon",
-            videoUrl: "/BGFIBank.mp4",
-            imageUrl: "/BGFIBank Gabon COMPLETE LIBERTY - Spot.gif",
-            advertiser: "Institut de Formation Juridique",
-          }}
-        />
+      <div className="flex justify-center items-center pb-12 container bg-[#eaeeeb]">
+        <AdBanner emplacement="MIDDLE" className="w-full h-full object-cover object-center max-h-52" />
       </div>
       <section className="py-12 bg-[#063a1e]">
         <div className="container">
