@@ -11,6 +11,7 @@ import {
   Mail,
   ArrowRight,
 } from "lucide-react";
+import AdBanner from "@/components/ads/AdBanner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -21,8 +22,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Advert } from "@/components/ads/Advert";
-import AutoCarousel from "@/components/section/AutoCarousel";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
@@ -33,15 +32,17 @@ export default function Structure() {
   const [activeTab, setActiveTab] = useState("incubateurs");
   const [sea, setSea] = useState<SEA[]>([]);
   const [loading, setLoading] = useState(true);
- 
+
   useEffect(() => {
-    
     const loadData = async () => {
       try {
         setLoading(true);
         const data = await fetchAllSEAs();
-         console.log("SEA data:", data);
-        console.log("✅ Données SEA reçues :", data.map((d) => d.categorie));
+        console.log("SEA data:", data);
+        console.log(
+          "✅ Données SEA reçues :",
+          data.map((d) => d.categorie)
+        );
         setSea(data);
       } catch (error) {
         console.error("Erreur lors du chargement des données:", error);
@@ -53,26 +54,20 @@ export default function Structure() {
     loadData();
   }, []);
 
-  
   const filtrerSeas = (categorie: string) => {
-    
     if (!Array.isArray(sea)) return [];
 
-
     return sea.filter(
-      
-      (item) =>
-        item.categorie === categorie &&
-        item.nom?.includes(search)
+      (item) => item.categorie === categorie && item.nom?.includes(search)
     );
   };
 
   const incubateursFiltres = filtrerSeas("incubateurs");
   const centresFormationFiltres = filtrerSeas("centresFormation");
   const cabinetsConseilFiltres = filtrerSeas("cabinetsConseil");
-  
+
   const structuresPubliquesFiltrees = filtrerSeas("structuresPubliques");
- 
+
   const obtenirResultatsAutresSections = () => {
     const resultats = [];
 
@@ -373,55 +368,21 @@ export default function Structure() {
           </div>
 
           {/* Sidebar avec publicités */}
-          <div className="w-80 hidden lg:block  space-y-6">
-            <Advert
-              type="image"
-              size="medium"
-              position="sidebar"
-              content={{
-                title: "Masterclass Business Plan",
-                imageUrl: "/placeholder.svg?height=200&width=300",
-                advertiser: "Business School Gabon",
-              }}
-            />
-
-            <Advert
-              type="image"
-              size="medium"
-              position="sidebar"
-              content={{
-                title: "Concours Jeunes Entrepreneurs",
-                imageUrl: "/placeholder.svg?height=200&width=300",
-                ctaText: "Participer",
-                advertiser: "Ministère de l'Entrepreneuriat",
-              }}
+          <div className="w-80 hidden lg:block space-y-6">
+            <AdBanner
+              emplacement="SEA"
+              interval={3000}
+              className="w-80 h-auto"
             />
           </div>
-          <div className="flex lg:hidden w-full">
-            <AutoCarousel interval={3000}>
-              <Advert
-                type="image"
-                size="medium"
-                position="sidebar"
-                content={{
-                  title: "Masterclass Business Plan",
-                  imageUrl: "/placeholder.svg?height=200&width=300",
-                  advertiser: "Business School Gabon",
-                }}
-              />
 
-              <Advert
-                type="image"
-                size="medium"
-                position="sidebar"
-                content={{
-                  title: "Concours Jeunes Entrepreneurs",
-                  imageUrl: "/placeholder.svg?height=200&width=300",
-                  ctaText: "Participer",
-                  advertiser: "Ministère de l'Entrepreneuriat",
-                }}
-              />
-            </AutoCarousel>
+          {/* Mobile */}
+          <div className="flex lg:hidden w-full">
+            <AdBanner
+              emplacement="SEA"
+              interval={3000}
+              className="w-full h-48"
+            />
           </div>
         </div>
 

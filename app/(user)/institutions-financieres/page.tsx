@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Advert } from "@/components/ads/Advert";
+import AdBanner from "@/components/ads/AdBanner";
 import AutoCarousel from "@/components/section/AutoCarousel";
 import {
   Card,
@@ -507,55 +507,22 @@ export default function InstitutionsFinancieres() {
           </div>
 
           {/* Sidebar avec publicités */}
-          <div className="w-80 hidden lg:block  space-y-6">
-            <Advert
-              type="image"
-              size="medium"
-              position="sidebar"
-              content={{
-                title: "Masterclass Business Plan",
-                imageUrl: "/placeholder.svg?height=200&width=300",
-                advertiser: "Business School Gabon",
-              }}
-            />
-
-            <Advert
-              type="image"
-              size="medium"
-              position="sidebar"
-              content={{
-                title: "Concours Jeunes Entrepreneurs",
-                imageUrl: "/placeholder.svg?height=200&width=300",
-                ctaText: "Participer",
-                advertiser: "Ministère de l'Entrepreneuriat",
-              }}
+          {/* Desktop */}
+          <div className="w-80 hidden lg:block space-y-6">
+            <AdBanner
+              emplacement="INSTITUTION"
+              interval={3000}
+              className="w-80 h-auto"
             />
           </div>
-          <div className="flex lg:hidden w-full">
-            <AutoCarousel interval={3000}>
-              <Advert
-                type="image"
-                size="medium"
-                position="sidebar"
-                content={{
-                  title: "Masterclass Business Plan",
-                  imageUrl: "/placeholder.svg?height=200&width=300",
-                  advertiser: "Business School Gabon",
-                }}
-              />
 
-              <Advert
-                type="image"
-                size="medium"
-                position="sidebar"
-                content={{
-                  title: "Concours Jeunes Entrepreneurs",
-                  imageUrl: "/placeholder.svg?height=200&width=300",
-                  ctaText: "Participer",
-                  advertiser: "Ministère de l'Entrepreneuriat",
-                }}
-              />
-            </AutoCarousel>
+          {/* Mobile */}
+          <div className="flex lg:hidden w-full">
+            <AdBanner
+              emplacement="INSTITUTION"
+              interval={3000}
+              className="w-full h-48"
+            />
           </div>
         </div>
 
