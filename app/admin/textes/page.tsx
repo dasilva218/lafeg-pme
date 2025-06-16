@@ -63,7 +63,7 @@ import {
   updateTexteJuridique,
   deleteTexteJuridique,
 } from "@/app/services/texte/api";
-import { Textarea } from "@/components/ui/textarea";
+
 
 export default function TextesJuridiquesAdmin() {
   const [textesJuridiques, setTextesJuridiques] = useState<TexteJuridique[]>(
@@ -74,7 +74,7 @@ export default function TextesJuridiquesAdmin() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [filteredTextes, setFilteredTextes] = useState<TexteJuridique[]>([]);
   const [fichier, setFichier] = useState<File | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedTexte, setSelectedTexte] = useState<TexteJuridique | null>(
@@ -404,6 +404,14 @@ export default function TextesJuridiquesAdmin() {
                       <SelectItem value="Acte uniforme OHADA">OHADA</SelectItem>
                       <SelectItem value="Code">Code</SelectItem>
                       <SelectItem value="Arrêté">Arrêté</SelectItem>
+                      <SelectItem value="Ordonnance">Ordonnance</SelectItem>
+                      <SelectItem value="Traité">Traité</SelectItem>
+                      <SelectItem value="Convention">Convention</SelectItem>
+                      <SelectItem value="Circulaire">Circulaire</SelectItem>
+                      <SelectItem value="Règlement">Règlement</SelectItem>
+                      <SelectItem value="Accord">Accord</SelectItem>
+                      <SelectItem value="Directive">Directive</SelectItem>
+              
                     </SelectContent>
                   </Select>
                 </div>
@@ -458,7 +466,7 @@ export default function TextesJuridiquesAdmin() {
                     }}
                   />
                   <p className="text-xs text-muted-foreground mt-1">
-                    Veuillez téléverser un document (PDF)
+                    N.B: Veuillez téléverser un document (PDF) de moins de 5 Mo. Le titre du document ne doit comporter aucun accent.
                   </p>
                 </div>
 
@@ -535,9 +543,17 @@ export default function TextesJuridiquesAdmin() {
                   <SelectItem value="all">Tous les types</SelectItem>
                   <SelectItem value="Loi">Loi</SelectItem>
                   <SelectItem value="Décret">Décret</SelectItem>
-                  <SelectItem value="Acte uniforme OHADA">OHADA</SelectItem>
+                  <SelectItem value="Acte uniforme OHADA">Acte uniforme OHADA</SelectItem>
                   <SelectItem value="Code">Code</SelectItem>
                   <SelectItem value="Arrêté">Arrêté</SelectItem>
+                  <SelectItem value="Ordonnance">Ordonnance</SelectItem>
+                  <SelectItem value="Traité">Traité</SelectItem>
+                  <SelectItem value="Convention">Convention</SelectItem>
+                  <SelectItem value="Circulaire">Circulaire</SelectItem>
+                  <SelectItem value="Règlement">Règlement</SelectItem>
+                  <SelectItem value="Accord">Accord</SelectItem>
+                  <SelectItem value="Directive">Directive</SelectItem>
+
                 </SelectContent>
               </Select>
               <Select
