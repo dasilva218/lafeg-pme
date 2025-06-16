@@ -203,10 +203,11 @@ export default function TextesJuridiquesAdmin() {
         version: newTexte.version,
         fichier: newTexte.fichier,
       });
-      console.log("Texte créé :", createdTexte);
-      toast.success("Texte ajouté avec succès", {
+       toast.success("Texte ajouté avec succès", {
         description: "Le texte juridique a été ajouté avec succès.",
       });
+      console.log("Texte créé :", createdTexte);
+     
 
       setTextesJuridiques([...textesJuridiques, createdTexte]);
       setShowAddForm(false);
@@ -225,11 +226,12 @@ export default function TextesJuridiquesAdmin() {
       });
       setFichier(null);
     } catch (error) {
-      alert("Erreur lors de l’ajout du texte.");
-      console.error("Erreur lors de l’ajout du texte :", error);
-      toast.error("Échec de l'ajout du texte", {
+      // alert("Erreur lors de l’ajout du texte.");
+       toast.error("Échec de l'ajout du texte", {
         description: "Une erreur est survenue lors de l'ajout du texte.",
       });
+      console.error("Erreur lors de l’ajout du texte :", error);
+     
     } finally {
       setLoading(false);
       resetNewTexteForm();
