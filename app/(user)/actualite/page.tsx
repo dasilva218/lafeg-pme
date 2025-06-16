@@ -42,7 +42,7 @@ const actualites = [
     - Exonération fiscale de 2 ans pour les startups innovantes
 
     Cette initiative s'inscrit dans le cadre du Plan Stratégique Gabon Émergent et devrait bénéficier à plus de 15 000 PME à travers le pays.`,
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/article.png?height=400&width=600",
     auteur: "Marie Nguema",
     datePublication: "2024-12-10",
     categorie: "Réglementation",
@@ -67,7 +67,7 @@ const actualites = [
     - La remise des Trophées de l'Entrepreneur 2024
 
     Les participants ont particulièrement apprécié les sessions dédiées à la transformation digitale et aux opportunités d'export vers les marchés régionaux.`,
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/article.png?height=400&width=600",
     auteur: "Jean-Claude Obame",
     datePublication: "2024-12-08",
     categorie: "Événements",
@@ -91,7 +91,7 @@ const actualites = [
     - Des délais de traitement réduits (15 jours maximum)
 
     Cette expansion du réseau de financement devrait permettre de débloquer plus de 50 milliards de FCFA pour les PME gabonaises en 2025.`,
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/article.png?height=400&width=600",
     auteur: "Sylvie Mba",
     datePublication: "2024-12-05",
     categorie: "Financement",
@@ -116,7 +116,7 @@ const actualites = [
     - Croissance moyenne de 30% pour les entreprises digitalisées
 
     Les secteurs les plus avancés sont le commerce de détail, les services et l'artisanat. Le gouvernement accompagne cette transition avec des programmes de formation et des subventions pour l'équipement numérique.`,
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/article.png?height=400&width=600",
     auteur: "Paul Ndong",
     datePublication: "2024-12-03",
     categorie: "Innovation",
@@ -140,7 +140,7 @@ const actualites = [
     - Services numériques : +120%
 
     Les principaux marchés de destination sont le Cameroun, la Guinée Équatoriale et le Congo. L'Agence de Promotion des Exportations accompagne cette dynamique avec des missions commerciales et des formations spécialisées.`,
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/article.png?height=400&width=600",
     auteur: "Fatima Allogho",
     datePublication: "2024-12-01",
     categorie: "Commerce",
@@ -166,7 +166,7 @@ const actualites = [
     - Commerce international
 
     Le centre dispose d'équipements de pointe, d'une bibliothèque spécialisée et d'espaces de coworking. Les formations sont dispensées par des experts locaux et internationaux, avec un accent sur la pratique et l'accompagnement personnalisé.`,
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/article.png?height=400&width=600",
     auteur: "Robert Moussounda",
     datePublication: "2024-11-28",
     categorie: "Formation",
@@ -269,7 +269,7 @@ export default function ActualitesPage() {
                 >
                   <div className="relative h-64">
                     <Image
-                      src={article.image || "/placeholder.svg"}
+                      src={article.image || "/article.png"}
                       alt={article.titre}
                       fill
                       className="object-cover transition-transform duration-300 hover:scale-105"
@@ -388,7 +388,7 @@ export default function ActualitesPage() {
                   >
                     <div className="relative h-48">
                       <Image
-                        src={article.image || "/placeholder.svg"}
+                        src={article.image || "/article.png"}
                         alt={article.titre}
                         fill
                         className="object-cover transition-transform duration-300 hover:scale-105"
@@ -428,7 +428,7 @@ export default function ActualitesPage() {
                       <div className="flex gap-4">
                         <div className="relative w-32 h-24 flex-shrink-0">
                           <Image
-                            src={article.image || "/placeholder.svg"}
+                            src={article.image || "/article.png"}
                             alt={article.titre}
                             fill
                             className="object-cover rounded"
