@@ -77,7 +77,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
         <div className="hidden md:block fixed top-0 left-0 h-screen w-64 z-40">
           <div className="flex h-full w-full flex-col flex-grow bg-[#063a1e]">
-            <div className="flex items-center gap-3 justify-center border border-b py-6 px-2">
+            <div className="flex items-center gap-3 justify-center border-b py-6 mx-6">
               <Image
                 src="/images/logo_FEG_blanc.png"
                 alt="Logo FEG"
@@ -86,11 +86,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 className="h-12 w-auto"
               />
               <div className="ml-3">
-                <h1 className="text-lg font-bold text-white">ADMIN</h1>
+                <h1 className="text-md font-bold text-white">Espace Administrateur</h1>
                 <p className="text-sm text-white">Répertoire des textes Juridiques</p>
               </div>
             </div>
-            <div className="mt-8 flex-1 flex flex-col">
+            <div className="mt-5 flex-1 flex flex-col">
               <nav className="flex-1 px-4 space-y-1">
                 {navigation.map((item) => {
                   const Icon = item.icon;
