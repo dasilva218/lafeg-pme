@@ -63,7 +63,7 @@ import {
   updateTexteJuridique,
   deleteTexteJuridique,
 } from "@/app/services/texte/api";
-import { Textarea } from "@/components/ui/textarea";
+
 
 export default function TextesJuridiquesAdmin() {
   const [textesJuridiques, setTextesJuridiques] = useState<TexteJuridique[]>(
@@ -74,7 +74,7 @@ export default function TextesJuridiquesAdmin() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [filteredTextes, setFilteredTextes] = useState<TexteJuridique[]>([]);
   const [fichier, setFichier] = useState<File | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedTexte, setSelectedTexte] = useState<TexteJuridique | null>(
@@ -458,7 +458,7 @@ export default function TextesJuridiquesAdmin() {
                     }}
                   />
                   <p className="text-xs text-muted-foreground mt-1">
-                    Veuillez téléverser un document (PDF)
+                    N.B: Veuillez téléverser un document (PDF) de moins de 5 Mo. Le titre du document ne doit comporter aucun accent.
                   </p>
                 </div>
 
