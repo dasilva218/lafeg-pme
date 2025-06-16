@@ -22,6 +22,7 @@ const nextConfig = {
     parallelServerCompiles: true,
   },
   transpilePackages: ['swagger-ui-react'],
+  
 }
 
 if (userConfig) {

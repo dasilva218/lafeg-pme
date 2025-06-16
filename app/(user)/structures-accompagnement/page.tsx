@@ -243,8 +243,9 @@ export default function Structure() {
       </div>
 
       {/* Section Hero */}
-      <section className="bg-[#063a1e] text-white py-12">
-        <div className="container">
+      <section className="bg-[#063a1e] relative text-white py-12">
+                <div className="absolute inset-0 bg-[url('/images/sea.jpg?height=600&width=1200')] bg-cover bg-center opacity-20" />
+        <div className="container ">
           <div className="max-w-3xl">
             <h1 className="text-3xl font-bold mb-4">
               Structures d'Accompagnement pour les PME Gabonaises

@@ -62,6 +62,8 @@ export default function Nav() {
                     </TooltipContent>
                   ),
                 },
+                { name: "Offres", path: "/offre" },
+                { name: "Actualités", path: "/actualite" },
                 { name: "À propos", path: "/a-propos" },
                 {
                   name: "Contact",
