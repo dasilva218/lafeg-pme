@@ -404,6 +404,14 @@ export default function TextesJuridiquesAdmin() {
                       <SelectItem value="Acte uniforme OHADA">OHADA</SelectItem>
                       <SelectItem value="Code">Code</SelectItem>
                       <SelectItem value="Arrêté">Arrêté</SelectItem>
+                      <SelectItem value="Ordonnance">Ordonnance</SelectItem>
+                      <SelectItem value="Traité">Traité</SelectItem>
+                      <SelectItem value="Convention">Convention</SelectItem>
+                      <SelectItem value="Circulaire">Circulaire</SelectItem>
+                      <SelectItem value="Règlement">Règlement</SelectItem>
+                      <SelectItem value="Accord">Accord</SelectItem>
+                      <SelectItem value="Directive">Directive</SelectItem>
+              
                     </SelectContent>
                   </Select>
                 </div>
@@ -535,9 +543,17 @@ export default function TextesJuridiquesAdmin() {
                   <SelectItem value="all">Tous les types</SelectItem>
                   <SelectItem value="Loi">Loi</SelectItem>
                   <SelectItem value="Décret">Décret</SelectItem>
-                  <SelectItem value="Acte uniforme OHADA">OHADA</SelectItem>
+                  <SelectItem value="Acte uniforme OHADA">Acte uniforme OHADA</SelectItem>
                   <SelectItem value="Code">Code</SelectItem>
                   <SelectItem value="Arrêté">Arrêté</SelectItem>
+                  <SelectItem value="Ordonnance">Ordonnance</SelectItem>
+                  <SelectItem value="Traité">Traité</SelectItem>
+                  <SelectItem value="Convention">Convention</SelectItem>
+                  <SelectItem value="Circulaire">Circulaire</SelectItem>
+                  <SelectItem value="Règlement">Règlement</SelectItem>
+                  <SelectItem value="Accord">Accord</SelectItem>
+                  <SelectItem value="Directive">Directive</SelectItem>
+
                 </SelectContent>
               </Select>
               <Select
