@@ -336,7 +336,7 @@ export default function InstitutionsPage({}: {
     console.log("submitEditInstitution called");
 
     if (!selectedInstitutionId || !editedInstitution) return;
-
+    setLoading(true);
     try {
       setLoading(true);
       console.log("selectedInstitutionId", selectedInstitutionId);
@@ -377,14 +377,16 @@ export default function InstitutionsPage({}: {
 
       if (!response.ok) throw new Error("Erreur lors de la mise à jour");
 
-      await refreshInstitutions();
+      // await refreshInstitutions();
+      
       setIsEditDialogOpen(false);
+      setLoading(false);
       toast.success("Institution mise à jour avec succès");
     } catch (error) {
       console.error(error);
       toast.error("Erreur lors de la mise à jour de l'institution");
     } finally {
-      setLoading(false);
+     
     }
   };
 
@@ -1285,14 +1287,13 @@ export default function InstitutionsPage({}: {
                 }}
               >
                 {loading ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Suppression…
-          </>
-        ) : (
-          "Supprimer l'institution"
-        )}
-               
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Suppression…
+                  </>
+                ) : (
+                  "Supprimer l'institution"
+                )}
               </Button>
             </DialogFooter>
           </DialogContent>
