@@ -30,6 +30,23 @@ const HamburgerMenu = () => {
         label: "Structure d'Ecadremente et d'Accompagnement",
         href: "/structures-accompagnement" 
       },
+      {
+        label: "Offres",
+        href: "/offre" 
+      },
+      {
+        label: "Actualités",
+        href: "/actualite" 
+      },
+      {
+        label: "À propos",
+        href: "/a-propos" 
+      },
+      {
+        label: "Contact",
+        href: "https://www.lafeg.ga/contact",
+        target: "_blank"
+      }
     ];
 
   return (

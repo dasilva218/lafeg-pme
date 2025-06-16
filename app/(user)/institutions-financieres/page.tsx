@@ -122,7 +122,8 @@ export default function InstitutionsFinancieres() {
       </div>
 
       {/* Hero Section */}
-      <section className="bg-[#063a1e] text-white py-12">
+      <section className="bg-[#063a1e] relative text-white py-12">
+        <div className="absolute inset-0 bg-[url('/images/bank.jpg?height=600&width=1200')] bg-cover bg-center opacity-20" />
         <div className="container">
           <div className="max-w-3xl">
             <h1 className="text-3xl font-bold mb-4">

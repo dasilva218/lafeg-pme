@@ -15,6 +15,7 @@ import {
   Briefcase,
   Newspaper,
   LucideIcon,
+  FileEdit,
 } from "lucide-react";
 
 import {Providers} from "@/app/providers";
@@ -66,27 +67,27 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { name: "Institution", href: "/admin/institutions", icon: Newspaper },
     { name: "SEA", href: "/admin/structures", icon: Briefcase },
     { name: "Publicité", href: "/admin/publicites", icon: Megaphone },
-    // { name: "Contenu du site", href: "/admin/contenu", icon: FileEdit },
+    { name: "Actualité", href: "/admin/actualite", icon: FileEdit },
   ];
 
   return (
     <Providers>
-      <div className="flex overflow-hidden bg-gray-100">
+      <div className="flex overflow-hidden">
         {/* Sidebar desktop */}
 
         <div className="hidden md:block fixed top-0 left-0 h-screen w-64 z-40">
           <div className="flex h-full w-full flex-col flex-grow bg-[#063a1e]">
-            <div className="flex items-center gap-3 justify-center bg-white py-6 px-2">
+            <div className="flex items-center gap-3 justify-center border border-b py-6 px-2">
               <Image
-                src="/images/logo-feg.png"
+                src="/images/logo_FEG_blanc.png"
                 alt="Logo FEG"
                 width={50}
                 height={50}
                 className="h-12 w-auto"
               />
               <div className="ml-3">
-                <h1 className="text-lg font-bold text-[#063a1e]">ADMIN</h1>
-                <p className="text-sm text-black">Répertoire des textes Juridiques</p>
+                <h1 className="text-lg font-bold text-white">ADMIN</h1>
+                <p className="text-sm text-white">Répertoire des textes Juridiques</p>
               </div>
             </div>
             <div className="mt-8 flex-1 flex flex-col">
@@ -115,7 +116,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <div className="p-4">
               <Button
                 variant="outline"
-                className="w-full justify-start text-[#063a1e] border-white/20 hover:bg-[#063a1e]/50 hover:text-white"
+                className="w-full justify-start text-[#063a1e] border-white/20 hover:bg-[#063a1e]/80 hover:text-white"
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />
