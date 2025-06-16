@@ -27,7 +27,7 @@ const offresFinancement = [
     fournisseur: "BCEG",
     type: "Banque",
     but: "Technique de financement destiné à l'acquisition d'un bien nécessaire au bon fonctionnement ou au développement de l'activité : matériels de travail, véhicule, agrandissement de locaux, rachat de fonds de commerce etc",
-    montantMin: "3 000 000",
+    montantMin: "3000000",
     montantMax: "Non spécifié",
     devise: "XAF",
     admissibilite: "Entreprises établies avec projet d'investissement viable",
@@ -42,7 +42,7 @@ const offresFinancement = [
     fournisseur: "BCEG",
     type: "Banque",
     but: "Technique de financement permettant l'acquisition à court terme de petits matériels et outillages neufs (pneumatiques, pièces détachées, moteurs hors-bord, matériels bureautiques).",
-    montantMin: "1 000 000",
+    montantMin: "1000000",
     montantMax: "Non spécifié",
     devise: "XAF",
     admissibilite: "PME ayant besoin d'équipements professionnels",
@@ -57,12 +57,12 @@ const offresFinancement = [
     fournisseur: "BVMAC",
     type: "Marché financier",
     but: "Levée de capitaux pour croissance sans endettement",
-    montantMin: "200 000 000",
-    montantMax: "10 000 000 000",
+    montantMin: "200000000",
+    montantMax: "10000000000",
     devise: "XAF",
     admissibilite: "Personne morale, CA > 1 Md XAF, 2 ans bénéficiaires, Comptes certifiés",
     documentation: "Business plan, États financiers audités, Contrat de liquidité (optionnel)",
-    remboursement: "Aucun remboursement (financement par actions)",
+    remboursement: "Aucun remboursement",
     tauxInteret: "N/A",
     secteur: "Tous secteurs",
   },
@@ -107,7 +107,7 @@ const offresFinancement = [
     devise: "XAF",
     admissibilite: "Activité génératrice de revenus, Fiche circuit, Domiciliation des recettes",
     documentation: "Pièce d'identité, Garanties (selon montant)",
-    remboursement: "Court terme (flexible)",
+    remboursement: "Court terme",
     tauxInteret: "Variable",
     secteur: "Tous secteurs",
   },
@@ -123,7 +123,7 @@ const offresFinancement = [
     admissibilite: "Compte actif (3 mois min), Revenus réguliers",
     documentation:
       "Pièce d'identité, 3 derniers bilans/relevés bancaires, Plan d'affaires, Quittance SEEG, Lettre de demande",
-    remboursement: "De quelques mois à plusieurs années",
+    remboursement: "Flexible",
     tauxInteret: "Compétitif",
     secteur: "PME",
   },
@@ -133,8 +133,8 @@ const offresFinancement = [
     fournisseur: "SODEC",
     type: "Institution publique",
     but: "Financement de projets de développement économique",
-    montantMin: "200 000",
-    montantMax: "1 500 000",
+    montantMin: "200000",
+    montantMax: "1500000",
     devise: "XOF",
     admissibilite: "Projet viable, Engagement personnel",
     documentation: "Fiche circuit, Plan simplifié",
@@ -386,11 +386,11 @@ const getTypeColor = (type: string): string => {
                   <TableRow>
                     <TableHead>Nom de l'offre</TableHead>
                     <TableHead>Fournisseur</TableHead>
-                    <TableHead>Type</TableHead>
+                    <TableHead className="text-center">Type</TableHead>
                     <TableHead>Montant</TableHead>
                     <TableHead>Remboursement</TableHead>
                     <TableHead>Taux</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead className="text-center">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -408,8 +408,8 @@ const getTypeColor = (type: string): string => {
                        
                         </div>
                       </TableCell>
-                      <TableCell>
-                          <Badge className={`w-fit text-xs text-center ${getTypeColor(offre.type)}`}>{offre.type}</Badge>
+                      <TableCell className="text-center">
+                          <Badge variant="default" className={`w-fit text-xs text-center ${getTypeColor(offre.type)}`}>{offre.type}</Badge>
                       </TableCell>
                       <TableCell>
                         <span className="font-medium text-green-600">
@@ -418,7 +418,7 @@ const getTypeColor = (type: string): string => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
-                          <Clock className="w-4 h-4 text-gray-400" />
+                          <Clock className="w-4 h-4 text-green-900" />
                           <span className="text-sm">{offre.remboursement}</span>
                         </div>
                       </TableCell>

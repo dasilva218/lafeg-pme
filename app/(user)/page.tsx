@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Form from "@/components/section/form";
 import AdBanner from "@/components/ads/AdBanner";
-import { ArrowRight, FileText } from "lucide-react";
+import { ArrowRight, FileText, Linkedin, Facebook, MapPin, Mail, Phone, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -260,13 +260,15 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
 
       {/* Recent Updates */}
       <NewText />
       {/* Sidebar Video Ad */}
       <div className="flex justify-center items-center pb-12 container bg-[#eaeeeb]">
-        <AdBanner emplacement="MIDDLE" className="w-full h-full object-cover object-center max-h-52" />
+        <AdBanner
+          emplacement="MIDDLE"
+          className="w-full h-full object-cover object-center max-h-52"
+        />
       </div>
       <section className="py-12 bg-[#063a1e]">
         <div className="container">
@@ -314,11 +316,10 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#063a1e] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-70"></div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <div className="rounded-full bg-white/90 p-3 shadow-lg">
-                   <Link  href="/institutions-financieres?tab=banques">
+                    <Link href="/institutions-financieres?tab=banques">
                       {" "}
                       <ArrowRight className="h-6 w-6 text-[#063a1e]" />
                     </Link>
-                    
                   </div>
                 </div>
               </div>
@@ -358,11 +359,10 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#063a1e] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-70"></div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <div className="rounded-full bg-white/90 p-3 shadow-lg">
-                   <Link  href="/institutions-financieres?tab=microfinance">
+                    <Link href="/institutions-financieres?tab=microfinance">
                       {" "}
                       <ArrowRight className="h-6 w-6 text-[#063a1e]" />
                     </Link>
-                
                   </div>
                 </div>
               </div>
@@ -406,7 +406,6 @@ export default function Home() {
                       {" "}
                       <ArrowRight className="h-6 w-6 text-[#063a1e]" />
                     </Link>
-
                   </div>
                 </div>
               </div>
@@ -584,6 +583,57 @@ export default function Home() {
                       <span>Institutions Financières </span>
                     </li>
                   </ul>
+                  <div className="w-full mt-6">
+                    <h3 className="text-[#dcdaa4] font-bold text-lg mb-3">
+                      Informations de contact
+                    </h3>
+                    <h3>Pour tous vos besoins d'informations contactez-nous ou suivez-nous sur nos réseaux sociaux.</h3>
+                    <ul className="space-y-2 mt-4 text-sm">
+                     
+                      <li className="flex items-center gap-2">
+                        <Phone className="h-4 w-4" />
+                        <a className="hover:underline" href="tel:065815738">
+                          (+241) 065 81 57 38
+                        </a>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Mail className="h-4 w-4 mt-0.5" />
+                        <div className="flex flex-col">
+                          <a
+                            className="hover:underline"
+                            href="mailto:info@lafeg.ga"
+                          >
+                            info@lafeg.ga
+                          </a>
+                          <a
+                            className="hover:underline"
+                            href="mailto:a.obiang@lafeg.ga"
+                          >
+                            a.obiang@lafeg.ga
+                          </a>
+                        </div>
+                      </li>
+                     
+                    </ul>
+
+                    <div className="mt-4">
+                      <p className="mb-2 text-sm font-semibold">Suivez-nous</p>
+                      <div className="flex space-x-4">
+                        <Link
+                          target="_blank"
+                          href="https://www.facebook.com/feggabon?locale=fr_FR"
+                        >
+                          <Facebook className="hover:scale-125 duration-200 hover:text-[#dcdaa4]" />
+                        </Link>
+                        <Link
+                          target="_blank"
+                          href="https://www.linkedin.com/company/lafeg/"
+                        >
+                          <Linkedin className="hover:scale-125 duration-200 hover:text-[#dcdaa4]" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className=" p-8">
                   <div className=" ">
