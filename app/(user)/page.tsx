@@ -598,18 +598,18 @@ export default function Home() {
                       </li>
                       <li className="flex items-start gap-2">
                         <Mail className="h-4 w-4 mt-0.5" />
-                        <div className="flex flex-col">
+                        <div className="flex">
                           <a
                             className="hover:underline"
                             href="mailto:info@lafeg.ga"
                           >
-                            info@lafeg.ga
+                            info@lafeg.ga / 
                           </a>
                           <a
                             className="hover:underline"
                             href="mailto:a.obiang@lafeg.ga"
                           >
-                            a.obiang@lafeg.ga
+                             a.obiang@lafeg.ga
                           </a>
                         </div>
                       </li>
