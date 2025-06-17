@@ -10,11 +10,11 @@ import {
   Mail,
   Star,
   Users,
-    BookOpen,
-    Handshake,
-    Network,
-    Gavel,
-    // UserGroup,
+  BookOpen,
+  Handshake,
+  Network,
+  Gavel,
+  // UserGroup,
   Award,
   Building2,
   Briefcase,
@@ -207,12 +207,12 @@ const tarifsPublication = {
     "6 mois": { membre: "70,000", nonMembre: "140,000" },
     "12 mois": { membre: "120,000", nonMembre: "240,000" },
   },
-  "Profil Premium": {
-    "1 mois": { membre: "25,000", nonMembre: "50,000" },
-    "3 mois": { membre: "65,000", nonMembre: "130,000" },
-    "6 mois": { membre: "115,000", nonMembre: "230,000" },
-    "12 mois": { membre: "200,000", nonMembre: "400,000" },
-  },
+  //   "Profil Premium": {
+  //     "1 mois": { membre: "25,000", nonMembre: "50,000" },
+  //     "3 mois": { membre: "65,000", nonMembre: "130,000" },
+  //     "6 mois": { membre: "115,000", nonMembre: "230,000" },
+  //     "12 mois": { membre: "200,000", nonMembre: "400,000" },
+  //   },
   "Profil Elite": {
     "1 mois": { membre: "40,000", nonMembre: "80,000" },
     "3 mois": { membre: "105,000", nonMembre: "210,000" },
@@ -432,12 +432,28 @@ export default function EntreprisesServices() {
                         <span>{entreprise.telephone}</span>
                       </div>
                       <ul className="text-sm text-gray-700 list-decimal list-inside space-y-1">
-  <li><span className="font-semibold">Prise de contact :</span> le client remplit un formulaire en ligne.</li>
-  <li><span className="font-semibold"> Vérification :</span> l&apos;équipe commerciale analyse la demande sous 24h.</li>
-  <li><span className="font-semibold"> Mise en œuvre :</span> les services sont activés sous 48h après validation.</li>
-  <li><span className="font-semibold"> Suivi :</span> un conseiller est affecté pour assurer l'accompagnement.</li>
-</ul>
-
+                        <li>
+                          <span className="font-semibold">
+                            Prise de contact :
+                          </span>{" "}
+                          le client remplit un formulaire en ligne.
+                        </li>
+                        <li>
+                          <span className="font-semibold"> Vérification :</span>{" "}
+                          l&apos;équipe commerciale analyse la demande sous 24h.
+                        </li>
+                        <li>
+                          <span className="font-semibold">
+                            {" "}
+                            Mise en œuvre :
+                          </span>{" "}
+                          les services sont activés sous 48h après validation.
+                        </li>
+                        <li>
+                          <span className="font-semibold"> Suivi :</span> un
+                          conseiller est affecté pour assurer l'accompagnement.
+                        </li>
+                      </ul>
                     </CardContent>
 
                     <CardFooter className="p-4 pt-0 flex flex-col gap-2">
@@ -556,7 +572,7 @@ export default function EntreprisesServices() {
                         <div className="text-center">
                           <Network className="h-12 w-12 text-[#dcdaa4] mx-auto mb-4" />
                           <h3 className="font-bold text-lg mb-2">
-                            Réseau d’Affaires
+                            Réseau d&apos;Affaires
                           </h3>
                           <p className="text-white/90">
                             Forums, assemblées générales, salons & opportunités
@@ -595,74 +611,95 @@ export default function EntreprisesServices() {
                     <h2 className="text-3xl font-bold text-[#063a1e] mb-4">
                       Modalités Tarifaires
                     </h2>
-                    <p className="text-lg text-muted-foreground">
+                    <p className="text-lg ">
                       Choisissez le forfait qui correspond à vos besoins
                     </p>
                   </div>
 
-                  <div className="flex flex-col justify-center items-center gap-8">
-                    <Card className="relative w-full max-w-2xl border-[#063a1e] border-2">
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <Badge className="bg-[#063a1e] text-white">
-                          Recommandé
-                        </Badge>
-                      </div>
-
-                      <CardHeader className="text-center">
-                        <CardTitle className="text-xl">
-                          Profil Standard
-                        </CardTitle>
-                        {/* <CardDescription>Le plus populaire</CardDescription> */}
-                      </CardHeader>
-
-                      <CardContent className="space-y-4">
-                        {Object.entries(
-                          tarifsPublication["Profil Premium"]
-                        ).map(([duree, prix]) => (
-                          <div
-                            key={duree}
-                            className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
-                          >
-                            <span className="font-medium">{duree}</span>
-                            <div className="text-right">
-                              <div className="text-sm text-muted-foreground line-through">
-                                {prix.nonMembre} FCFA
-                              </div>
-                              <div className="font-bold text-[#063a1e]">
-                                {prix.membre} FCFA
-                              </div>
-                              <div className="text-xs text-green-600">
-                                Membre FEG
-                              </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-3xl mx-auto">
+                    {Object.entries(tarifsPublication).map(
+                      ([forfait, tarifs]) => (
+                        <Card
+                          key={forfait}
+                          className={`relative rounded-xl overflow-hidden transition-transform transform hover:scale-[1.01] shadow-md ${
+                            forfait === "Profil Premium"
+                              ? "border-[#063a1e] border-2 ring-2 ring-[#063a1e]"
+                              : "border border-gray-200"
+                          }`}
+                        >
+                          {forfait === "Profil Premium" && (
+                            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+                              <Badge className="bg-[#063a1e] text-white text-xs shadow-md">
+                                Recommandé
+                              </Badge>
                             </div>
-                          </div>
-                        ))}
+                          )}
 
-                        <div className="pt-4 border-t">
-                          <h4 className="font-medium mb-2">Inclus :</h4>
-                          <ul className="text-sm space-y-1">
-                            <li className="flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
-                              Profil entreprise complet
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
-                              Publication de services
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
-                              Mise en avant premium
-                            </li>
-                          </ul>
-                        </div>
-                      </CardContent>
+                          <CardHeader className="text-center bg-gradient-to-r from-[#063a1e] to-[#145c35] text-white py-5">
+                            <CardTitle className="text-xl text-[#dcdaa4] font-bold">
+                              {forfait}
+                            </CardTitle>
+                            <CardDescription className="text-sm text-white/80 italic">
+                              {forfait === "Profil Basique" &&
+                                "Exclusivement pour les membres FEG"}
+                              {forfait === "Profil Elite" &&
+                                "Pour tout autres types d'entreprises"}
+                            </CardDescription>
+                          </CardHeader>
 
-                      <CardFooter>
-                        <Button className="w-full bg-[#063a1e] hover:bg-[#063a1e]/90">
-                          Choisir ce forfait
-                        </Button>
-                      </CardFooter>
-                    </Card>
+                          <CardContent className="space-y-4 p-4 bg-[#dcdaa4]">
+                            {Object.entries(tarifs).map(([duree, prix]) => (
+                              <div
+                                key={duree}
+                                className="flex justify-between items-center p-3 bg-gray-50 rounded-lg border"
+                              >
+                                <span className="font-medium">{duree}</span>
+                                <div className="text-right">
+                                  <div className="text-sm text-muted-foreground line-through">
+                                    {prix.nonMembre} FCFA
+                                  </div>
+                                  <div className="font-bold text-[#063a1e]">
+                                    {prix.membre} FCFA
+                                  </div>
+                                  <div className="text-xs text-green-600">
+                                    {forfait === "Profil Basique" &&
+                                      "Membre FEG"}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+
+                            <div className="pt-4 border-t">
+                              <h4 className="font-medium mb-2 text-[#063a1e]">
+                                Inclus :
+                              </h4>
+                              <ul className="text-sm space-y-1">
+                                <li className="flex items-center gap-2">
+                                  <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                                  Profil entreprise complet
+                                </li>
+                                <li className="flex items-center gap-2">
+                                  <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                                  Publication de services
+                                </li>
+                              </ul>
+                            </div>
+                          </CardContent>
+
+                          <CardFooter className="p-4 bg-gray-50">
+                            <Button
+                              className={`w-full rounded-md text-white font-medium ${
+                                forfait === "Profil Premium"
+                                  ? "bg-[#063a1e] hover:bg-[#063a1e]/90"
+                                  : "bg-[#145c35] hover:bg-[#145c35]/90"
+                              }`}
+                            >
+                              Choisir ce forfait
+                            </Button>
+                          </CardFooter>
+                        </Card>
+                      )
+                    )}
                   </div>
                 </div>
 
