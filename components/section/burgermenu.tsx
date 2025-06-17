@@ -35,8 +35,13 @@ const HamburgerMenu = () => {
         href: "/offre" 
       },
       {
-        label: "Actualités",
-        href: "/actualite" 
+        label: "Offres",
+        href: "/offre" 
+      },
+      {
+        label: "Entreprises & Services",
+        href: "/entreprise",
+     
       },
       {
         label: "À propos",
