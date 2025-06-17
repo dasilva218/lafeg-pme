@@ -244,7 +244,7 @@ const getTypeColor = (type: string): string => {
         <div className="absolute inset-0 bg-[url('/images/offre.jpg?height=600&width=1200')] bg-cover bg-center opacity-20" />
         <div className="container relative mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-6">Offres de Financement</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-6">Offres Financières</h1>
             <p className="text-xl text-green-100 mb-8">
               Découvrez toutes les opportunités de financement disponibles pour les PME gabonaises
             </p>
@@ -377,7 +377,7 @@ const getTypeColor = (type: string): string => {
         {/* Tableau des offres */}
         <Card>
           <CardHeader>
-            <CardTitle>Offres de financement disponibles</CardTitle>
+            <CardTitle>Offres Financières</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">

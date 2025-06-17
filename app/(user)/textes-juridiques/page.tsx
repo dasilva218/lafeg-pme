@@ -254,10 +254,10 @@ export default function TextesJuridiques() {
       <div className="container w-full py-8 ">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar */}
-          <div className="hidden lg:block lg:w-64 md:hidden">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="px-4 py-5 sm:px-6 bg-[#f7f7f7]">
-                <h3 className="text-lg font-semibold text-[#063a1e]">
+          <div className="hidden lg:flex gap-10  md:hidden">
+            <div className="bg-white block w-64 rounded-lg shadow-md overflow-hidden">
+              <div className="px-4 py-5  sm:px-6 bg-[#063a1e]">
+                <h3 className="text-lg font-semibold text-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -274,7 +274,7 @@ export default function TextesJuridiques() {
                   </svg>
                   Filtres avancés
                 </h3>
-                <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                <p className="mt-1 max-w-2xl text-sm text-gray-200">
                   Affinez votre recherche par type de document.
                 </p>
               </div>
@@ -384,27 +384,12 @@ export default function TextesJuridiques() {
                         >
                           Convention
                         </label>
-                        <div className="flex items-center">
-                          <input
-                            id="type5"
-                            name="type"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                            checked={selectedTypes.includes(
-                              "Acte uniforme OHADA"
-                            )}
-                            onChange={() =>
-                              handleTypeFilter("Acte uniforme OHADA")
-                            }
-                          />
-                          <label
-                            htmlFor="type5"
-                            className="ml-2 block text-sm text-gray-900"
-                          >
-                            Règlement
-                          </label>
-                        </div>
-                        <div className="flex items-center">
+
+                        
+                        
+                        
+                      </div>
+                      <div className="flex items-center">
                           <input
                             id="type5"
                             name="type"
@@ -420,7 +405,7 @@ export default function TextesJuridiques() {
                             Directive
                           </label>
                         </div>
-                        <div className="flex items-center">
+                      <div className="flex items-center">
                           <input
                             id="type5"
                             name="type"
@@ -436,7 +421,7 @@ export default function TextesJuridiques() {
                             Circulaire
                           </label>
                         </div>
-                        <div className="flex items-center">
+                      <div className="flex items-center">
                           <input
                             id="type5"
                             name="type"
@@ -452,38 +437,57 @@ export default function TextesJuridiques() {
                             Accord
                           </label>
                         </div>
-                        <div className="flex items-center">
-                          <input
-                            id="type5"
-                            name="type"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                            checked={selectedTypes.includes("Ordonnance")}
-                            onChange={() => handleTypeFilter("Ordonnance")}
-                          />
-                          <label
-                            htmlFor="type5"
-                            className="ml-2 block text-sm text-gray-900"
-                          >
-                            Ordonnance
-                          </label>
-                        </div>
-                        <div className="flex items-center">
-                          <input
-                            id="type5"
-                            name="type"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                            checked={selectedTypes.includes("Traité")}
-                            onChange={() => handleTypeFilter("Traité")}
-                          />
-                          <label
-                            htmlFor="type5"
-                            className="ml-2 block text-sm text-gray-900"
-                          >
-                            Traité
-                          </label>
-                        </div>
+                      <div className="flex items-center">
+                        <input
+                          id="type5"
+                          name="type"
+                          type="checkbox"
+                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
+                          checked={selectedTypes.includes("Ordonnance")}
+                          onChange={() => handleTypeFilter("Ordonnance")}
+                        />
+                        <label
+                          htmlFor="type5"
+                          className="ml-2 block text-sm text-gray-900"
+                        >
+                          Ordonnance
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          id="type5"
+                          name="type"
+                          type="checkbox"
+                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
+                          checked={selectedTypes.includes("Traité")}
+                          onChange={() => handleTypeFilter("Traité")}
+                        />
+                        <label
+                          htmlFor="type5"
+                          className="ml-2 block text-sm text-gray-900"
+                        >
+                          Traité
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          id="type5"
+                          name="type"
+                          type="checkbox"
+                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
+                          checked={selectedTypes.includes(
+                            "Acte uniforme OHADA"
+                          )}
+                          onChange={() =>
+                            handleTypeFilter("Acte uniforme OHADA")
+                          }
+                        />
+                        <label
+                          htmlFor="type5"
+                          className="ml-2 block text-sm text-gray-900"
+                        >
+                          Règlement
+                        </label>
                       </div>
                     </div>
                   </div>
