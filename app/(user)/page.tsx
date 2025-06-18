@@ -582,6 +582,18 @@ export default function Home() {
                       </span>
                       <span>Institutions Financières </span>
                     </li>
+                    <li className="flex items-start gap-2">
+                      <span className="bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] rounded-full h-5 w-5 flex items-center justify-center text-xs font-bold mt-0.5">
+                        ✓
+                      </span>
+                      <span>Offres Financières </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] rounded-full h-5 w-5 flex items-center justify-center text-xs font-bold mt-0.5">
+                        ✓
+                      </span>
+                      <span>Offres de services des PME </span>
+                    </li>
                   </ul>
                   <div className="w-full mt-6">
                     <h3 className="text-[#dcdaa4] font-bold text-lg mb-3">
