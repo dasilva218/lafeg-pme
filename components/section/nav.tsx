@@ -85,7 +85,7 @@ export default function Nav() {
             className="h-12 md:h-16 w-auto"
           />
           <div>
-            <h1 className="md:text-2xl md:hidden lg:block font-hyundai font-bold text-[#063a1e]">
+            <h1 className="md:text-xl md:hidden lg:block font-hyundai font-bold text-[#063a1e]">
               Répertoire des <br className="md:block xl:hidden" /> Textes
               Juridiques
             </h1>
