@@ -83,7 +83,7 @@ export default function Nav() {
             width={80}
             height={80}
             className="h-12 md:h-16 w-auto"
-          />
+          /> 
           <div>
             <h1 className="md:text-xl md:hidden lg:block font-hyundai font-bold text-[#063a1e]">
               Répertoire des <br className="md:block xl:hidden" /> Textes

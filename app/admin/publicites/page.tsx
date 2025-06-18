@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import { fetchAllPublicites, Publicite } from "@/app/services/publicite/api";
+import { fetchAllPublicites, Annonce } from "@/app/services/annonce/api";
 import {
   Table,
   TableBody,
@@ -36,7 +36,7 @@ type Props = {
 };
 
 export default function PublicitesPage({ trigger, onConfirm }: Props) {
-  const [publicites, setPublicites] = useState<Publicite[]>([]);
+  const [publicites, setPublicites] = useState<Annonce[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [existingImageUrl, setExistingImageUrl] = useState<string | null>(null);
@@ -48,7 +48,7 @@ export default function PublicitesPage({ trigger, onConfirm }: Props) {
   //   const [statusFilter, setStatusFilter] = useState("all");
   //   const [typeFilter, setTypeFilter] = useState("all");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingPublicite, setEditingPublicite] = useState<Publicite | null>(
+  const [editingPublicite, setEditingPublicite] = useState<Annonce | null>(
     null
   );
   const [formValues, setFormValues] = useState({
@@ -79,7 +79,7 @@ export default function PublicitesPage({ trigger, onConfirm }: Props) {
       const response = await fetch("/api/publicites");
       if (response.ok) {
         const data = await response.json();
-        setPublicites(Array.isArray(data) ? data : data.publicites || []);
+        setPublicites(Array.isArray(data) ? data : data.publicites);
       }
     } catch (error) {
       console.error("Erreur lors du chargement des publicités:", error);
@@ -102,7 +102,7 @@ export default function PublicitesPage({ trigger, onConfirm }: Props) {
     setIsEditDialogOpen(true);
   };
 
-  const filteredPublicites = publicites.filter((pub) => {
+  const filteredPublicites = (publicites || []).filter((pub) => {
     const matchesSearch =
       typeof pub.libelle === "string" &&
       pub.libelle.toLowerCase().includes(searchTerm.toLowerCase());
