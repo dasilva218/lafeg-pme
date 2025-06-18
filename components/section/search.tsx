@@ -20,10 +20,10 @@ export default function TextSearch() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 10,
-    total: 0,
-    totalPages: 1,
+    page: 100,
+    limit: 100,
+    total: 100,
+    totalPages: 100,
   });
   const [hasSearched, setHasSearched] = useState(false);
 
@@ -135,7 +135,7 @@ export default function TextSearch() {
                       <div className="mt-2 flex justify-between items-center">
                         {text.categorie && (
                           <Badge variant="secondary" className="text-xs">
-                            {text.categorie.toUpperCase()} -{" "}
+                            {text.categorie.toUpperCase()} {" "}
                          
                           </Badge>
                         )}

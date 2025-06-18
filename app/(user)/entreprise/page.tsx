@@ -201,11 +201,11 @@ const entreprises = [
 ];
 
 const tarifsPublication = {
-  "Profil Basique": {
-    "1 mois": { membre: "15,000", nonMembre: "30,000" },
-    "3 mois": { membre: "40,000", nonMembre: "80,000" },
-    "6 mois": { membre: "70,000", nonMembre: "140,000" },
-    "12 mois": { membre: "120,000", nonMembre: "240,000" },
+  "Tarif Membre": {
+    "1 mois": { membre: "50,000" },
+    "3 mois": { membre: "133,300" },
+    "6 mois": { membre: "234, 600" },
+    "12 mois": { membre: "408,200" },
   },
   //   "Profil Premium": {
   //     "1 mois": { membre: "25,000", nonMembre: "50,000" },
@@ -213,11 +213,11 @@ const tarifsPublication = {
   //     "6 mois": { membre: "115,000", nonMembre: "230,000" },
   //     "12 mois": { membre: "200,000", nonMembre: "400,000" },
   //   },
-  "Profil Elite": {
-    "1 mois": { membre: "40,000", nonMembre: "80,000" },
-    "3 mois": { membre: "105,000", nonMembre: "210,000" },
-    "6 mois": { membre: "185,000", nonMembre: "370,000" },
-    "12 mois": { membre: "320,000", nonMembre: "640,000" },
+  "Tarif Non-membre": {
+    "1 mois": { membre: "80,000" },
+    "3 mois": { membre: "210,000" },
+    "6 mois": { membre: "370,000" },
+    "12 mois": { membre: "670,000" },
   },
 };
 
@@ -253,7 +253,7 @@ export default function EntreprisesServices() {
         <div className="container">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <h1 className="text-3xl md:text-4xl font-bold">
-              Entreprises & Services
+              Offre de services des PME
             </h1>
             <p className="text-xl text-white/90">
               Découvrez les services proposés par les entreprises gabonaises et
@@ -285,7 +285,7 @@ export default function EntreprisesServices() {
           <Tabs defaultValue="entreprises" className="w-full">
             <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto">
               <TabsTrigger value="entreprises">
-                Parcourir les entreprises
+                Parcourir les offres
               </TabsTrigger>
               <TabsTrigger value="publier">Publier mes services</TabsTrigger>
             </TabsList>
@@ -399,7 +399,7 @@ export default function EntreprisesServices() {
                         {entreprise.description}
                       </p>
 
-                      <div>
+                      {/* <div>
                         <h4 className="text-sm font-semibold mb-1">
                           Services phares :
                         </h4>
@@ -420,53 +420,35 @@ export default function EntreprisesServices() {
                             </Badge>
                           )}
                         </div>
-                      </div>
+                      </div> */}
 
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <MapPin className="h-4 w-4" />
-                        <span>{entreprise.localisation}</span>
-                      </div>
+                      
 
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2 text-sm text-black/80">
                         <Phone className="h-4 w-4" />
                         <span>{entreprise.telephone}</span>
                       </div>
-                      <ul className="text-sm text-gray-700 list-decimal list-inside space-y-1">
-                        <li>
-                          <span className="font-semibold">
-                            Prise de contact :
-                          </span>{" "}
-                          le client remplit un formulaire en ligne.
-                        </li>
-                        <li>
-                          <span className="font-semibold"> Vérification :</span>{" "}
-                          l&apos;équipe commerciale analyse la demande sous 24h.
-                        </li>
-                        <li>
-                          <span className="font-semibold">
-                            {" "}
-                            Mise en œuvre :
-                          </span>{" "}
-                          les services sont activés sous 48h après validation.
-                        </li>
-                        <li>
-                          <span className="font-semibold"> Suivi :</span> un
-                          conseiller est affecté pour assurer l'accompagnement.
-                        </li>
-                      </ul>
+                        <div className="flex items-center gap-2 text-sm text-black/80">
+                            <Mail className="h-4 w-4" />
+                            <span>{entreprise.email}</span>
+                        </div>
+                      <div className="flex items-center gap-2 text-sm text-black/80">
+                        <MapPin className="h-4 w-4" />
+                        <span>{entreprise.localisation}</span>
+                      </div>
                     </CardContent>
 
                     <CardFooter className="p-4 pt-0 flex flex-col gap-2">
                       <div className="grid grid-cols-2 gap-2 w-full">
-                        {/* <Button variant="outline" size="sm">
+                         <Button variant="default" size="sm">
                           Voir le profil
-                        </Button> */}
-                        <Button
+                        </Button> 
+                        {/* <Button
                           size="sm"
                           className="bg-[#063a1e] hover:bg-[#063a1e]/90 text-white"
                         >
                           Contacter
-                        </Button>
+                        </Button> */}
                       </div>
 
                       <div className="text-xs text-gray-500 w-full text-center">
@@ -496,36 +478,59 @@ export default function EntreprisesServices() {
             <TabsContent value="publier" className="mt-8">
               {/* Section Modalités Tarifaires */}
               <div className="space-y-8">
-                {/* Avantages Membres FEG */}
+                {/* Avantages pour les Entreprises Partenaires */}
                 <div className="bg-gradient-to-r from-[#063a1e] to-[#063a1e]/80 text-white p-8 rounded-lg">
-                  <div className="max-w-4xl mx-auto">
+                  <div className="max-w-4xl flex flex-col justify-center items-center mx-auto">
                     <div className="text-center mb-8">
                       <h2 className="text-3xl font-bold mb-4">
-                        Avantages Membres{" "}
-                        <span className="text-[#dcdaa4]">FEG</span>
+                        Pourquoi publier sur le{" "}
+                        <span className="text-[#dcdaa4]">
+                          Portail Numérique des PME
+                        </span>
+                         ?
                       </h2>
-                      {/* <p className="text-xl text-white/90">
-                        Bénéficiez de{" "}
-                        <span className="font-bold text-[#dcdaa4]">
-                          50 % de réduction
-                        </span>{" "}
-                        sur nos services*
+                      <p className="text-xl text-white/90">
+                        Accélérez votre visibilité, vos ventes et vos
+                        opportunités B2B
                       </p>
-                      <p className="text-sm text-white/70 mt-2 italic">
-                        *Services personnalisés, formations, publications,
-                        réseautage…
-                      </p> */}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                      <div className="bg-white/10 rounded-lg p-6 backdrop-blur">
+                        <div className="text-center">
+                          <Network className="h-12 w-12 text-[#dcdaa4] mx-auto mb-4" />
+                          <h3 className="font-bold text-lg mb-2">
+                            Visibilité Ciblée
+                          </h3>
+                          <p className="text-white/90">
+                            Touchez directement un public professionnel, engagé
+                            et local
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* <div className="bg-white/10 rounded-lg p-6 backdrop-blur">
+                        <div className="text-center">
+                          <Handshake className="h-12 w-12 text-[#dcdaa4] mx-auto mb-4" />
+                          <h3 className="font-bold text-lg mb-2">
+                            Crédibilité Renforcée
+                          </h3>
+                          <p className="text-white/90">
+                            Associez votre image à une institution reconnue du
+                            monde économique
+                          </p>
+                        </div>
+                      </div> */}
+
                       <div className="bg-white/10 rounded-lg p-6 backdrop-blur">
                         <div className="text-center">
                           <Award className="h-12 w-12 text-[#dcdaa4] mx-auto mb-4" />
                           <h3 className="font-bold text-lg mb-2">
-                            Tarifs Préférentiels
+                            Offres Valoriséées
                           </h3>
                           <p className="text-white/90">
-                            -50 % sur la publication et services personnalisés
+                            Vos offres sont mises en avant dans une section
+                            dédiée du guide
                           </p>
                         </div>
                       </div>
@@ -534,11 +539,11 @@ export default function EntreprisesServices() {
                         <div className="text-center">
                           <BookOpen className="h-12 w-12 text-[#dcdaa4] mx-auto mb-4" />
                           <h3 className="font-bold text-lg mb-2">
-                            Veille & Publications
+                            Communication Optimisée
                           </h3>
                           <p className="text-white/90">
-                            Accès à circulaires, newsletter, veille
-                            institutionnelle
+                            Profitez de notre audience web, réseaux sociaux et
+                            de notre communauté fédérale
                           </p>
                         </div>
                       </div>
@@ -547,60 +552,51 @@ export default function EntreprisesServices() {
                         <div className="text-center">
                           <Users className="h-12 w-12 text-[#dcdaa4] mx-auto mb-4" />
                           <h3 className="font-bold text-lg mb-2">
-                            Formations & Coaching
+                            Nouvelles Opportunités
                           </h3>
                           <p className="text-white/90">
-                            Cycles de formation et accompagnement professionnel
+                            Entrez en contact avec de nouveaux clients,
+                            partenaires et fournisseurs
                           </p>
                         </div>
                       </div>
 
-                      <div className="bg-white/10 rounded-lg p-6 backdrop-blur">
-                        <div className="text-center">
-                          <Handshake className="h-12 w-12 text-[#dcdaa4] mx-auto mb-4" />
-                          <h3 className="font-bold text-lg mb-2">
-                            Dialogue Public‑Privé
-                          </h3>
-                          <p className="text-white/90">
-                            Participation aux négociations & représentations
-                            institutionnelles
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="bg-white/10 rounded-lg p-6 backdrop-blur">
-                        <div className="text-center">
-                          <Network className="h-12 w-12 text-[#dcdaa4] mx-auto mb-4" />
-                          <h3 className="font-bold text-lg mb-2">
-                            Réseau d&apos;Affaires
-                          </h3>
-                          <p className="text-white/90">
-                            Forums, assemblées générales, salons & opportunités
-                            business
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="bg-white/10 rounded-lg p-6 backdrop-blur">
+                      {/* <div className="bg-white/10 rounded-lg p-6 backdrop-blur">
                         <div className="text-center">
                           <Gavel className="h-12 w-12 text-[#dcdaa4] mx-auto mb-4" />
                           <h3 className="font-bold text-lg mb-2">
-                            Médiation & Arbitrage
+                            Avantage Concurrentiel
                           </h3>
                           <p className="text-white/90">
-                            Règlement confidentiel et amiable des litiges
+                            Démarquez-vous avec une présence professionnelle et
+                            valorisante
                           </p>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
 
-                    <div className="text-center mt-8">
-                      <Button
-                        size="lg"
-                        className="bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] hover:from-[#e6e4b4] hover:to-[#c7c7a0] font-medium"
-                      >
-                        Devenir Membre FEG
-                      </Button>
+   
+                    <div className="flex flex-col mt-8 sm:flex-row sm:justify-center items-center w-full gap-4">
+                      <Link href="/textes-juridiques">
+                        <Button
+                          variant="secondary"
+                          size="lg"
+                          className="bg-[#063a1e] relative hover:bg-white min-w-[200px] group"
+                        >
+                          <span className="absolute inset-0 w-full h-full bg-[#dcdaa4] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></span>
+                          <span className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
+                            <p>Publier mon offre sur le Guide</p>
+                          </span>
+                        </Button>
+                      </Link>
+                      <Link href="/a-propos">
+                        <Button
+                          size="lg"
+                          className="text-[#063a1e] hover:bg-white/70 duration-300 ease-in-out bg-white border-none font-medium min-w-[200px]"
+                        >
+                          Devenir membre FEG
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -655,9 +651,9 @@ export default function EntreprisesServices() {
                               >
                                 <span className="font-medium">{duree}</span>
                                 <div className="text-right">
-                                  <div className="text-sm text-muted-foreground line-through">
+                                  {/* <div className="text-sm text-muted-foreground line-through">
                                     {prix.nonMembre} FCFA
-                                  </div>
+                                  </div> */}
                                   <div className="font-bold text-[#063a1e]">
                                     {prix.membre} FCFA
                                   </div>
@@ -669,7 +665,7 @@ export default function EntreprisesServices() {
                               </div>
                             ))}
 
-                            <div className="pt-4 border-t">
+                            {/* <div className="pt-4 border-t">
                               <h4 className="font-medium mb-2 text-[#063a1e]">
                                 Inclus :
                               </h4>
@@ -683,7 +679,7 @@ export default function EntreprisesServices() {
                                   Publication de services
                                 </li>
                               </ul>
-                            </div>
+                            </div> */}
                           </CardContent>
 
                           <CardFooter className="p-4 bg-gray-50">
