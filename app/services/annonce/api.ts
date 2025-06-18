@@ -2,7 +2,7 @@
 
 const API_BASE_URL = "/api/annonces";
 
-export interface Publicite {
+export interface Annonce {
   id_publicite: string;
   libelle: string;
   nom_structure: string;
@@ -29,7 +29,7 @@ export async function createPublicite(data: FormData) {
 
 
 // READ - Récupérer toutes les publicités
-export async function fetchAllPublicites(): Promise<Publicite[]> {
+export async function fetchAllPublicites(): Promise<Annonce[]> {
   const response = await fetch(API_BASE_URL);
 
   if (!response.ok) {
@@ -47,7 +47,7 @@ export async function fetchAllPublicites(): Promise<Publicite[]> {
 }
 
 // READ - Récupérer une publicité par ID
-export async function fetchPubliciteById(id: string): Promise<Publicite> {
+export async function fetchPubliciteById(id: string): Promise<Annonce> {
   const response = await fetch(`${API_BASE_URL}/${id}`);
 
   if (!response.ok) {
@@ -61,7 +61,7 @@ export async function fetchPubliciteById(id: string): Promise<Publicite> {
 export async function updatePubliciteWithImage(
   id: string,
   formData: FormData
-): Promise<Publicite> {
+): Promise<Annonce> {
   const response = await fetch(`${API_BASE_URL}/${id}`, {
     method: "PUT",
     body: formData, // pas de headers ici
@@ -75,7 +75,7 @@ export async function updatePubliciteWithImage(
 }
 
 // PATCH - Mise à jour partielle
-export async function patchPublicite(id: string, data: Partial<Publicite>) {
+export async function patchPublicite(id: string, data: Partial<Annonce>) {
   const response = await fetch(`${API_BASE_URL}/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
