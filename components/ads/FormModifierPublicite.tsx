@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import {
   updatePubliciteWithImage,
 
-} from "@/app/services/publicite/api";
+} from "@/app/services/annonce/api";
 import { Loader2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";

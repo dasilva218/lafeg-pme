@@ -20,6 +20,9 @@ const nextConfig = {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
+    serverActions: {
+      bodySizeLimit: '15mb',
+    }
   },
   transpilePackages: ['swagger-ui-react'],
   
