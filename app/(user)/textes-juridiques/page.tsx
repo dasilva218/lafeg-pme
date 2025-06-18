@@ -76,14 +76,13 @@ export default function TextesJuridiques() {
   const handleSort = (value: string) => {
     setSortOption(value);
   };
+  const resetTypeFilter = () => {
+    setSelectedTypes([]); // Réinitialise le tableau
+  };
 
   // Fonction pour gérer les filtres de type
   const handleTypeFilter = (type: string) => {
-    if (selectedTypes.includes(type)) {
-      setSelectedTypes(selectedTypes.filter((t) => t !== type));
-    } else {
-      setSelectedTypes([...selectedTypes, type]);
-    }
+    setSelectedTypes([type]); // remplace tout par le nouveau type
   };
 
   // Filtrer les textes en fonction de la recherche et des filtres
@@ -284,211 +283,49 @@ export default function TextesJuridiques() {
                     <h3 className="text-sm font-medium text-gray-700">
                       Type de texte
                     </h3>
-                    <div className="mt-2 space-y-2">
-                      <div className="flex items-center">
-                        <input
-                          id="type1"
-                          name="type"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                          checked={selectedTypes.includes("Loi")}
-                          onChange={() => handleTypeFilter("Loi")}
-                        />
-                        <label
-                          htmlFor="type1"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Loi
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="type2"
-                          name="type"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                          checked={selectedTypes.includes("Décret")}
-                          onChange={() => handleTypeFilter("Décret")}
-                        />
-                        <label
-                          htmlFor="type2"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Décret
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="type3"
-                          name="type"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                          checked={selectedTypes.includes("Arrêté")}
-                          onChange={() => handleTypeFilter("Arrêté")}
-                        />
-                        <label
-                          htmlFor="type3"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Arrêté
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="type4"
-                          name="type"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                          checked={selectedTypes.includes("Code")}
-                          onChange={() => handleTypeFilter("Code")}
-                        />
-                        <label
-                          htmlFor="type4"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Code
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="type5"
-                          name="type"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                          checked={selectedTypes.includes(
-                            "Acte uniforme OHADA"
-                          )}
-                          onChange={() =>
-                            handleTypeFilter("Acte uniforme OHADA")
-                          }
-                        />
-                        <label
-                          htmlFor="type5"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Acte uniforme OHADA
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="type6"
-                          name="type"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                          checked={selectedTypes.includes("Convention")}
-                          onChange={() => handleTypeFilter("Convention")}
-                        />
-                        <label
-                          htmlFor="type6"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Convention
-                        </label>
+                    <button
+                      type="button"
+                      onClick={resetTypeFilter}
+                      className="mt-4 inline-flex items-center rounded-md bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-800 hover:bg-gray-300"
+                    >
+                      Réinitialiser le filtre
+                    </button>
 
-                        
-                        
-                        
-                      </div>
-                      <div className="flex items-center">
+                    {/* <p className="text-xs text-red-600 mt-1">
+                      ⚠️ Veuillez sélectionner un seul type à la fois.
+                    </p> */}
+                    <div className="mt-2 space-y-2">
+                      {[
+                        "Loi",
+                        "Décret",
+                        "Arrêté",
+                        "Code",
+                        "Acte uniforme OHADA",
+                        "Convention",
+                        "Directive",
+                        "Circulaire",
+                        "Accord",
+                        "Ordonnance",
+                        "Traité",
+                        "Règlement",
+                      ].map((type, index) => (
+                        <div className="flex items-center" key={index}>
                           <input
-                            id="type5"
-                            name="type"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                            checked={selectedTypes.includes("Directive")}
-                            onChange={() => handleTypeFilter("Directive")}
+                            id={`type${index}`}
+                            name="type" // important pour grouper les radios
+                            type="radio"
+                            className="h-4 w-4 border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
+                            checked={selectedTypes.includes(type)}
+                            onChange={() => handleTypeFilter(type)}
                           />
                           <label
-                            htmlFor="type5"
+                            htmlFor={`type${index}`}
                             className="ml-2 block text-sm text-gray-900"
                           >
-                            Directive
+                            {type}
                           </label>
                         </div>
-                      <div className="flex items-center">
-                          <input
-                            id="type5"
-                            name="type"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                            checked={selectedTypes.includes("Circulaire")}
-                            onChange={() => handleTypeFilter("Circulaire")}
-                          />
-                          <label
-                            htmlFor="type5"
-                            className="ml-2 block text-sm text-gray-900"
-                          >
-                            Circulaire
-                          </label>
-                        </div>
-                      <div className="flex items-center">
-                          <input
-                            id="type5"
-                            name="type"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                            checked={selectedTypes.includes("Accord")}
-                            onChange={() => handleTypeFilter("Accord")}
-                          />
-                          <label
-                            htmlFor="type5"
-                            className="ml-2 block text-sm text-gray-900"
-                          >
-                            Accord
-                          </label>
-                        </div>
-                      <div className="flex items-center">
-                        <input
-                          id="type5"
-                          name="type"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                          checked={selectedTypes.includes("Ordonnance")}
-                          onChange={() => handleTypeFilter("Ordonnance")}
-                        />
-                        <label
-                          htmlFor="type5"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Ordonnance
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="type5"
-                          name="type"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                          checked={selectedTypes.includes("Traité")}
-                          onChange={() => handleTypeFilter("Traité")}
-                        />
-                        <label
-                          htmlFor="type5"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Traité
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="type5"
-                          name="type"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-[#063a1e] focus:ring-[#063a1e]"
-                          checked={selectedTypes.includes(
-                            "Acte uniforme OHADA"
-                          )}
-                          onChange={() =>
-                            handleTypeFilter("Acte uniforme OHADA")
-                          }
-                        />
-                        <label
-                          htmlFor="type5"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Règlement
-                        </label>
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>
