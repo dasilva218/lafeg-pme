@@ -250,11 +250,12 @@ export default function TextesJuridiques() {
       </div>
 
       {/* Main Content */}
-      <div className="container w-full py-8 ">
+      <div className="md:container w-full py-8 ">
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Sidebar */}
-          <div className="hidden lg:flex gap-10  md:hidden">
-            <div className="bg-white block w-64 rounded-lg shadow-md overflow-hidden">
+          
+          <div className=" gap-10 flex  ">
+            {/* Sidebar */}
+            <div className="bg-white hidden lg:block w-64 rounded-lg shadow-md overflow-hidden">
               <div className="px-4 py-5  sm:px-6 bg-[#063a1e]">
                 <h3 className="text-lg font-semibold text-white">
                   <svg
@@ -368,7 +369,7 @@ export default function TextesJuridiques() {
                   value={activeTab}
                   onValueChange={handleTabChange}
                 >
-                  <TabsList className="grid grid-cols-2 md:grid-cols-3 mb-8">
+                  <TabsList className="grid grid-cols-1 md:grid-cols-3 mb-8">
                     <TabsTrigger
                       value="pmes"
                       className="w-full md:w-auto text-center  py-2"
