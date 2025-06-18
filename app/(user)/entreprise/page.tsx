@@ -68,7 +68,11 @@ const entreprises = [
     note: 4.8,
     avis: 24,
     membreFEG: true,
-    premium: true,
+    descriptionLongue:
+      "Le Cabinet Juridique Excellence offre des services de conseil juridique adaptés aux besoins des PME et startups. Notre équipe d'experts vous accompagne dans la rédaction de contrats, la création d'entreprise et le conseil juridique général.",
+    cahierCharges: "/cahier-entreprise.pdf",
+
+
     services: [
       "Conseil juridique",
       "Rédaction de contrats",
@@ -94,7 +98,9 @@ const entreprises = [
     note: 4.6,
     avis: 18,
     membreFEG: true,
-    premium: false,
+    descriptionLongue:
+      "TechSolutions Gabon propose des services de développement web, d'applications mobiles et de transformation digitale pour les entreprises. Notre équipe d'experts vous aide à optimiser votre présence en ligne et à améliorer vos processus d'affaires.",
+    cahierCharges: "/cahier-techsolutions.pdf",
     services: [
       "Développement web",
       "Applications mobiles",
@@ -120,7 +126,9 @@ const entreprises = [
     note: 4.7,
     avis: 31,
     membreFEG: false,
-    premium: true,
+    descriptionLongue:
+      "Formation Pro Gabon offre des programmes de formation en management, leadership et développement personnel. Nos formations sont conçues pour aider les professionnels à améliorer leurs compétences et à atteindre leurs objectifs de carrière.",
+    cahierCharges: "/cahier-formation.pdf",
     services: [
       "Formation en management",
       "Certification professionnelle",
@@ -146,7 +154,7 @@ const entreprises = [
     note: 4.9,
     avis: 42,
     membreFEG: true,
-    premium: true,
+
     services: ["Comptabilité générale", "Audit financier", "Conseil fiscal"],
     tarifs: {
       "Tenue comptabilité (mois)": { membre: "75,000", nonMembre: "150,000" },
@@ -168,7 +176,7 @@ const entreprises = [
     note: 4.4,
     avis: 16,
     membreFEG: true,
-    premium: false,
+
     services: ["Construction bureaux", "Rénovation locaux", "Aménagement"],
     tarifs: {
       "Étude de projet": { membre: "50,000", nonMembre: "100,000" },
@@ -190,7 +198,7 @@ const entreprises = [
     note: 4.3,
     avis: 28,
     membreFEG: false,
-    premium: false,
+
     services: ["Transport marchandises", "Logistique", "Livraison express"],
     tarifs: {
       "Transport local (tonne)": { membre: "15,000", nonMembre: "30,000" },
@@ -200,19 +208,15 @@ const entreprises = [
   },
 ];
 
-const tarifsPublication = {
+const tarifsPublication1 = {
   "Tarif Membre": {
     "1 mois": { membre: "50,000" },
     "3 mois": { membre: "133,300" },
     "6 mois": { membre: "234, 600" },
     "12 mois": { membre: "408,200" },
   },
-  //   "Profil Premium": {
-  //     "1 mois": { membre: "25,000", nonMembre: "50,000" },
-  //     "3 mois": { membre: "65,000", nonMembre: "130,000" },
-  //     "6 mois": { membre: "115,000", nonMembre: "230,000" },
-  //     "12 mois": { membre: "200,000", nonMembre: "400,000" },
-  //   },
+};
+const tarifsPublication2 = {
   "Tarif Non-membre": {
     "1 mois": { membre: "80,000" },
     "3 mois": { membre: "210,000" },
@@ -225,6 +229,45 @@ export default function EntreprisesServices() {
   const [secteurFiltre, setSecteurFiltre] = useState("tous");
   const [localisationFiltre, setLocalisationFiltre] = useState("toutes");
   const [rechercheTexte, setRechercheTexte] = useState("");
+  const [selectedEntreprise, setSelectedEntreprise] =
+    useState<Entreprise | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  interface Tarif {
+    membre: string;
+    nonMembre?: string;
+  }
+
+  interface Entreprise {
+    id: number;
+    nom: string;
+    secteur: string;
+    description: string;
+    localisation: string;
+    telephone: string;
+    email: string;
+    website: string;
+    logo: string;
+    image: string;
+    note: number;
+    avis: number;
+    membreFEG: boolean;
+    services: string[];
+    tarifs: Record<string, Tarif | undefined>;
+    descriptionLongue?: string;
+    cahierCharges?: string;
+  }
+
+  interface ModalEntreprise extends Entreprise {}
+
+  const openModal = (entreprise: Entreprise) => {
+    setSelectedEntreprise(entreprise);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedEntreprise(null);
+  };
 
   const entreprisesFiltrees = entreprises.filter((entreprise) => {
     const matchSecteur =
@@ -248,6 +291,71 @@ export default function EntreprisesServices() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
+      {isModalOpen && selectedEntreprise && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-lg max-w-2xl w-full p-6 shadow-xl relative">
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl font-bold"
+            >
+              &times;
+            </button>
+
+            <h2 className="text-xl font-bold mb-4">{selectedEntreprise.nom}</h2>
+
+            <Image
+              src={selectedEntreprise.image || "/placeholder.svg"}
+              alt={selectedEntreprise.nom}
+              width={600}
+              height={300}
+              className="w-full h-48 object-cover rounded"
+            />
+
+            <p className="mt-4 text-sm text-gray-700 leading-relaxed">
+              {selectedEntreprise.descriptionLongue ||
+                selectedEntreprise.description}
+            </p>
+
+            <div className="mt-4 text-sm text-gray-800 space-y-2">
+              <div className="flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                {selectedEntreprise.telephone}
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                {selectedEntreprise.email}
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                {selectedEntreprise.localisation}
+              </div>
+              <div>
+                Site web :{" "}
+                <a
+                  href={`https://${selectedEntreprise.website}`}
+                  target="_blank"
+                  className="text-blue-600 underline"
+                >
+                  {selectedEntreprise.website}
+                </a>
+              </div>
+              {selectedEntreprise.cahierCharges && (
+                <div>
+                  Cahier des charges :{" "}
+                  <a
+                    href={selectedEntreprise.cahierCharges}
+                    target="_blank"
+                    className="text-green-600 underline"
+                    download
+                  >
+                    Télécharger le PDF
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       <section className="relative bg-gradient-to-r from-[#063a1e] to-[#063a1e]/80 text-white py-16">
         <div className="absolute inset-0 bg-[url('/ban_feg.png?height=600&width=1200')] bg-cover bg-center opacity-10" />
         <div className="container">
@@ -422,27 +530,30 @@ export default function EntreprisesServices() {
                         </div>
                       </div> */}
 
-                      
-
                       <div className="flex items-center gap-2 text-sm text-black/80">
                         <Phone className="h-4 w-4" />
                         <span>{entreprise.telephone}</span>
                       </div>
-                        <div className="flex items-center gap-2 text-sm text-black/80">
-                            <Mail className="h-4 w-4" />
-                            <span>{entreprise.email}</span>
-                        </div>
+                      <div className="flex items-center gap-2 text-sm text-black/80">
+                        <Mail className="h-4 w-4" />
+                        <span>{entreprise.email}</span>
+                      </div>
                       <div className="flex items-center gap-2 text-sm text-black/80">
                         <MapPin className="h-4 w-4" />
                         <span>{entreprise.localisation}</span>
                       </div>
                     </CardContent>
 
-                    <CardFooter className="p-4 pt-0 flex flex-col gap-2">
+                    <CardFooter className="p-4 pt-0 flex flex-col gap-5">
                       <div className="grid grid-cols-2 gap-2 w-full">
-                         <Button variant="default" size="sm">
+                        <Button
+                          variant="default"
+                          size="sm"
+                          onClick={() => openModal(entreprise)}
+                        >
                           Voir le profil
-                        </Button> 
+                        </Button>
+
                         {/* <Button
                           size="sm"
                           className="bg-[#063a1e] hover:bg-[#063a1e]/90 text-white"
@@ -575,9 +686,8 @@ export default function EntreprisesServices() {
                       </div> */}
                     </div>
 
-   
                     <div className="flex flex-col mt-8 sm:flex-row sm:justify-center items-center w-full gap-4">
-                      <Link href="/textes-juridiques">
+                      <Link href="https://docs.google.com/forms/d/e/1FAIpQLSdvlgJLCxOAtzxaqaXMtT9jTjwbsDx3iXdTVHimcAKCkkMstg/viewform?usp=header">
                         <Button
                           variant="secondary"
                           size="lg"
@@ -589,7 +699,7 @@ export default function EntreprisesServices() {
                           </span>
                         </Button>
                       </Link>
-                      <Link href="/a-propos">
+                      <Link href="https://www.lafeg.ga/home#register">
                         <Button
                           size="lg"
                           className="text-[#063a1e] hover:bg-white/70 duration-300 ease-in-out bg-white border-none font-medium min-w-[200px]"
@@ -613,24 +723,16 @@ export default function EntreprisesServices() {
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-3xl mx-auto">
-                    {Object.entries(tarifsPublication).map(
+                    {Object.entries(tarifsPublication1).map(
                       ([forfait, tarifs]) => (
                         <Card
                           key={forfait}
                           className={`relative rounded-xl overflow-hidden transition-transform transform hover:scale-[1.01] shadow-md ${
-                            forfait === "Profil Premium"
+                            forfait === "Tarif membre"
                               ? "border-[#063a1e] border-2 ring-2 ring-[#063a1e]"
                               : "border border-gray-200"
                           }`}
                         >
-                          {forfait === "Profil Premium" && (
-                            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                              <Badge className="bg-[#063a1e] text-white text-xs shadow-md">
-                                Recommandé
-                              </Badge>
-                            </div>
-                          )}
-
                           <CardHeader className="text-center bg-gradient-to-r from-[#063a1e] to-[#145c35] text-white py-5">
                             <CardTitle className="text-xl text-[#dcdaa4] font-bold">
                               {forfait}
@@ -643,7 +745,7 @@ export default function EntreprisesServices() {
                             </CardDescription>
                           </CardHeader>
 
-                          <CardContent className="space-y-4 p-4 bg-[#dcdaa4]">
+                          <CardContent className="space-y-4 p-4  bg-gradient-to-r from-[#063a1e] to-[#145c35]">
                             {Object.entries(tarifs).map(([duree, prix]) => (
                               <div
                                 key={duree}
@@ -682,8 +784,8 @@ export default function EntreprisesServices() {
                             </div> */}
                           </CardContent>
 
-                          <CardFooter className="p-4 bg-gray-50">
-                            <Button
+                          <CardFooter className="p-4  bg-gradient-to-r from-[#063a1e] to-[#145c35]">
+                            {/* <Button
                               className={`w-full rounded-md text-white font-medium ${
                                 forfait === "Profil Premium"
                                   ? "bg-[#063a1e] hover:bg-[#063a1e]/90"
@@ -691,7 +793,82 @@ export default function EntreprisesServices() {
                               }`}
                             >
                               Choisir ce forfait
-                            </Button>
+                            </Button> */}
+                          </CardFooter>
+                        </Card>
+                      )
+                    )}
+                    {Object.entries(tarifsPublication2).map(
+                      ([forfait, tarifs]) => (
+                        <Card
+                          key={forfait}
+                          className={`relative rounded-xl overflow-hidden transition-transform transform hover:scale-[1.01] shadow-md ${
+                            forfait === "Profil Premium"
+                              ? "border-[#063a1e] border-2 ring-2 ring-[#063a1e]"
+                              : "border border-gray-200"
+                          }`}
+                        >
+                          <CardHeader className="text-center bg-[#dcdaa4]  py-5">
+                            <CardTitle className="text-xl text-[#063a1e] font-bold">
+                              {forfait}
+                            </CardTitle>
+                            <CardDescription className="text-sm text-white/80 italic">
+                              {forfait === "Profil Basique" &&
+                                "Exclusivement pour les membres FEG"}
+                              {forfait === "Profil Elite" &&
+                                "Pour tout autres types d'entreprises"}
+                            </CardDescription>
+                          </CardHeader>
+
+                          <CardContent className="space-y-4 p-4 bg-[#dcdaa4] ">
+                            {Object.entries(tarifs).map(([duree, prix]) => (
+                              <div
+                                key={duree}
+                                className="flex justify-between items-center p-3 bg-gray-50 rounded-lg border"
+                              >
+                                <span className="font-medium">{duree}</span>
+                                <div className="text-right">
+                                  {/* <div className="text-sm text-muted-foreground line-through">
+                                    {prix.nonMembre} FCFA
+                                  </div> */}
+                                  <div className="font-bold text-[#063a1e]">
+                                    {prix.membre} FCFA
+                                  </div>
+                                  <div className="text-xs text-green-600">
+                                    {forfait === "Profil Basique" &&
+                                      "Membre FEG"}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+
+                            {/* <div className="pt-4 border-t">
+                              <h4 className="font-medium mb-2 text-[#063a1e]">
+                                Inclus :
+                              </h4>
+                              <ul className="text-sm space-y-1">
+                                <li className="flex items-center gap-2">
+                                  <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                                  Profil entreprise complet
+                                </li>
+                                <li className="flex items-center gap-2">
+                                  <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                                  Publication de services
+                                </li>
+                              </ul>
+                            </div> */}
+                          </CardContent>
+
+                          <CardFooter className="p-4  bg-[#dcdaa4]">
+                            {/* <Button
+                              className={`w-full rounded-md text-white font-medium ${
+                                forfait === "Profil Premium"
+                                  ? "bg-[#063a1e] hover:bg-[#063a1e]/90"
+                                  : "bg-[#145c35] hover:bg-[#145c35]/90"
+                              }`}
+                            >
+                              Choisir ce forfait
+                            </Button> */}
                           </CardFooter>
                         </Card>
                       )
