@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { fetchAllPublicites, Publicite } from "@/app/services/publicite/api";
+import { fetchAllPublicites, Annonce } from "@/app/services/annonce/api";
 
 type DynamicAdBannerProps = {
   /** 
@@ -21,7 +21,7 @@ export default function AdBanner({
   interval = 5000,
   className = "w-full h-32",
 }: DynamicAdBannerProps) {
-  const [ads, setAds] = useState<Publicite[]>([]);
+  const [ads, setAds] = useState<Annonce[]>([]);
   const [current, setCurrent] = useState(0);
 
   // Récupère et filtre les pubs à l’emplacement donné
@@ -51,9 +51,9 @@ export default function AdBanner({
 
   return (
     <div className={`relative ${className} bg-gray-100 overflow-hidden rounded-xl shadow-md`}>
-      <div className="absolute top-2 left-2 z-10 bg-gray-500/80 text-white text-xs px-1 rounded">
+      {/* <div className="absolute top-2 left-2 z-10 bg-gray-500/80 text-white text-xs px-1 rounded">
         Publicité
-      </div>
+      </div> */}
 
       {/* Image de la pub */}
         <Image

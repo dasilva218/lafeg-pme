@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { createPublicite } from "@/app/services/publicite/api";
+import { createPublicite } from "@/app/services/annonce/api";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
