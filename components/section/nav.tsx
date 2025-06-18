@@ -23,26 +23,45 @@ import {
 export default function Nav() {
   const pathname = usePathname();
 
-  const isActive = (path: string): boolean => pathname === path;
-  const navItems = [
+  const isActive = (path: string): boolean =>
+    pathname.replace(/\/$/, "") === path.replace(/\/$/, "");
+
+  type NavSubmenuItem = {
+    name: string;
+    path: string;
+    tooltip?: string;
+  };
+
+  type NavItem =
+    | { name: string; path: string; tooltip?: string; target?: string }
+    | { name: string; submenu: NavSubmenuItem[] };
+
+  const navItems: NavItem[] = [
     { name: "Accueil", path: "/" },
+    { name: "Textes Juridiques", path: "/textes-juridiques" },
     {
-      name: "Ressources",
-      submenu: [
-        { name: "Textes Juridiques", path: "/textes-juridiques" },
-        {
-          name: "SEA",
-          path: "/structures-accompagnement",
-          tooltip: "Structure d'Encadrement et d'Accompagnement",
-        },
-        { name: "Institutions Financières", path: "/institutions-financieres" },
-      ],
+      name: "SEA",
+      path: "/structures-accompagnement",
+      tooltip: "Structure d'Encadrement et d'Accompagnement",
     },
+    { name: "Institutions Financières", path: "/institutions-financieres" },
+    // {
+    //   name: "Ressources",
+    //   submenu: [
+    //     { name: "Textes Juridiques", path: "/textes-juridiques" },
+    //     {
+    //       name: "SEA",
+    //       path: "/structures-accompagnement",
+    //       tooltip: "Structure d'Encadrement et d'Accompagnement",
+    //     },
+    //     { name: "Institutions Financières", path: "/institutions-financieres" },
+    //   ],
+    // },
     {
-      name: "Solutions",
+      name: "Offres",
       submenu: [
         { name: "Offres Financières", path: "/offre" },
-        { name: "Entreprises & Services", path: "/entreprise" },
+        { name: "Offres de Services", path: "/entreprise" },
       ],
     },
     { name: "Actualités", path: "/actualite" },
@@ -78,22 +97,18 @@ export default function Nav() {
         <HamburgerMenu />
         {/* Burger button */}
 
-        <nav className="hidden md:flex gap-6">
+        <nav className="hidden lg:flex gap-6">
           <ul className="text-sm font-medium lg:flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-0 md:border-0">
             <NavigationMenu>
               <NavigationMenuList className="text-sm font-medium lg:flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-0 md:border-0">
                 {navItems.map((item) =>
-                  item.submenu ? (
-                    <NavigationMenuItem key={item.name}>
-                      <NavigationMenuTrigger
-                        className={`pb-1 relative font-bold transition-all ease-in-out text-black hover:text-[#063a1e] flex items-center gap-1 ${
-                          item.path && isActive(item) ? "text-[#063a1e]" : ""
-                        }`}
-                      >
+                  "submenu" in item ? (
+                    <NavigationMenuItem key={item.name} className="relative">
+                      <NavigationMenuTrigger className="pb-1 relative font-bold transition-all ease-in-out text-black hover:text-[#063a1e] flex items-center gap-1">
                         {item.name}
                       </NavigationMenuTrigger>
-                      <NavigationMenuContent className="bg-white rounded-md shadow-lg p-4">
-                        <div className="grid gap-2 min-w-[200px]">
+                      <NavigationMenuContent className="absolute left-0 top-full bg-white rounded-md shadow-lg p-4 z-50 min-w-[200px]">
+                        <div className="grid gap-2">
                           {item.submenu.map((sub) => (
                             <TooltipProvider key={sub.path}>
                               <Tooltip>
@@ -113,7 +128,7 @@ export default function Nav() {
                                 </TooltipTrigger>
                                 {sub.tooltip && (
                                   <TooltipContent>
-                                    <p>{sub.tooltip}</p>
+                                    <p>{sub.tooltip} </p>
                                   </TooltipContent>
                                 )}
                               </Tooltip>
@@ -146,6 +161,9 @@ export default function Nav() {
                               </Link>
                             </NavigationMenuLink>
                           </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{item.tooltip}</p>
+                          </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     </NavigationMenuItem>
