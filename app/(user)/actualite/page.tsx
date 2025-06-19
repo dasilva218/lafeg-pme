@@ -6,12 +6,10 @@ import Link from "next/link";
 import {
   Search,
   Calendar,
-  User,
-  Clock,
+  ChevronRight,
   ArrowRight,
   Grid,
   List,
-  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -242,6 +240,18 @@ export default function ActualitesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+       {/* Breadcrumb */}
+            <div className="bg-white border-b">
+              <div className="container py-4">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Link href="/" className="hover:text-[#063a1e]">
+                    Accueil
+                  </Link>
+                  <ChevronRight className="h-4 w-4" />
+                  <span>Actualité</span>
+                </div>
+              </div>
+            </div>
       {/* Hero Section */}
       <div className="relative bg-[#063a1e] text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#063a1e]/90 to-[#0a4d28]/20" />
