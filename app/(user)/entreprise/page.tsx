@@ -8,12 +8,10 @@ import {
   MapPin,
   Phone,
   Mail,
-  Star,
   Users,
   BookOpen,
-  Handshake,
   Network,
-  Gavel,
+  ChevronRight,
   // UserGroup,
   Award,
   Building2,
@@ -71,7 +69,6 @@ const entreprises = [
     descriptionLongue:
       "Le Cabinet Juridique Excellence offre des services de conseil juridique adaptés aux besoins des PME et startups. Notre équipe d'experts vous accompagne dans la rédaction de contrats, la création d'entreprise et le conseil juridique général.",
     cahierCharges: "/cahier-entreprise.pdf",
-
 
     services: [
       "Conseil juridique",
@@ -290,6 +287,20 @@ export default function EntreprisesServices() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Breadcrumb */}
+      <div className="bg-white border-b">
+        <div className="container py-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Link href="/" className="hover:text-[#063a1e]">
+              Accueil
+            </Link>
+            <ChevronRight className="h-4 w-4" />
+            <span>Offres</span>
+            <ChevronRight className="h-4 w-4" />
+            <span>Offres de Services</span>
+          </div>
+        </div>
+      </div>
       {/* Hero Section */}
       {isModalOpen && selectedEntreprise && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
