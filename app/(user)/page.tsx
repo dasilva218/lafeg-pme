@@ -529,12 +529,11 @@ export default function Home() {
       <section className="py-12 bg-[#063a1e] text-white">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-3xl font-bold">Liens utiles ?</h2>
+            <h2 className="text-3xl font-bold">Offres Financières</h2>
             <p className="text-white/90 text-lg">
-              Accédez aux sites des institutions et organismes officiels liés au
-              droit des affaires au Gabon.
+              Découvrez les offres de financement proposées par les organismes officiels liés aux marchés financiers, au Gabon comme à l&apos;international.
             </p>
-            <Link className="flex justify-center" href="/#lien">
+            <Link className="flex justify-center" href="/offre">
               <Button
                 variant="secondary"
                 size="lg"
@@ -542,7 +541,7 @@ export default function Home() {
               >
                 <span className="absolute inset-0 w-full h-full bg-[#dcdaa4] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></span>
                 <span className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
-                  <p>Voir les liens</p>
+                  <p>Voir les Offres</p>
                 </span>
               </Button>
             </Link>

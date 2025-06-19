@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import {
   Search,
   Filter,
-  Download,
+  ChevronRight,
   Eye,
   ExternalLink,
   Building2,
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 import {
   Select,
   SelectContent,
@@ -272,6 +273,20 @@ export default function OffresFinancementPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Breadcrumb */}
+      <div className="bg-white border-b">
+        <div className="container py-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Link href="/" className="hover:text-[#063a1e]">
+              Accueil
+            </Link>
+            <ChevronRight className="h-4 w-4" />
+            <span>Offres</span>
+            <ChevronRight className="h-4 w-4" />
+            <span>Offres Financières</span>
+          </div>
+        </div>
+      </div>
       {/* Header */}
       <div className="bg-[#063a1e] relative text-white py-16">
         <div className="absolute inset-0 bg-[url('/images/offre.jpg?height=600&width=1200')] bg-cover bg-center opacity-20" />
@@ -281,8 +296,8 @@ export default function OffresFinancementPage() {
               Offres Financières
             </h1>
             <p className="text-xl text-green-100 mb-8">
-              Découvrez toutes les opportunités de financement disponibles pour
-              les PME gabonaises
+              Découvrez et comparez les opportunités de financement disponibles
+              pour les PME gabonaises
             </p>
           </div>
         </div>
