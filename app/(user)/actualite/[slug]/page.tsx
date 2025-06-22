@@ -34,7 +34,7 @@ const actualites = [
     Parmi les principales mesures annoncées :
     - Réduction de 30% des taxes de création d'entreprise
     - Simplification des procédures d'obtention de licences
-    - Création d'un guichet unique numérique
+    - Création d'un guichet unique Numérique
     - Exonération fiscale de 2 ans pour les startups innovantes
 
     Cette initiative s'inscrit dans le cadre du Plan Stratégique Gabon Émergent et devrait bénéficier à plus de 15 000 PME à travers le pays.

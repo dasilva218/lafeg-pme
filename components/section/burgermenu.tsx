@@ -32,6 +32,7 @@ const HamburgerMenu = () => {
         { label: "Offres de Services", href: "/offre/services" },
       ],
     },
+    {label: "Actualités PME", href: "/actualite"},
     { label: "À propos", href: "/a-propos" },
     {
       label: "Contact",

@@ -45,7 +45,7 @@ export default function Footer() {
           <div className="w-full md:w-1/3">
             <h3 className="text-[#dcdaa4] font-bold text-lg mb-2">FEG</h3>
             <p className="text-sm">
-              Le Répertoire des textes Juridiques est une initiative de la Fédération des Entreprises du Gabon visant à faciliter l'accès à l'information par rapport aux normes juridiques.
+              Le Guide Numérique des PME est une initiative de la Fédération des Entreprises du Gabon visant à faciliter l'accès à l'information par rapport aux normes juridiques.
             </p>
             <ul className="space-y-2 mt-3 text-sm">
               <li>
@@ -165,7 +165,7 @@ export default function Footer() {
 
         
         <div className="border-t border-white mt-10 pt-5 text-center text-sm">
-          <p>© 2025 Répertoire des textes Juridiques. Tous droits réservés la FEG.</p>
+          <p>© 2025 Guide Numérique des PME. Tous droits réservés la FEG.</p>
         </div>
       </div>
     </footer>
