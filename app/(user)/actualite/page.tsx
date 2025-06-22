@@ -36,7 +36,7 @@ const actualites = [
     Parmi les principales mesures annoncées :
     - Réduction de 30% des taxes de création d'entreprise
     - Simplification des procédures d'obtention de licences
-    - Création d'un guichet unique numérique
+    - Création d'un guichet unique Numérique
     - Exonération fiscale de 2 ans pour les startups innovantes
 
     Cette initiative s'inscrit dans le cadre du Plan Stratégique Gabon Émergent et devrait bénéficier à plus de 15 000 PME à travers le pays.`,
@@ -101,19 +101,19 @@ const actualites = [
   {
     id: 4,
     titre:
-      "Transformation digitale : Les PME gabonaises à l'heure du numérique",
+      "Transformation digitale : Les PME gabonaises à l'heure du Numérique",
     slug: "transformation-digitale-pme-gabonaises-numerique",
     extrait:
       "Une étude révèle que 65% des PME gabonaises ont entamé leur transformation digitale, avec des impacts positifs sur leur croissance.",
     contenu: `Une récente étude menée par l'Institut National de la Statistique révèle l'accélération de la transformation digitale des PME gabonaises. Cette mutation, accélérée par la pandémie, transforme en profondeur le paysage entrepreneurial du pays.
 
     Principaux enseignements de l'étude :
-    - 65% des PME utilisent des outils numériques
+    - 65% des PME utilisent des outils Numériques
     - 40% ont développé une présence en ligne
     - 25% pratiquent le e-commerce
     - Croissance moyenne de 30% pour les entreprises digitalisées
 
-    Les secteurs les plus avancés sont le commerce de détail, les services et l'artisanat. Le gouvernement accompagne cette transition avec des programmes de formation et des subventions pour l'équipement numérique.`,
+    Les secteurs les plus avancés sont le commerce de détail, les services et l'artisanat. Le gouvernement accompagne cette transition avec des programmes de formation et des subventions pour l'équipement Numérique.`,
     image: "/article.png?height=400&width=600",
     auteur: "Paul Ndong",
     datePublication: "2024-12-03",
@@ -135,7 +135,7 @@ const actualites = [
     - Agroalimentaire : +60% (cacao, café, fruits transformés)
     - Artisanat : +40% (sculptures, textiles traditionnels)
     - Cosmétiques naturels : +80%
-    - Services numériques : +120%
+    - Services Numériques : +120%
 
     Les principaux marchés de destination sont le Cameroun, la Guinée Équatoriale et le Congo. L'Agence de Promotion des Exportations accompagne cette dynamique avec des missions commerciales et des formations spécialisées.`,
     image: "/article.png?height=400&width=600",

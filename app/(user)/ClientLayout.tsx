@@ -33,7 +33,7 @@ export default function ClientLayout({
             </div>
             <div className="flex flex-col items-center">
               <Image src="/images/logo-feg.png" alt="Logo FEG" width={60} height={60} className="h-12 w-auto mb-2" />
-              <h2 className="text-lg font-bold text-[#063a1e]">RÉPERTOIRE DES TEXTES JURIDIQUES</h2>
+              <h2 className="text-lg font-bold text-[#063a1e]">Guide Numérique des PME</h2>
               <p className="text-xs text-muted-foreground">POUR LES PME GABONAISES</p>
             </div>
             <div className="mt-4 h-1 w-48 bg-gray-200 rounded-full overflow-hidden">
