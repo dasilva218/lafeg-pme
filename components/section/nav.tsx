@@ -64,7 +64,7 @@ export default function Nav() {
         { name: "Offres de Services", path: "/entreprise" },
       ],
     },
-    { name: "Actualités PME", path: "/actualite",  showDot: true },
+    { name: "Actualités", path: "/actualite",  showDot: true },
     { name: "À propos", path: "/a-propos" },
     {
       name: "Contact",
