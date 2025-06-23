@@ -104,7 +104,11 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#063a1e] to-[#063a1e]/50 text-white p-10 lg:p-16">
+      <section className="bg-gradient-to-r from-[#063a1e] to-[#063a1e]/50 text-white relative overflow-hidden p-10 lg:p-16">
+      <div className="absolute inset-0 opacity-25">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#fff] to-transparent rounded-full -translate-x-48 -translate-y-48"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#063a1e] to-transparent rounded-full translate-x-48 translate-y-48"></div>
+        </div>
         <div className="lg:container">
           <div className="grid grid-cols-1 md:flex md:justify-between gap-8 lg:gap-12 items-center">
             <div className="space-y-6 w-full md:max-w-[50%] flex flex-col items-center text-center md:items-start md:text-left">
