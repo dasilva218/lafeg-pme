@@ -5,8 +5,19 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Form from "@/components/section/form";
 import AdBanner from "@/components/ads/AdBanner";
-import { ArrowRight, FileText, Linkedin, Facebook, MapPin, Mail, Phone, Globe } from "lucide-react";
+import {
+  ArrowRight,
+  FileText,
+  Linkedin,
+  Facebook,
+  MapPin,
+  Mail,
+  Phone,
+  BookOpen,
+  ExternalLink,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -59,7 +70,7 @@ export default function Home() {
               className="h-12 w-auto mb-2"
             />
             <h2 className="text-lg font-bold text-[#063a1e]">
-              Répertoire des textes Juridiques
+              Guide Numérique des PME
             </h2>
           </div>
           <div className="mt-4 h-1 w-48 bg-gray-200 rounded-full overflow-hidden">
@@ -71,7 +82,7 @@ export default function Home() {
   }
 
   return (
-    <div className="">
+    <div className="bg-[#eaeeeb]">
       <TickerTextes />
       {/* Scrolling News Ticker */}
 
@@ -93,7 +104,11 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#063a1e] to-[#063a1e]/50 text-white p-10 lg:p-16">
+      <section className="bg-gradient-to-r from-[#063a1e] to-[#063a1e]/50 text-white relative overflow-hidden p-10 lg:p-16">
+      <div className="absolute inset-0 opacity-25">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#fff] to-transparent rounded-full -translate-x-48 -translate-y-48"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#063a1e] to-transparent rounded-full translate-x-48 translate-y-48"></div>
+        </div>
         <div className="lg:container">
           <div className="grid grid-cols-1 md:flex md:justify-between gap-8 lg:gap-12 items-center">
             <div className="space-y-6 w-full md:max-w-[50%] flex flex-col items-center text-center md:items-start md:text-left">
@@ -141,122 +156,19 @@ export default function Home() {
       </section>
 
       {/* Search Section */}
-      <section className="py-12 bg-[#EAEEEB]">
+      <section className="py-12 bg-white">
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold mb-2">
                 Recherchez un texte juridique
               </h2>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground font-bold">
                 Trouvez rapidement les textes juridiques dont vous avez besoin
                 pour votre entreprise
               </p>
             </div>
             <TextSearch />
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Categories */}
-      <section className="py-12">
-        <div className="container">
-          <h2 className="text-2xl font-bold mb-8">Catégories principales</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Category 1 */}
-            <Card className="shadow-md transition-shadow border-2 border-[#dcdaa4]">
-              <CardHeader className="pb-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e]  flex items-center justify-center mb-3">
-                  <FileText className="h-6 w-6 text-[#063a1e]" />
-                </div>
-                <CardTitle>
-                  Textes législatifs et règlementaires des administrations
-                  publiques
-                </CardTitle>
-                <CardDescription className="text-black">
-                  Réglementations et lois encadrant les activités des
-                  administrations publiques.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-1 text-sm">
-                  <li className="text-black">
-                    • Loi sur les sociétés commerciales
-                  </li>
-                  <li className="text-black">• Acte uniforme OHADA</li>
-                  <li className="text-black">• Formalités d'immatriculation</li>
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Link href="/textes-juridiques#administrations">
-                  <Button className="w-full gap-1 text-white hover:text-[#063a1e]/90 hover:bg-[#063a1e]/20">
-                    Consulter <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-
-            {/* Category 2 */}
-            <Card className="shadow-md transition-shadow border-2 border-[#dcdaa4]">
-              <CardHeader className="pb-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e]  flex items-center justify-center mb-3">
-                  <FileText className="h-6 w-6 text-[#063a1e]" />
-                </div>
-                <CardTitle>
-                  Textes législatifs et règlementaires pour les PME
-                </CardTitle>
-                <CardDescription className="text-black">
-                  Normes et obligations légales spécifiques aux petites et
-                  moyennes entreprises.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-1 text-sm">
-                  <li className="text-black">• Code général des impôts</li>
-                  <li className="text-black">• TVA et droits d'accises</li>
-                  <li className="text-black">
-                    • Avantages fiscaux pour les PME
-                  </li>
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Link href="/textes-juridiques#pme">
-                  <Button className="w-full gap-1 text-white hover:text-[#063a1e]/90 hover:bg-[#063a1e]/20">
-                    Consulter <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-
-            {/* Category 3 */}
-            <Card className="shadow-md transition-shadow border-2 border-[#dcdaa4]">
-              <CardHeader className="pb-5">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e]  flex items-center justify-center mb-3">
-                  <FileText className="h-6 w-6 text-[#063a1e]" />
-                </div>
-                <CardTitle>
-                  Textes juridiques régionaux et internationaux
-                </CardTitle>
-                <CardDescription className="text-black">
-                  Accords, conventions et traités influençant le droit des
-                  affaires au niveau mondial.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-1 text-sm">
-                  <li className="text-black">• Code du travail</li>
-                  <li className="text-black">• Conventions collectives</li>
-                  <li className="text-black">• Protection sociale</li>
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Link href="/textes-juridiques#internationaux">
-                  <Button className="w-full gap-1 text-white hover:text-[#063a1e]/90 hover:bg-[#063a1e]/20">
-                    Consulter <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
           </div>
         </div>
       </section>
@@ -270,6 +182,343 @@ export default function Home() {
           className="w-full h-full object-cover object-center max-h-52"
         />
       </div>
+      {/* Enhanced Business Services Section */}
+      <section className="py-12 bg-gradient-to-br from-[#063a1e] via-[#063a1e]/95 to-[#063a1e]/90 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-25">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#fff] to-transparent rounded-full -translate-x-48 -translate-y-48"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#bdbd95] to-transparent rounded-full translate-x-48 translate-y-48"></div>
+        </div>
+
+        <div className="container relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] bg-clip-text text-transparent mb-4">
+              Offres & Services des PME
+            </h2>
+            <p className="text-white/90 text-lg max-w-3xl mx-auto">
+              Découvrez et publiez vos services sur notre plateforme dédiée aux
+              PME gabonaises. Bénéficiez de tarifs préférentiels en tant que
+              membre FEG.
+            </p>
+          </div>
+
+          {/* Statistics */}
+          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+            <div className="text-center">
+              <div className="text-3xl font-bold bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] bg-clip-text text-transparent">
+                150+
+              </div>
+              <p className="text-white/80 text-sm">Entreprises inscrites</p>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] bg-clip-text text-transparent">
+                500+
+              </div>
+              <p className="text-white/80 text-sm">Services proposés</p>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] bg-clip-text text-transparent">
+                85%
+              </div>
+              <p className="text-white/80 text-sm">Membres FEG</p>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] bg-clip-text text-transparent">
+                50%
+              </div>
+              <p className="text-white/80 text-sm">Réduction membres</p>
+            </div>
+          </div> */}
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Service Categories */}
+            <div className="bg-white/10 backdrop-blur-xl rounded-lg p-6 border border-white/20">
+              {/* <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center mb-4">
+                <span className="text-[#063a1e] font-bold text-lg">C</span>
+              </div> */}
+              <h3 className="text-xl font-bold mb-3">Conseils & Expertise</h3>
+              <ul className="space-y-2 text-white/90 text-sm mb-4">
+                <li>• Conseil en gestion d'entreprise</li>
+                <li>• Audit & Expertise comptable</li>
+                <li>• Conseil juridique spécialisé</li>
+                <li>• Accompagnement stratégique</li>
+              </ul>
+              {/* <Badge className="bg-[#dcdaa4]/20 text-[#dcdaa4] border-[#dcdaa4]/30">
+                45 services disponibles
+              </Badge> */}
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-xl rounded-lg p-6 border border-white/20">
+              {/* <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center mb-4">
+                <span className="text-[#063a1e] font-bold text-lg">T</span>
+              </div> */}
+              <h3 className="text-xl font-bold mb-3">Technologies & Digital</h3>
+              <ul className="space-y-2 text-white/90 text-sm mb-4">
+                <li>• Développement web & mobile</li>
+                <li>• Solutions ERP et CRM</li>
+                <li>• Transformation digitale</li>
+                <li>• Marketing digital</li>
+              </ul>
+              {/* <Badge className="bg-[#dcdaa4]/20 text-[#dcdaa4] border-[#dcdaa4]/30">
+                32 services disponibles
+              </Badge> */}
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-xl rounded-lg p-6 border border-white/20">
+              {/* <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center mb-4">
+                <span className="text-[#063a1e] font-bold text-lg">F</span>
+              </div> */}
+              <h3 className="text-xl font-bold mb-3">
+                Formation & Développement
+              </h3>
+              <ul className="space-y-2 text-white/90 text-sm mb-4">
+                <li>• Formation professionnelle</li>
+                <li>• Coaching d'entreprise</li>
+                <li>• Développement des compétences</li>
+                <li>• Certifications métiers</li>
+              </ul>
+              {/* <Badge className="bg-[#dcdaa4]/20 text-[#dcdaa4] border-[#dcdaa4]/30">
+                28 services disponibles
+              </Badge> */}
+            </div>
+          </div>
+
+          {/* CTA Section */}
+          <div className="mt-12 text-center">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 border border-white/20">
+              <h3 className="text-2xl font-bold mb-4">
+                Rejoignez la plateforme dès aujourd'hui
+              </h3>
+              <p className="text-white/90 mb-6 max-w-2xl mx-auto">
+                Publiez vos services et bénéficiez de la visibilité auprès de
+                milliers d'entreprises gabonaises. Les membres FEG profitent de
+                d'une réduction sur nos les forfaits.
+              </p>
+
+              <div className="flex flex-col mt-8 sm:flex-row sm:justify-center items-center w-full gap-4">
+                <Link href="/entreprise">
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    className="bg-[#063a1e] relative hover:bg-white min-w-[200px] group"
+                  >
+                    <span className="absolute inset-0 w-full h-full bg-[#dcdaa4] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></span>
+                    <span className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
+                      <p className="justify-center items-center flex">
+                        {" "}
+                        Explorer les offres{" "}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </p>
+                    </span>
+                  </Button>
+                </Link>
+                <Link href="https://www.lafeg.ga/home#register">
+                  <Button
+                    size="lg"
+                    className="text-[#063a1e] hover:bg-white/70 duration-300 ease-in-out bg-white border-none font-medium min-w-[200px]"
+                  >
+                    Devenir membre FEG
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Support Structures Section */}
+      <section className="py-12 bg-gray-50">
+        <div className="container">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-[#063a1e]">
+                Structures d'Accompagnement
+              </h2>
+              <p className="text-muted-foreground mt-2">
+                Bénéficiez d'un accompagnement personnalisé pour votre
+                entreprise
+              </p>
+            </div>
+            <Button
+              className="mt-4 md:mt-0 bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] hover:from-[#e6e4b4] hover:to-[#c7c7a0] font-medium"
+              asChild
+            >
+              <Link href="/structures-accompagnement">
+                Découvrir toutes les structures{" "}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Incubateurs */}
+            <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-[#063a1e]">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center">
+                    <span className="text-[#063a1e] font-bold text-lg">I</span>
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Incubateurs</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Accompagnement startup
+                    </p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm mb-4">
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                    <span>Programme d'incubation 6-12 mois</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                    <span>Mentorat personnalisé</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                    <span>Accès au financement</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/structures-accompagnement?tab=incubateurs">
+                  <Button
+                    variant="ghost"
+                    className="w-full text-[#063a1e] hover:bg-[#063a1e]/10"
+                  >
+                    Explorer les incubateurs
+                  </Button>
+                </Link>
+                <Badge className="bg-[#063a1e]/10 text-[#063a1e] hover:bg-[#063a1e]/20">
+                  5 structures disponibles
+                </Badge>
+              </CardFooter>
+            </Card>
+
+            {/* Centres de formation */}
+            <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-[#063a1e]">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center">
+                    <span className="text-[#063a1e] font-bold text-lg">F</span>
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">
+                      Centres de Formation
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Développement des compétences
+                    </p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm mb-4">
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                    <span>Formation professionnelle</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                    <span>Certifications reconnues</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                    <span>Formation continue</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/structures-accompagnement?tab=centresFormation">
+                  <Button
+                    variant="ghost"
+                    className="w-full text-[#063a1e] hover:bg-[#063a1e]/10"
+                  >
+                    Voir les formations
+                  </Button>
+                </Link>
+                <Badge className="bg-[#063a1e]/10 text-[#063a1e] hover:bg-[#063a1e]/20">
+                  12 centres partenaires
+                </Badge>
+              </CardFooter>
+            </Card>
+
+            {/* Structure publique */}
+            <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-[#063a1e]">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center">
+                    <span className="text-[#063a1e] font-bold text-lg">C</span>
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">
+                      Structure Publique
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Accompagnement spécialisé
+                    </p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm mb-4">
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                    <span>Ministère des PME</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                    <span>CNSS, CNAMGS</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#063a1e] rounded-full"></div>
+                    <span>Chambre de commerce</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/structures-accompagnement?tab=structuresPubliques">
+                  <Button
+                    variant="ghost"
+                    className="w-full text-[#063a1e] hover:bg-[#063a1e]/10"
+                  >
+                    Voir les structures Publiques
+                  </Button>
+                </Link>
+                <Badge className="bg-[#063a1e]/10 text-[#063a1e] hover:bg-[#063a1e]/20">
+                  10+ institutions publiques
+                </Badge>
+              </CardFooter>
+            </Card>
+          </div>
+
+          {/* Call to Action */}
+          {/* <div className="mt-12 text-center">
+            <div className="bg-white rounded-lg p-8 shadow-sm border-2 border-[#dcdaa4]/30">
+              <h3 className="text-xl font-bold text-[#063a1e] mb-4">
+                Besoin d'un accompagnement personnalisé ?
+              </h3>
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                Nos structures partenaires vous accompagnent à chaque étape de
+                votre développement, de la création à la croissance de votre
+                entreprise.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button className="bg-[#063a1e] hover:bg-[#063a1e]/90">
+                  Demander un accompagnement
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-[#063a1e] text-[#063a1e] hover:bg-[#063a1e]/10"
+                >
+                  Télécharger le guide
+                </Button>
+              </div>
+            </div>
+          </div> */}
+        </div>
+      </section>
+      {/* Financial Institutions Section */}
       <section className="py-12 bg-[#063a1e]">
         <div className="container">
           <div className="flex flex-col md:flex-row justify-between items-center mb-8">
@@ -337,12 +586,17 @@ export default function Home() {
                     • Services bancaires aux entreprises
                   </li>
                 </ul>
-                <Link
-                  href="/institutions-financieres?tab=banques"
-                  className="inline-flex items-center text-sm font-medium text-[#063a1e] hover:underline"
-                >
-                  Explorer <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+                <div className="flex items-center justify-between">
+                  <Link
+                    href="/institutions-financieres?tab=banques"
+                    className="inline-flex items-center text-sm font-medium text-[#063a1e] hover:underline"
+                  >
+                    Explorer <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                  <Badge className="bg-[#063a1e]/20 text-[#063a1e] border-[#063a1e]/30">
+                    45 disponibles
+                  </Badge>
+                </div>
               </div>
             </div>
 
@@ -380,12 +634,17 @@ export default function Home() {
                     • Accompagnement de proximité
                   </li>
                 </ul>
-                <Link
-                  href="/institutions-financieres?tab=microfinance"
-                  className="inline-flex items-center text-sm font-medium text-[#063a1e] hover:underline"
-                >
-                  Explorer <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+                <div className="flex items-center justify-between">
+                  <Link
+                    href="/institutions-financieres?tab=microfinance"
+                    className="inline-flex items-center text-sm font-medium text-[#063a1e] hover:underline"
+                  >
+                    Explorer <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                  <Badge className="bg-[#063a1e]/20 text-[#063a1e] border-[#063a1e]/30">
+                    45 disponibles
+                  </Badge>
+                </div>
               </div>
             </div>
 
@@ -423,115 +682,329 @@ export default function Home() {
                   </li>
                   <li className="text-gray-600">• Financement de croissance</li>
                 </ul>
-                <Link
-                  href="/institutions-financieres?tab=fonds"
-                  className="inline-flex items-center text-sm font-medium text-[#063a1e] hover:underline"
-                >
-                  Explorer <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+                <div className="flex items-center justify-between">
+                  <Link
+                    href="/institutions-financieres?tab=fonds"
+                    className="inline-flex items-center text-sm font-medium text-[#063a1e] hover:underline"
+                  >
+                    Explorer <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                  <Badge className="bg-[#063a1e]/20 text-[#063a1e] border-[#063a1e]/30">
+                    45 disponibles
+                  </Badge>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      {/* Resources Section 
-      <section className=" hidden py-12">
+      {/* Financial Offers Comparison Section */}
+      <section className="py-12 bg-white">
         <div className="container">
-          <h2 className="text-2xl font-bold mb-8">Ressources utiles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-           
-            <Card className="hover:shadow-md transition-shadow">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-[#063a1e] mb-4">
+              Offres de Financement
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              Découvrez et comparez les meilleures opportunités de financement
+              disponibles pour les PME gabonaises
+            </p>
+          </div>
+
+          {/* Quick Filters */}
+          {/* <div className="bg-gray-50 rounded-lg p-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Type de financement
+                </label>
+                <select className="w-full p-2 border border-gray-300 rounded-md text-sm">
+                  <option>Tous les types</option>
+                  <option>Crédit d'équipement</option>
+                  <option>Crédit de fonctionnement</option>
+                  <option>Crédit immobilier</option>
+                  <option>Microfinance</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Secteur d'activité
+                </label>
+                <select className="w-full p-2 border border-gray-300 rounded-md text-sm">
+                  <option>Tous les secteurs</option>
+                  <option>Commerce</option>
+                  <option>Agriculture</option>
+                  <option>Services</option>
+                  <option>Industrie</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Montant souhaité
+                </label>
+                <select className="w-full p-2 border border-gray-300 rounded-md text-sm">
+                  <option>Tous montants</option>
+                  <option>Moins de 5M FCFA</option>
+                  <option>5M - 50M FCFA</option>
+                  <option>50M - 200M FCFA</option>
+                  <option>Plus de 200M FCFA</option>
+                </select>
+              </div>
+              <div className="flex items-end">
+                <Button className="w-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] hover:from-[#e6e4b4] hover:to-[#c7c7a0] font-medium">
+                  Filtrer les offres
+                </Button>
+              </div>
+            </div>
+          </div> */}
+
+          {/* Featured Offers */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {/* Offer 1 */}
+            <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-green-500">
               <CardHeader>
-                <div className="w-12 h-12 rounded-full bg-[#063a1e]/10 flex items-center justify-center mb-3">
-                  <BookOpen className="h-6 w-6 text-[#063a1e]" />
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className="text-[#063a1e]">
+                      <h1 className="text-base ">Crédit Équipement Pro</h1>
+                      
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      BICIG - Banque
+                    </p>
+                  </div>
+                  <Badge className="bg-green-100 text-green-800">
+                    Taux préférentiel
+                  </Badge>
                 </div>
-                <CardTitle>Guides pratiques</CardTitle>
-                <CardDescription>
-                  Guides d'application des textes juridiques
-                </CardDescription>
               </CardHeader>
               <CardContent>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Montant</p>
+                    <p className="font-semibold">5M - 100M FCFA</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Taux</p>
+                    <p className="font-semibold text-green-600">8.5% - 12%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Durée</p>
+                    <p className="font-semibold">2 - 7 ans</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Apport</p>
+                    <p className="font-semibold">20% minimum</p>
+                  </div>
+                </div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Des guides explicatifs pour comprendre et appliquer
-                  correctement les textes juridiques dans votre entreprise.
+                  Financement d'équipements professionnels avec conditions
+                  préférentielles pour les membres FEG.
                 </p>
+                
               </CardContent>
-              <CardFooter>
-                <Button
-                  variant="ghost"
-                  className="w-full text-[#063a1e] hover:text-[#063a1e]/90 hover:bg-[#063a1e]/10"
-                >
-                  Consulter les guides
-                </Button>
-              </CardFooter>
             </Card>
 
-           
-            <Card className="hover:shadow-md transition-shadow">
+            {/* Offer 2 */}
+            <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-blue-500">
               <CardHeader>
-                <div className="w-12 h-12 rounded-full bg-[#063a1e]/10 flex items-center justify-center mb-3">
-                  <FileText className="h-6 w-6 text-[#063a1e]" />
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className="text-lg text-[#063a1e]">
+                                          <h1 className="text-base ">                 Crédit de Fonctionnement</h1>
+                    </CardTitle>
+
+                    <p className="text-sm text-muted-foreground">
+                      BWMAC - Banque
+                    </p>
+                  </div>
+                  <Badge className="bg-blue-100 text-blue-800">Flexible</Badge>
                 </div>
-                <CardTitle>Modèles de documents</CardTitle>
-                <CardDescription>
-                  Documents types pour votre entreprise
-                </CardDescription>
               </CardHeader>
               <CardContent>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Montant</p>
+                    <p className="font-semibold">10M - 500M FCFA</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Taux</p>
+                    <p className="font-semibold text-blue-600">9% - 14%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Durée</p>
+                    <p className="font-semibold">6 mois - 3 ans</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Garantie</p>
+                    <p className="font-semibold">Selon contexte</p>
+                  </div>
+                </div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Téléchargez des modèles de documents juridiques prêts à
-                  l'emploi pour votre PME (statuts, contrats, etc.).
+                  Ligne de crédit flexible pour financer le besoin en fonds de
+                  roulement de votre entreprise.
                 </p>
+              
               </CardContent>
-              <CardFooter>
-                <Button
-                  variant="ghost"
-                  className="w-full text-[#063a1e] hover:text-[#063a1e]/90 hover:bg-[#063a1e]/10"
-                >
-                  Télécharger les modèles
-                </Button>
-              </CardFooter>
             </Card>
 
-            
-            <Card className="hover:shadow-md transition-shadow">
+            {/* Offer 3 */}
+            <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-orange-500">
               <CardHeader>
-                <div className="w-12 h-12 rounded-full bg-[#063a1e]/10 flex items-center justify-center mb-3">
-                  <ExternalLink className="h-6 w-6 text-[#063a1e]" />
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className=" text-[#063a1e]">
+                                           <h1 className="text-base ">                                Microcrédit Entrepreneur </h1>
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      FINAFI - Microfinance
+                    </p>
+                  </div>
+                  <Badge className="bg-orange-100 text-orange-800">
+                    Accessible
+                  </Badge>
                 </div>
-                <CardTitle>Liens utiles</CardTitle>
-                <CardDescription>
-                  Sites officiels et ressources externes
-                </CardDescription>
               </CardHeader>
               <CardContent>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Montant</p>
+                    <p className="font-semibold">500K - 10M FCFA</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Taux</p>
+                    <p className="font-semibold text-orange-600">12% - 18%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Durée</p>
+                    <p className="font-semibold">6 mois - 2 ans</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Garantie</p>
+                    <p className="font-semibold">Solidaire</p>
+                  </div>
+                </div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Accédez aux sites des institutions et organismes officiels
-                  liés au droit des affaires au Gabon.
+                  Solution de financement adaptée aux petites entreprises et
+                  entrepreneurs individuels.
                 </p>
+                
               </CardContent>
-              <CardFooter>
-                <Link href="#lien" scroll={true}>
-                  <Button
-                    variant="ghost"
-                    className="w-full text-[#063a1e] hover:text-[#063a1e]/90 hover:bg-[#063a1e]/10"
-                  >
-                    Voir les liens
-                  </Button>
-                </Link>
-              </CardFooter>
+            </Card>
+
+            {/* Offer 4 */}
+            <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-purple-500">
+              <CardHeader>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className=" text-[#063a1e]">
+                      <h1 className="text-base ">Crédit Immobilier Pro</h1>
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      UGB - Banque
+                    </p>
+                  </div>
+                  <Badge className="bg-purple-100 text-purple-800">
+                    Long terme
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Montant</p>
+                    <p className="font-semibold">50M - 2Mds FCFA</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Taux</p>
+                    <p className="font-semibold text-purple-600">7.5% - 10%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Durée</p>
+                    <p className="font-semibold">5 - 20 ans</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Apport</p>
+                    <p className="font-semibold">30% minimum</p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Financement pour l'acquisition de locaux commerciaux ou
+                  industriels pour votre entreprise.
+                </p>
+                
+              </CardContent>
             </Card>
           </div>
-        </div>
-      </section>*/}
 
+          {/* Comparison Tool */}
+          <div className="bg-gradient-to-r from-[#063a1e] to-[#063a1e]/90 rounded-lg p-8 text-white">
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold mb-2">Outil de Comparaison</h3>
+              <p className="text-white/90">
+                Comparez jusqu'à 3 offres de financement pour trouver celle qui
+                correspond le mieux à vos besoins
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <h4 className="font-semibold mb-2">Critères de comparaison</h4>
+                <ul className="text-sm text-white/90 space-y-1">
+                  <li>• Taux d'intérêt</li>
+                  <li>• Montant maximum</li>
+                  <li>• Durée de remboursement</li>
+                  <li>• Conditions d'éligibilité</li>
+                </ul>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <h4 className="font-semibold mb-2">Avantages membres FEG</h4>
+                <ul className="text-sm text-white/90 space-y-1">
+                  <li>• Taux préférentiels</li>
+                  <li>• Traitement prioritaire</li>
+                  <li>• Accompagnement dédié</li>
+                  <li>• Conditions négociées</li>
+                </ul>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <h4 className="font-semibold mb-2">Support inclus</h4>
+                <ul className="text-sm text-white/90 space-y-1">
+                  <li>• Simulation personnalisée</li>
+                  <li>• Aide au montage de dossier</li>
+                  <li>• Suivi de demande</li>
+                  <li>• Conseil expert</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <Link href="/offre">
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    className="bg-[#063a1e] relative hover:bg-white min-w-[200px] group"
+                  >
+                    <span className="absolute inset-0 w-full h-full bg-[#dcdaa4] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></span>
+                    <span className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
+                      <p className="flex items-center justify-center">          Voir toutes les offres <ArrowRight className="ml-2 h-4 w-4" /></p>
+                    </span>
+                  </Button>
+                </Link>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* CTA Section */}
-      <section className="py-12 bg-[#063a1e] text-white">
+      {/* <section className="py-12 bg-[#063a1e] text-white">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <h2 className="text-3xl font-bold">Offres Financières</h2>
             <p className="text-white/90 text-lg">
-              Découvrez les offres de financement proposées par les organismes officiels liés aux marchés financiers, au Gabon comme à l&apos;international.
+              Découvrez les offres de financement proposées par les organismes
+              officiels liés aux marchés financiers, au Gabon comme à
+              l&apos;international.
             </p>
             <Link className="flex justify-center" href="/offre">
               <Button
@@ -545,6 +1018,164 @@ export default function Home() {
                 </span>
               </Button>
             </Link>
+          </div>
+        </div>
+      </section> */}
+
+      {/* News & Events Section */}
+      <section className="py-12 bg-white">
+        <div className="container">
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-[#063a1e] flex items-center gap-3">
+                Actualités & Événements
+                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+              </h2>
+              <p className="text-muted-foreground mt-2">
+                Restez informé des dernières actualités du monde des PME
+              </p>
+            </div>
+            <Button
+              className="bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] hover:from-[#e6e4b4] hover:to-[#c7c7a0] font-medium"
+              asChild
+            >
+              <Link href="/actualites">
+                Toutes les actualités <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Featured Article */}
+            <div className="lg:col-span-2">
+              <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="relative h-64 overflow-hidden">
+                  <Image
+                    src="/placeholder.svg?height=400&width=600"
+                    alt="Article principal"
+                    width={600}
+                    height={400}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-red-500 text-white">À LA UNE</Badge>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                    <h3 className="text-white text-xl font-bold mb-2">
+                      Nouveau dispositif de financement pour les PME gabonaises
+                    </h3>
+                    <p className="text-white/90 text-sm">
+                      Le gouvernement annonce un fonds de 50 milliards FCFA pour
+                      soutenir les PME...
+                    </p>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                    <span>22 Juin 2025</span>
+                    <span>•</span>
+                    <span>Économie</span>
+                  </div>
+                  <p className="text-muted-foreground mb-4">
+                    Cette initiative gouvernementale vise à faciliter l'accès au
+                    financement pour les petites et moyennes entreprises
+                    gabonaises dans les secteurs prioritaires de l'économie
+                    nationale...
+                  </p>
+                  <Button
+                    variant="ghost"
+                    className="text-[#063a1e] hover:bg-[#063a1e]/10 p-0"
+                  >
+                    Lire l'article complet{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Side Articles */}
+            <div className="space-y-6">
+              <Card className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge variant="outline" className="text-xs">
+                      ÉVÉNEMENT
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">
+                      20 Juin 2025
+                    </span>
+                  </div>
+                  <h4 className="font-semibold mb-2 text-sm">
+                    Forum de l'Entrepreneuriat Féminin 2025
+                  </h4>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Rendez-vous le 15 juillet à Libreville pour célébrer
+                    l'entrepreneuriat féminin au Gabon.
+                  </p>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-[#063a1e] hover:bg-[#063a1e]/10 p-0 h-auto"
+                  >
+                    En savoir plus
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge variant="outline" className="text-xs">
+                      FORMATION
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">
+                      18 Juin 2025
+                    </span>
+                  </div>
+                  <h4 className="font-semibold mb-2 text-sm">
+                    Webinaire : Digitalisation des PME
+                  </h4>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Formation gratuite sur les outils digitaux essentiels pour
+                    moderniser votre entreprise.
+                  </p>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-[#063a1e] hover:bg-[#063a1e]/10 p-0 h-auto"
+                  >
+                    S'inscrire gratuitement
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge variant="outline" className="text-xs">
+                      RÉGLEMENTATION
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">
+                      16 Juin 2025
+                    </span>
+                  </div>
+                  <h4 className="font-semibold mb-2 text-sm">
+                    Nouvelles mesures fiscales 2025
+                  </h4>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Découvrez les changements fiscaux qui impactent les PME à
+                    partir de juillet 2025.
+                  </p>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-[#063a1e] hover:bg-[#063a1e]/10 p-0 h-auto"
+                  >
+                    Consulter le guide
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
@@ -598,9 +1229,11 @@ export default function Home() {
                     <h3 className="text-[#dcdaa4] font-bold text-lg mb-3">
                       Informations de contact
                     </h3>
-                    <h3>Pour tous vos besoins d'informations contactez-nous ou suivez-nous sur nos réseaux sociaux.</h3>
+                    <h3>
+                      Pour tous vos besoins d'informations contactez-nous ou
+                      suivez-nous sur nos réseaux sociaux.
+                    </h3>
                     <ul className="space-y-2 mt-4 text-sm">
-                     
                       <li className="flex items-center gap-2">
                         <Phone className="h-4 w-4" />
                         <a className="hover:underline" href="tel:065815738">
@@ -614,17 +1247,16 @@ export default function Home() {
                             className="hover:underline"
                             href="mailto:info@lafeg.ga"
                           >
-                            info@lafeg.ga / 
+                            info@lafeg.ga /
                           </a>
                           <a
                             className="hover:underline"
                             href="mailto:a.obiang@lafeg.ga"
                           >
-                             a.obiang@lafeg.ga
+                            a.obiang@lafeg.ga
                           </a>
                         </div>
                       </li>
-                     
                     </ul>
 
                     <div className="mt-4">

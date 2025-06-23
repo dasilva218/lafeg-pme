@@ -607,7 +607,7 @@ export default function EntreprisesServices() {
                       <h2 className="text-3xl font-bold mb-4">
                         Pourquoi publier sur le{" "}
                         <span className="text-[#dcdaa4]">
-                          Portail Numérique des PME
+                          Guide Numérique des PME
                         </span>
                          ?
                       </h2>

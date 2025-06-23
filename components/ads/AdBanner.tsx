@@ -50,7 +50,7 @@ export default function AdBanner({
   const pub = ads[current];
 
   return (
-    <div className={`relative ${className} bg-gray-100 overflow-hidden rounded-xl shadow-md`}>
+    <div className={`relative ${className} bg-gray-100 overflow-hidden rounded-xl shadow-lg`}>
       {/* <div className="absolute top-2 left-2 z-10 bg-gray-500/80 text-white text-xs px-1 rounded">
         Publicité
       </div> */}

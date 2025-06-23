@@ -74,7 +74,7 @@ export default function TextSearch() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm">
+    <div className="bg-[#063a1e] p-6 rounded-lg shadow-sm">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col md:flex-row gap-4">
           <Input

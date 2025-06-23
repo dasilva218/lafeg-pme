@@ -55,14 +55,14 @@ export default function NewText() {
     loadData();
   }, [activeTab, pagination.page, pagination.limit]);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("fr-FR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
+  // const formatDate = (dateString: string) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleDateString("fr-FR", {
+  //     year: "numeric",
+  //     month: "long",
+  //     day: "numeric",
+  //   });
+  // };
 
   if (loading)
     return (
@@ -93,7 +93,7 @@ export default function NewText() {
                     <Badge className="bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] font-medium">
                       Nouveau
                     </Badge>
-                    <span className="text-sm ">
+                    <span className="text-sm font-bold ">
                       {new Date(text.date_parution).toLocaleDateString(
                         "fr-FR",
                         {
@@ -105,12 +105,13 @@ export default function NewText() {
                     </span>{" "}
                     {/* Utilisez la date de l'objet */}
                   </div>
-                  <CardTitle className="mt-2">{truncateText(text.titre, 90)}</CardTitle>{" "}
+                  <CardTitle className="mt-1"><p className="text-base">{truncateText(text.titre, 80)}</p></CardTitle>{" "}
                   {/* Utilisez le titre de l'objet */}
                 </CardHeader>
                 <CardContent>
-                  <p className="font-medium">
-                    {text.description || "Aucune description disponible"}
+                  <p className="font-medium text-sm">
+                    {/* {text.description || "Aucune description disponible"} */}
+                    {truncateText(text.description || "Aucune description disponible", 120)}
                   </p>{" "}
                   {/* Utilisez la description de l'objet */}
                 </CardContent>
