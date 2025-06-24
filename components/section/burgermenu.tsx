@@ -28,7 +28,7 @@ const HamburgerMenu = () => {
       label: "Offres",
       href: "/offre",
       children: [
-        { label: "Offres Financières", href: "/offre/financieres" },
+        { label: "Instrument de Financement", href: "/offre/financieres" },
         { label: "Offres de Services", href: "/offre/services" },
       ],
     },

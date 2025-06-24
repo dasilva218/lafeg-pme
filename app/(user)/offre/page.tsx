@@ -49,7 +49,7 @@ const offresFinancement = [
     but: "Technique de financement destiné à l'acquisition d'un bien nécessaire au bon fonctionnement ou au développement de l'activité : matériels de travail, véhicule, agrandissement de locaux, rachat de fonds de commerce etc",
     montantMin: "3000000",
     montantMax: "Non spécifié",
-    devise: "XAF",
+    devise: "F CFA",
     admissibilite: "Entreprises établies avec projet d'investissement viable",
     documentation: "Dossier de crédit complet, garanties, états financiers",
     remboursement: "6 à 36 mois",
@@ -64,7 +64,7 @@ const offresFinancement = [
     but: "Technique de financement permettant l'acquisition à court terme de petits matériels et outillages neufs (pneumatiques, pièces détachées, moteurs hors-bord, matériels bureautiques).",
     montantMin: "1000000",
     montantMax: "Non spécifié",
-    devise: "XAF",
+    devise: "F CFA",
     admissibilite: "PME ayant besoin d'équipements professionnels",
     documentation: "Facture pro forma, garanties",
     remboursement: "3 à 12 mois",
@@ -79,9 +79,9 @@ const offresFinancement = [
     but: "Levée de capitaux pour croissance sans endettement",
     montantMin: "200000000",
     montantMax: "10000000000",
-    devise: "XAF",
+    devise: "F CFA",
     admissibilite:
-      "Personne morale, CA > 1 Md XAF, 2 ans bénéficiaires, Comptes certifiés",
+      "Personne morale, CA > 1 Md F CFA, 2 ans bénéficiaires, Comptes certifiés",
     documentation:
       "Business plan, États financiers audités, Contrat de liquidité (optionnel)",
     remboursement: "Aucun remboursement",
@@ -96,7 +96,7 @@ const offresFinancement = [
     but: "Financement des besoins d'investissement",
     montantMin: "Variable",
     montantMax: "Selon opportunité",
-    devise: "XAF",
+    devise: "F CFA",
     admissibilite: "Client FINAM (3 mois min), Accord du Comité de Crédits",
     documentation:
       "Demande client détaillée, États financiers (2-3 ans), PV du comité",
@@ -112,7 +112,7 @@ const offresFinancement = [
     but: "Financement pour clients cotisants à l'épargne tontine",
     montantMin: "Selon cotisation",
     montantMax: "Selon cotisation",
-    devise: "XAF",
+    devise: "F CFA",
     admissibilite:
       "Compte courant, Cotisation tontine (3 mois min), Activité génératrice de revenus",
     documentation: "Pièce d'identité, Caution solidaire",
@@ -128,7 +128,7 @@ const offresFinancement = [
     but: "Financement du fonctionnement courant",
     montantMin: "Variable",
     montantMax: "Selon garanties",
-    devise: "XAF",
+    devise: "F CFA",
     admissibilite:
       "Activité génératrice de revenus, Fiche circuit, Domiciliation des recettes",
     documentation: "Pièce d'identité, Garanties (selon montant)",
@@ -144,7 +144,7 @@ const offresFinancement = [
     but: "Financement diversifié (investissement ou trésorerie)",
     montantMin: "Variable",
     montantMax: "Selon solvabilité",
-    devise: "XAF",
+    devise: "F CFA",
     admissibilite: "Compte actif (3 mois min), Revenus réguliers",
     documentation:
       "Pièce d'identité, 3 derniers bilans/relevés bancaires, Plan d'affaires, Quittance SEEG, Lettre de demande",
@@ -160,7 +160,7 @@ const offresFinancement = [
     but: "Financement de projets de développement économique",
     montantMin: "200000",
     montantMax: "1500000",
-    devise: "XOF",
+    devise: "F CFA",
     admissibilite: "Projet viable, Engagement personnel",
     documentation: "Fiche circuit, Plan simplifié",
     remboursement: "3-12 mois",
@@ -283,7 +283,7 @@ export default function OffresFinancementPage() {
             <ChevronRight className="h-4 w-4" />
             <span>Offres</span>
             <ChevronRight className="h-4 w-4" />
-            <span>Offres Financières</span>
+            <span>Instrument de Financement</span>
           </div>
         </div>
       </div>
@@ -293,7 +293,7 @@ export default function OffresFinancementPage() {
         <div className="container relative mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-3xl md:text-4xl font-bold mb-6">
-              Offres Financières
+              Instrument de Financement & Fournisseur de Financement
             </h1>
             <p className="text-xl text-green-100 mb-8">
               Découvrez et comparez les opportunités de financement disponibles
@@ -433,7 +433,7 @@ export default function OffresFinancementPage() {
         {/* Tableau des offres */}
         <Card>
           <CardHeader>
-            <CardTitle>Offres Financières</CardTitle>
+            <CardTitle>Instrument de Financement</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="mb-4 text-base text-black">

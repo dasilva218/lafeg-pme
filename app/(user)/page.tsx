@@ -105,7 +105,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-[#063a1e] to-[#063a1e]/50 text-white relative overflow-hidden p-10 lg:p-16">
-      <div className="absolute inset-0 opacity-25">
+      <div className="absolute inset-0 opacity-35">
           <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#fff] to-transparent rounded-full -translate-x-48 -translate-y-48"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#063a1e] to-transparent rounded-full translate-x-48 translate-y-48"></div>
         </div>
@@ -135,7 +135,7 @@ export default function Home() {
                 <Link href="/a-propos">
                   <Button
                     size="lg"
-                    className="hover:text-[#063a1e] duration-300 ease-in-out hover:bg-white border-none font-medium min-w-[200px]"
+                    className="hover:text-[#063a1e] relative z-10 duration-300 ease-in-out hover:bg-white border-none font-medium min-w-[200px]"
                   >
                     En savoir plus
                   </Button>
@@ -231,7 +231,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Service Categories */}
-            <div className="bg-white/10 backdrop-blur-xl rounded-lg p-6 border border-white/20">
+            <div className="bg-white/10 flex flex-col justify-center items-center backdrop-blur-xl rounded-lg p-6 border border-white/20">
               {/* <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center mb-4">
                 <span className="text-[#063a1e] font-bold text-lg">C</span>
               </div> */}
@@ -247,7 +247,7 @@ export default function Home() {
               </Badge> */}
             </div>
 
-            <div className="bg-white/10 backdrop-blur-xl rounded-lg p-6 border border-white/20">
+            <div className="bg-white/10 backdrop-blur-xl flex flex-col justify-center items-center rounded-lg p-6 border border-white/20">
               {/* <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center mb-4">
                 <span className="text-[#063a1e] font-bold text-lg">T</span>
               </div> */}
@@ -263,7 +263,7 @@ export default function Home() {
               </Badge> */}
             </div>
 
-            <div className="bg-white/10 backdrop-blur-xl rounded-lg p-6 border border-white/20">
+            <div className="bg-white/10 backdrop-blur-xl flex flex-col justify-center items-center rounded-lg p-6 border border-white/20">
               {/* <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center mb-4">
                 <span className="text-[#063a1e] font-bold text-lg">F</span>
               </div> */}
@@ -521,7 +521,7 @@ export default function Home() {
       {/* Financial Institutions Section */}
       <section className="py-12 bg-[#063a1e]">
         <div className="container">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+          <div className="flex flex-col md:flex-row gap-5 justify-between items-center mb-8">
             <div>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] bg-clip-text text-transparent">
                 Institutions Financières
@@ -703,9 +703,9 @@ export default function Home() {
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-[#063a1e] mb-4">
-              Offres de Financement
+              Instrument de Financement
             </h2>
-            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+            <p className="text-black/80 text-lg max-w-3xl mx-auto">
               Découvrez et comparez les meilleures opportunités de financement
               disponibles pour les PME gabonaises
             </p>
@@ -1025,7 +1025,7 @@ export default function Home() {
       {/* News & Events Section */}
       <section className="py-12 bg-white">
         <div className="container">
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex flex-col md:flex-row gap-5 justify-between items-center mb-8">
             <div>
               <h2 className="text-2xl font-bold text-[#063a1e] flex items-center gap-3">
                 Actualités & Événements
