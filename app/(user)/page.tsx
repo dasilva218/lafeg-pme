@@ -7,17 +7,18 @@ import Form from "@/components/section/form";
 import AdBanner from "@/components/ads/AdBanner";
 import {
   ArrowRight,
-  FileText,
+ 
   Linkedin,
   Facebook,
-  MapPin,
+  Rocket,
+  Building,
+  GraduationCap,
   Mail,
   Phone,
-  BookOpen,
-  ExternalLink,
+  
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import  offresFinancement  from "./offre/page";
 import {
   Card,
   CardContent,
@@ -242,9 +243,7 @@ export default function Home() {
                 <li>• Conseil juridique spécialisé</li>
                 <li>• Accompagnement stratégique</li>
               </ul>
-              {/* <Badge className="bg-[#dcdaa4]/20 text-[#dcdaa4] border-[#dcdaa4]/30">
-                45 services disponibles
-              </Badge> */}
+            
             </div>
 
             <div className="bg-white/10 backdrop-blur-xl flex flex-col justify-center items-center rounded-lg p-6 border border-white/20">
@@ -337,15 +336,24 @@ export default function Home() {
                 entreprise
               </p>
             </div>
-            <Button
-              className="mt-4 md:mt-0 bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] hover:from-[#e6e4b4] hover:to-[#c7c7a0] font-medium"
-              asChild
+            <Link
+              className="flex justify-center"
+              href="/structures-accompagnement"
             >
-              <Link href="/structures-accompagnement">
-                Découvrir toutes les structures{" "}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                className="bg-[#063a1e] relative hover:bg-white"
+              >
+                <span className="absolute inset-0 w-full h-full bg-[#dcdaa4] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></span>
+                <span className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
+                  <p className="flex items-center justify-center">
+                      Découvrir toutes les structures{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </p>
+                </span>
+              </Button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -354,7 +362,7 @@ export default function Home() {
               <CardHeader>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center">
-                    <span className="text-[#063a1e] font-bold text-lg">I</span>
+                    <span className="text-[#063a1e] font-bold text-lg"><Rocket className="h-6 w-6" /></span>
                   </div>
                   <div>
                     <CardTitle className="text-lg">Incubateurs</CardTitle>
@@ -390,7 +398,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Badge className="bg-[#063a1e]/10 text-[#063a1e] hover:bg-[#063a1e]/20">
-                  5 structures disponibles
+                  3 structures disponibles
                 </Badge>
               </CardFooter>
             </Card>
@@ -400,7 +408,7 @@ export default function Home() {
               <CardHeader>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center">
-                    <span className="text-[#063a1e] font-bold text-lg">F</span>
+                    <span className="text-[#063a1e] font-bold text-lg"><GraduationCap className=" h-6 w-6" /></span>
                   </div>
                   <div>
                     <CardTitle className="text-lg">
@@ -438,7 +446,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Badge className="bg-[#063a1e]/10 text-[#063a1e] hover:bg-[#063a1e]/20">
-                  12 centres partenaires
+                  2 centres partenaires
                 </Badge>
               </CardFooter>
             </Card>
@@ -448,7 +456,7 @@ export default function Home() {
               <CardHeader>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] flex items-center justify-center">
-                    <span className="text-[#063a1e] font-bold text-lg">C</span>
+                    <span className="text-[#063a1e] font-bold text-lg"><Building className=" h-6 w-6" /></span>
                   </div>
                   <div>
                     <CardTitle className="text-lg">
@@ -486,7 +494,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Badge className="bg-[#063a1e]/10 text-[#063a1e] hover:bg-[#063a1e]/20">
-                  10+ institutions publiques
+                  9 institutions publiques
                 </Badge>
               </CardFooter>
             </Card>
@@ -594,7 +602,7 @@ export default function Home() {
                     Explorer <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                   <Badge className="bg-[#063a1e]/20 text-[#063a1e] border-[#063a1e]/30">
-                    45 disponibles
+                    7 disponibles
                   </Badge>
                 </div>
               </div>
@@ -642,7 +650,7 @@ export default function Home() {
                     Explorer <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                   <Badge className="bg-[#063a1e]/20 text-[#063a1e] border-[#063a1e]/30">
-                    45 disponibles
+                    5 disponibles
                   </Badge>
                 </div>
               </div>
@@ -690,7 +698,7 @@ export default function Home() {
                     Explorer <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                   <Badge className="bg-[#063a1e]/20 text-[#063a1e] border-[#063a1e]/30">
-                    45 disponibles
+                    3 disponibles
                   </Badge>
                 </div>
               </div>
@@ -710,53 +718,6 @@ export default function Home() {
               disponibles pour les PME gabonaises
             </p>
           </div>
-
-          {/* Quick Filters */}
-          {/* <div className="bg-gray-50 rounded-lg p-6 mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Type de financement
-                </label>
-                <select className="w-full p-2 border border-gray-300 rounded-md text-sm">
-                  <option>Tous les types</option>
-                  <option>Crédit d'équipement</option>
-                  <option>Crédit de fonctionnement</option>
-                  <option>Crédit immobilier</option>
-                  <option>Microfinance</option>
-                </select>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Secteur d'activité
-                </label>
-                <select className="w-full p-2 border border-gray-300 rounded-md text-sm">
-                  <option>Tous les secteurs</option>
-                  <option>Commerce</option>
-                  <option>Agriculture</option>
-                  <option>Services</option>
-                  <option>Industrie</option>
-                </select>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Montant souhaité
-                </label>
-                <select className="w-full p-2 border border-gray-300 rounded-md text-sm">
-                  <option>Tous montants</option>
-                  <option>Moins de 5M FCFA</option>
-                  <option>5M - 50M FCFA</option>
-                  <option>50M - 200M FCFA</option>
-                  <option>Plus de 200M FCFA</option>
-                </select>
-              </div>
-              <div className="flex items-end">
-                <Button className="w-full bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] hover:from-[#e6e4b4] hover:to-[#c7c7a0] font-medium">
-                  Filtrer les offres
-                </Button>
-              </div>
-            </div>
-          </div> */}
 
           {/* Featured Offers */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
@@ -996,34 +957,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* CTA Section */}
-      {/* <section className="py-12 bg-[#063a1e] text-white">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-3xl font-bold">Offres Financières</h2>
-            <p className="text-white/90 text-lg">
-              Découvrez les offres de financement proposées par les organismes
-              officiels liés aux marchés financiers, au Gabon comme à
-              l&apos;international.
-            </p>
-            <Link className="flex justify-center" href="/offre">
-              <Button
-                variant="secondary"
-                size="lg"
-                className="bg-[#063a1e] relative hover:bg-white"
-              >
-                <span className="absolute inset-0 w-full h-full bg-[#dcdaa4] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></span>
-                <span className="relative mr-3 z-10 transition-colors duration-500 ease-in-out group-hover:text-[#063a1e]">
-                  <p>Voir les Offres</p>
-                </span>
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section> */}
+  
 
       {/* News & Events Section */}
-      <section className="py-12 bg-white">
+      <section className="py-12 ">
         <div className="container">
           <div className="flex flex-col md:flex-row gap-5 justify-between items-center mb-8">
             <div>
@@ -1035,14 +972,15 @@ export default function Home() {
                 Restez informé des dernières actualités du monde des PME
               </p>
             </div>
+           
+            <Link href="/actualites">
             <Button
-              className="bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] text-[#063a1e] hover:from-[#e6e4b4] hover:to-[#c7c7a0] font-medium"
-              asChild
+              size="lg"
+              className="hover:text-[#063a1e] duration-300 ease-in-out hover:bg-white border hover:border-[#063a1e] font-medium"
             >
-              <Link href="/actualites">
-                Toutes les actualités <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+                        Toutes les actualités <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
+          </Link>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -1051,11 +989,11 @@ export default function Home() {
               <Card className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative h-64 overflow-hidden">
                   <Image
-                    src="/placeholder.svg?height=400&width=600"
+                    src="/article.png?height=400&width=600"
                     alt="Article principal"
                     width={600}
                     height={400}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-center object-cover"
                   />
                   <div className="absolute top-4 left-4">
                     <Badge className="bg-red-500 text-white">À LA UNE</Badge>

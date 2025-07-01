@@ -182,8 +182,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               </nav>
               <div className="p-4 border-t border-white/10">
                 <Button
-                  variant="outline"
-                  className="w-full justify-start text-white border-white/20 hover:bg-[#063a1e]/50 hover:text-white"
+                
+                  className="w-full justify-start text-white border-white/20 hover:bg-red-500 hover:text-white"
                   onClick={handleLogout}
                   aria-label="Déconnexion"
                 >

@@ -73,7 +73,7 @@ export default function APropos() {
 
       {/* Main Content */}
       <div className="container px-4 py-10 sm:py-12 md:py-16">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Mission Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12 sm:mb-16 md:mb-20 items-center">
             <div className="order-2 md:order-1">
