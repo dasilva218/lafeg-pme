@@ -1,21 +1,26 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
-import { ChevronDown} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 const HamburgerMenu = () => {
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [openSubMenus, setOpenSubMenus] = useState<string[]>([]);
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const isActive = (path: string): boolean => pathname === path;
+
   const toggleSubMenu = (label: string) => {
     setOpenSubMenus((prev) =>
       prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label]
     );
   };
-  const pathname = usePathname();
 
-  const isActive = (path: string): boolean => pathname === path;
   const mobileMenuItems = [
     { label: "Accueil", href: "/" },
     { label: "Textes Juridiques", href: "/textes-juridiques" },
@@ -28,11 +33,11 @@ const HamburgerMenu = () => {
       label: "Offres",
       href: "/offre",
       children: [
-        { label: "Instrument de Financement", href: "/offre/financieres" },
-        { label: "Offres de Services", href: "/offre/services" },
+        { label: "Instrument de Financement", href: "/offre" },
+        { label: "Offres de Services", href: "/entreprise" },
       ],
     },
-    {label: "Actualités", href: "/actualite"},
+    { label: "Actualités", href: "/actualite" },
     { label: "À propos", href: "/a-propos" },
     {
       label: "Contact",
@@ -40,6 +45,12 @@ const HamburgerMenu = () => {
       target: "_blank",
     },
   ];
+
+  const handleNavigation = async (href: string) => {
+    setIsNavigating(true);
+    setMenuOpen(false);
+    router.push(href);
+  };
 
   return (
     <div className="flex lg:hidden">
@@ -66,7 +77,7 @@ const HamburgerMenu = () => {
         />
       </button>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       <div
         className={`lg:hidden fixed top-20 left-0 bg-[#063a1e]/90 w-full max-h-[calc(100vh-64px)] overflow-auto transform transition-transform duration-300 ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
@@ -75,24 +86,18 @@ const HamburgerMenu = () => {
       >
         <ul className="flex flex-col divide-y divide-gray-200">
           {mobileMenuItems.map((item) => (
-            <li key={item.href}>
+            <li key={item.label}>
               <div className="flex flex-col">
-                <button
-                  onClick={() => {
-                    if (item.children) {
-                      toggleSubMenu(item.label);
-                    } else {
-                      setMenuOpen(false);
-                    }
-                  }}
-                  className={`flex justify-between items-center px-6 py-3 text-[16px] w-full text-left ${
-                    isActive(item.href)
-                      ? "text-[#063a1e] font-bold bg-white border-y border-[#063a1e]"
-                      : "text-[#bdbd95] font-medium"
-                  }`}
-                >
-                  {item.label}
-                  {item.children && (
+                {item.children ? (
+                  <button
+                    onClick={() => toggleSubMenu(item.label)}
+                    className={`flex justify-between items-center px-6 py-3 text-[16px] w-full text-left ${
+                      isActive(item.href)
+                        ? "text-[#063a1e] font-bold bg-white border-y border-[#063a1e]"
+                        : "text-[#bdbd95] font-medium"
+                    }`}
+                  >
+                    {item.label}
                     <span
                       className={`ml-2 transition-transform duration-200 ${
                         openSubMenus.includes(item.label) ? "rotate-180" : ""
@@ -100,24 +105,44 @@ const HamburgerMenu = () => {
                     >
                       <ChevronDown />
                     </span>
-                  )}
-                </button>
+                  </button>
+                ) : item.target === "_blank" ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 block text-[16px] text-[#bdbd95] font-medium"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => handleNavigation(item.href)}
+                    className={`px-6 py-3 text-left w-full text-[16px] ${
+                      isActive(item.href)
+                        ? "text-[#063a1e] font-bold bg-white border-y border-[#063a1e]"
+                        : "text-[#bdbd95] font-medium"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                )}
 
                 {item.children && openSubMenus.includes(item.label) && (
                   <ul className="ml-4">
                     {item.children.map((subItem) => (
-                      <li key={subItem.href}>
-                        <Link
-                          href={subItem.href}
-                          className={`block px-6 py-2 text-sm ${
+                      <li key={subItem.label}>
+                        <button
+                          onClick={() => handleNavigation(subItem.href)}
+                          className={`block px-6 py-2 text-sm w-full text-left ${
                             isActive(subItem.href)
                               ? "text-[#063a1e] font-bold bg-white border-y border-[#063a1e]"
                               : "text-[#bdbd95] font-medium"
                           }`}
-                          onClick={() => setMenuOpen(false)}
                         >
                           {subItem.label}
-                        </Link>
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -126,6 +151,11 @@ const HamburgerMenu = () => {
             </li>
           ))}
         </ul>
+        {isNavigating && (
+          <div className="text-white text-center py-4 animate-pulse">
+            Chargement...
+          </div>
+        )}
       </div>
     </div>
   );
