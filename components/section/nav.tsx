@@ -33,7 +33,7 @@ export default function Nav() {
   };
 
   type NavItem =
-    | { name: string; path: string; tooltip?: string; target?: string }
+    | { name: string; path: string; showDot?: boolean; tooltip?: string; target?: string }
     | { name: string; submenu: NavSubmenuItem[] };
 
   const navItems: NavItem[] = [
@@ -60,11 +60,11 @@ export default function Nav() {
     {
       name: "Offres",
       submenu: [
-        { name: "Offres Financières", path: "/offre" },
+        { name: "Instrument de Financement", path: "/offre" },
         { name: "Offres de Services", path: "/entreprise" },
       ],
     },
-    { name: "Actualités", path: "/actualite" },
+    { name: "Actualités", path: "/actualite",  showDot: true },
     { name: "À propos", path: "/a-propos" },
     {
       name: "Contact",
@@ -75,8 +75,8 @@ export default function Nav() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="px-4 md:container flex h-20 items-center justify-between">
-        <div className="flex items-center gap-5">
+      <div className="px-4 md:container flex h-20 items-center justify-between md:justify-center">
+        <div className="flex lg:hidden items-center gap-5">
           <Image
             src="/images/logo-feg.png"
             alt="Logo FEG"
@@ -85,12 +85,11 @@ export default function Nav() {
             className="h-12 md:h-16 w-auto"
           /> 
           <div>
-            <h1 className="md:text-xl md:hidden lg:block font-hyundai font-bold text-[#063a1e]">
-              Répertoire des <br className="md:block xl:hidden" /> Textes
-              Juridiques
+            <h1 className="text-xl md:hidden lg:block font-hyundai font-bold text-[#063a1e]">
+              Guide Numérique <br className="md:block xl:hidden" /> des PME
             </h1>
             <h1 className="md:text-2xl hidden md:block lg:hidden font-hyundai font-bold text-[#063a1e]">
-              Répertoire des Textes Juridiques
+              Guide Numérique des PME
             </h1>
           </div>
         </div>
@@ -100,14 +99,14 @@ export default function Nav() {
         <nav className="hidden lg:flex gap-6">
           <ul className="text-sm font-medium lg:flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-0 md:border-0">
             <NavigationMenu>
-              <NavigationMenuList className="text-sm font-medium lg:flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-0 md:border-0">
+              <NavigationMenuList className="text-sm font-medium lg:flex flex-col p-2 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-5 rtl:space-x-reverse md:mt-0 md:border-0">
                 {navItems.map((item) =>
                   "submenu" in item ? (
                     <NavigationMenuItem key={item.name} className="relative">
                       <NavigationMenuTrigger className="pb-1 relative font-bold transition-all ease-in-out text-black hover:text-[#063a1e] flex items-center gap-1">
                         {item.name}
                       </NavigationMenuTrigger>
-                      <NavigationMenuContent className="absolute left-0 top-full bg-white rounded-md shadow-lg p-4 z-50 min-w-[200px]">
+                      <NavigationMenuContent className="absolute left-0 top-full bg-white rounded-md shadow-lg p-2 z-50 min-w-[220px]">
                         <div className="grid gap-2">
                           {item.submenu.map((sub) => (
                             <TooltipProvider key={sub.path}>
@@ -123,7 +122,9 @@ export default function Nav() {
                                       }`}
                                     >
                                       {sub.name}
+                                      
                                     </Link>
+                                    
                                   </NavigationMenuLink>
                                 </TooltipTrigger>
                                 {sub.tooltip && (
@@ -156,9 +157,11 @@ export default function Nav() {
                           ? "text-[#063a1e] border-b border-[#063a1e]"
                           : "text-black hover:text-[#063a1e]"
                       }`}
-                              >
-                                {item.name}
+                              > {item.name} {item.showDot && (
+    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse inline-block mr-1" />
+  )}
                               </Link>
+                              
                             </NavigationMenuLink>
                           </TooltipTrigger>
                           <TooltipContent>

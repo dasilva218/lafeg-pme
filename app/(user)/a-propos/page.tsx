@@ -8,7 +8,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import CategorieText from "@/components/section/categorieText";
 
 export default function APropos() {
   return (
@@ -73,7 +73,7 @@ export default function APropos() {
 
       {/* Main Content */}
       <div className="container px-4 py-10 sm:py-12 md:py-16">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Mission Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12 sm:mb-16 md:mb-20 items-center">
             <div className="order-2 md:order-1">
@@ -81,8 +81,8 @@ export default function APropos() {
                 Faciliter l'accès à l'information juridique
               </h2>
               <div className="space-y-3 sm:space-y-4">
-                <p className="text-base sm:text-lg text-gray-700">
-                  Le Répertoire des Textes Juridiques pour les PME Gabonaises
+                <p className="text-base sm:text-base text-gray-700">
+                  Le Guide Numérique des PME pour les PME Gabonaises
                   est une initiative de la
                   <span className="font-semibold text-[#063a1e]">
                     {" "}
@@ -99,16 +99,16 @@ export default function APropos() {
                   législatives et réglementaires qui impactent leurs activités.
                 </p>
 
-                <p className="text-sm sm:text-base text-gray-700">
+                {/* <p className="text-sm sm:text-base text-gray-700">
                   Nous nous engageons à fournir un accès simplifié, centralisé
                   et à jour aux textes juridiques, ainsi qu'à des ressources
                   pratiques pour aider les PME à se conformer aux exigences
                   légales et à prospérer dans l'économie gabonaise.
-                </p>
+                </p> */}
               </div>
             </div>
-            <div className="order-1 md:order-2 flex justify-center">
-              <div className="rounded-2xl overflow-hidden shadow-xl border-4 ">
+            <div className="order-1 md:order-2 flex justify-center items-center">
+              <div className="rounded-2xl md:w-[70%] overflow-hidden shadow-xl ">
                 <Image
                   src="/images/logo-feg.png"
                   alt="PME Gabonaises"
@@ -127,7 +127,7 @@ export default function APropos() {
                 Ressource Essentielle
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-[#dcdaa4]">
-                Répertoire des textes Juridiques
+                Guide Numérique des PME
               </h2>
               <p className="text-white sm:text-lg text-muted-foreground max-w-2xl mx-auto">
                 Un outil complet pour accompagner les entreprises gabonaises
@@ -141,11 +141,11 @@ export default function APropos() {
                   <BookOpen className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-[#063a1e]" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-[#063a1e]">
-                  Qu'est-ce que le Répertoire des textes Juridiques ?
+                  Qu'est-ce que le Guide Numérique des PME ?
                 </h3>
                 <div className="space-y-3 sm:space-y-4">
                   <p className="text-sm sm:text-base text-gray-700">
-                    Le "Répertoire des textes Juridiques" est une ressource complète
+                    Le "Guide Numérique des PME" est une ressource complète
                     développée par la Fédération des Entreprises du Gabon pour
                     aider les petites et moyennes entreprises à naviguer dans
                     l'écosystème économique et juridique gabonais.
@@ -169,7 +169,7 @@ export default function APropos() {
                   Ce que vous y trouverez
                 </h3>
                 <p className="mb-4 sm:mb-6 text-sm sm:text-base text-gray-700">
-                  Notre Répertoire des textes Juridiques offre de nombreuses ressources
+                  Notre Guide Numérique des PME offre de nombreuses ressources
                   pour soutenir votre entreprise :
                 </p>
                 <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-gray-700">
@@ -189,6 +189,8 @@ export default function APropos() {
               </div>
             </div>
           </div>
+          {/* feature categorie */}
+          <CategorieText />
           {/* Abonnement Section */}
           <div className="bg-gradient-to-r from-[#dcdaa4] to-[#bdbd95] p-6 sm:p-8 rounded-xl shadow-md overflow-hidden">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">

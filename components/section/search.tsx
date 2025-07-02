@@ -74,7 +74,7 @@ export default function TextSearch() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm">
+    <div className="bg-[#063a1e] p-6 rounded-lg shadow-sm">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col md:flex-row gap-4">
           <Input
@@ -104,7 +104,7 @@ export default function TextSearch() {
       {hasSearched && results.length > 0 && (
         <div className="mt-8">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-semibold">
+            <h3 className="font-semibold text-white">
               {pagination.total} résultat{pagination.total > 1 ? "s" : ""}{" "}
               trouvé{pagination.total > 1 ? "s" : ""}
             </h3>

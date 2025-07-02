@@ -208,9 +208,9 @@ const entreprises = [
 const tarifsPublication1 = {
   "Tarif Membre": {
     "1 mois": { membre: "50,000" },
-    "3 mois": { membre: "133,300" },
-    "6 mois": { membre: "234, 600" },
-    "12 mois": { membre: "408,200" },
+    "3 mois": { membre: "133,000" },
+    "6 mois": { membre: "234, 000" },
+    "12 mois": { membre: "408,000" },
   },
 };
 const tarifsPublication2 = {
@@ -607,7 +607,7 @@ export default function EntreprisesServices() {
                       <h2 className="text-3xl font-bold mb-4">
                         Pourquoi publier sur le{" "}
                         <span className="text-[#dcdaa4]">
-                          Portail Numérique des PME
+                          Guide Numérique des PME
                         </span>
                          ?
                       </h2>

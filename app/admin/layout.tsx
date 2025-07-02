@@ -87,7 +87,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               />
               <div className="ml-3">
                 <h1 className="text-md font-bold text-white">Espace Administrateur</h1>
-                <p className="text-sm text-white">Répertoire des textes Juridiques</p>
+                <p className="text-sm text-white">Guide Numérique des PME</p>
               </div>
             </div>
             <div className="mt-5 flex-1 flex flex-col">
@@ -155,7 +155,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   <div className="ml-3">
                     <h1 className="text-lg font-bold text-[#063a1e]">ADMIN</h1>
                     <p className="text-xs text-[#063a1e]">
-                      Répertoire des textes Juridiques
+                      Guide Numérique des PME
                     </p>
                   </div>
                 </div>
@@ -182,8 +182,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               </nav>
               <div className="p-4 border-t border-white/10">
                 <Button
-                  variant="outline"
-                  className="w-full justify-start text-white border-white/20 hover:bg-[#063a1e]/50 hover:text-white"
+                
+                  className="w-full justify-start text-white border-white/20 hover:bg-red-500 hover:text-white"
                   onClick={handleLogout}
                   aria-label="Déconnexion"
                 >
