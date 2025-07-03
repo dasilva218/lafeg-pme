@@ -102,7 +102,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 /**
  * @swagger
- * /offres/{id}:
+ * /api/offres/{id}:
  *   put:
  *     tags:
  *       - Offres
@@ -509,7 +509,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 /**
  * @swagger
- * /apioffres/{id}:
+ * /api/offres/{id}:
  *   delete:
  *     tags:
  *       - Offres
