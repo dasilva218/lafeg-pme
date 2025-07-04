@@ -33,7 +33,7 @@ const HamburgerMenu = () => {
       label: "Offres",
       href: "/offre",
       children: [
-        { label: "Instrument de Financement", href: "/offre" },
+        { label: "Instruments Financier", href: "/offre" },
         { label: "Offres de Services", href: "/entreprise" },
       ],
     },

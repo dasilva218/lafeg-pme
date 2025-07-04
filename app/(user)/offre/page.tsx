@@ -283,7 +283,7 @@ export default function OffresFinancementPage() {
             <ChevronRight className="h-4 w-4" />
             <span>Offres</span>
             <ChevronRight className="h-4 w-4" />
-            <span>Instrument de Financement</span>
+            <span>Instruments Financier</span>
           </div>
         </div>
       </div>
