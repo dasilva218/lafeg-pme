@@ -283,7 +283,7 @@ export default function OffresFinancementPage() {
             <ChevronRight className="h-4 w-4" />
             <span>Offres</span>
             <ChevronRight className="h-4 w-4" />
-            <span>Instruments Financier</span>
+            <span>Instruments Financiers</span>
           </div>
         </div>
       </div>
@@ -293,7 +293,7 @@ export default function OffresFinancementPage() {
         <div className="container relative mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-3xl md:text-4xl font-bold mb-6">
-              Instrument de Financement & Fournisseur de Financement
+              Instruments Financiers
             </h1>
             <p className="text-xl text-green-100 mb-8">
               Découvrez et comparez les opportunités de financement disponibles
@@ -433,7 +433,7 @@ export default function OffresFinancementPage() {
         {/* Tableau des offres */}
         <Card>
           <CardHeader>
-            <CardTitle>Instrument de Financement</CardTitle>
+            <CardTitle>Instruments Financiers</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="mb-4 text-base text-black">

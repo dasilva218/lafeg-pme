@@ -60,7 +60,7 @@ export default function Nav() {
     {
       name: "Offres",
       submenu: [
-        { name: "Instruments Financier", path: "/offre" },
+        { name: "Instruments Financiers", path: "/offre" },
         { name: "Offres de Services", path: "/entreprise" },
       ],
     },
