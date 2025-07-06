@@ -4,7 +4,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API LAFEG PME',
+      title: 'LAFEG PME',
       version: '1.0.0',
       description: "Documentation de l'API REST",
     },
@@ -29,7 +29,17 @@ const options = {
   {
     name: 'Publicités',
     description: 'Opérations liées aux publicités'
-  }
+  },
+  {
+    name: 'Offres',
+    description: 'Opérations liées aux offres d\'emploi'
+  },
+  {
+    name: 'Textes Juridiques',
+    description: 'Opérations liées aux textes juridiques'
+  },
+
+
 ],
   // Les chemins vers les fichiers contenant vos routes API
   apis: ['./app/api/**/*.ts', './app/api/**/*.js','./lib/swagger-schemas.ts'],
