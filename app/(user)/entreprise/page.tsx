@@ -66,10 +66,10 @@ export default function EntreprisesServices() {
   const [rechercheTexte, setRechercheTexte] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  interface Tarif {
-    membre: string;
-    nonMembre?: string;
-  }
+  // interface Tarif {
+  //   membre: string;
+  //   nonMembre?: string;
+  // }
 
   // Chargement des entreprises à chaque changement de filtre
   useEffect(() => {
@@ -105,15 +105,15 @@ export default function EntreprisesServices() {
     setSelectedEntreprise(null);
   };
 
-  {
-    !loading && entreprises.length === 0 && (
-      <div className="text-center py-12">
-        <p className="text-muted-foreground">
-          Aucune entreprise ne correspond à vos critères de recherche.
-        </p>
-      </div>
-    );
-  }
+  // {
+  //   !loading && entreprises.length === 0 && (
+  //     <div className="text-center py-12">
+  //       <p className="text-muted-foreground">
+  //         Aucune entreprise ne correspond à vos critères de recherche.
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -263,7 +263,7 @@ export default function EntreprisesServices() {
                     </SelectTrigger>
                     <SelectContent>
                       {entreprises.map((secteur) => (
-                        <SelectItem key={secteur.id} value={secteur.id}>
+                        <SelectItem key={secteur.id_offre} value={secteur.id_offre}>
                           {secteur.type_offre}
                         </SelectItem>
                       ))} 
@@ -315,7 +315,7 @@ export default function EntreprisesServices() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {entreprises.map((entreprise) => (
                   <Card
-                    key={entreprise.id}
+                    key={entreprise.id_offre}
                     className={`transition-transform transform hover:scale-[1.02] border-2 rounded-xl 
                      `}
                   >
@@ -431,13 +431,13 @@ export default function EntreprisesServices() {
                 ))}
               </div>
 
-              {entreprises.length === 0 && (
+              {/* {entreprises.length === 0 && (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground">
                     Aucune entreprise ne correspond à vos critères de recherche.
                   </p>
                 </div>
-              )}
+              )} */}
             </TabsContent>
 
             <TabsContent value="publier" className="mt-8">

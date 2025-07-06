@@ -2,7 +2,7 @@ const API_BASE_URL = "/api/offres";
 
 // --- Typage des Offres ---
 export interface Offre {
-  id: string;
+  id_offre: string
   titre_offre: string;
   nom_structure: string;
   type_offre: "EMPLOI" | "STAGE" | "FORMATION" | "CONSULTATION";
@@ -107,27 +107,21 @@ export async function fetchOffreById(id: string): Promise<Offre> {
 }
 
 // --- Mettre à jour une offre ---
-export async function updateOffre(id: string, data: Partial<Offre>): Promise<Offre> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+export async function updateOffre(id: string, form: FormData): Promise<Offre> {
+  const response = await fetch(`${API_BASE_URL}/${id}`, {
+    method: 'PUT',
+    body: form,
+  });
 
-    if (!response.ok) {
-      const json = await response.json();
-      throw new Error(`Erreur mise à jour offre : ${json.error}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Erreur updateOffre:", error);
-    throw error;
+  if (!response.ok) {
+    const errText = await response.text();
+    console.error("Erreur serveur:", errText);
+    throw new Error("Erreur serveur lors de la mise à jour de l'offre");
   }
+
+  return response.json();
 }
+
 
 // --- Supprimer une offre ---
 export async function deleteOffre(id: string): Promise<void> {
