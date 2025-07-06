@@ -60,7 +60,7 @@ model Offre {
   @@map("offre")
 }
 
-model Publicite {
+model Annonce {
   id_publicite  String   @id @default(auto()) @map("_id") @db.ObjectId
   libelle       String
   image_url     String // URL ou chemin vers l'image stockée
