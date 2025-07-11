@@ -457,7 +457,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       image_nom = `${uuidv4()}.${ext}`;
       const { error } = await supabase.storage.from('feg').upload(`offres/${image_nom}`, files.image, { contentType: files.image.type });
       if (error) return NextResponse.json({ success: false, error: "Erreur upload image" }, { status: 500 });
-      image_url = supabase.storage.from('offres').getPublicUrl(`images/${image_nom}`).data.publicUrl;
+      image_url = supabase.storage.from('feg').getPublicUrl(`offres/${image_nom}`).data.publicUrl;
     }
     // Bannière
     if (files.banniere) {
@@ -466,7 +466,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       bannier_nom = `${uuidv4()}.${ext}`;
       const { error } = await supabase.storage.from('feg').upload(`offres/${bannier_nom}`, files.banniere, { contentType: files.banniere.type });
       if (error) return NextResponse.json({ success: false, error: "Erreur upload bannière" }, { status: 500 });
-      bannier_url = supabase.storage.from('offres').getPublicUrl(`bannieres/${bannier_nom}`).data.publicUrl;
+      bannier_url = supabase.storage.from('feg').getPublicUrl(`offres/${bannier_nom}`).data.publicUrl;
     }
     // Fichier PDF
     if (files.fichier) {
@@ -594,20 +594,45 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
  *                   type: string
  *                   example: "Erreur serveur lors de la suppression de l'offre"
  */
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  context: { params: { id: string } }
+) {
   try {
-    const { id } = params;
+    const id = context.params.id; // ✅ CORRECT en App Router
+
     const offre = await prisma.offre.findUnique({ where: { id_offre: id } });
+
     if (!offre) {
-      return NextResponse.json({ success: false, error: "Offre non trouvée" }, { status: 404 });
+      return NextResponse.json(
+        { success: false, error: "Offre non trouvée" },
+        { status: 404 }
+      );
     }
-    // Supprimer les fichiers associés
-    if (offre.image_nom) await supabase.storage.from('feg').remove([`offres/${offre.image_nom}`]);
-    if (offre.bannier_nom) await supabase.storage.from('feg').remove([`offres/${offre.bannier_nom}`]);
-    if (offre.fichier_nom) await supabase.storage.from('feg').remove([`offres/${offre.fichier_nom}`]);
+
+    // Supprimer les fichiers associés dans Supabase
+    if (offre.image_nom) {
+      await supabase.storage.from("feg").remove([`offres/${offre.image_nom}`]);
+    }
+    if (offre.bannier_nom) {
+      await supabase.storage.from("feg").remove([`offres/${offre.bannier_nom}`]);
+    }
+    if (offre.fichier_nom) {
+      await supabase.storage.from("feg").remove([`offres/${offre.fichier_nom}`]);
+    }
+
+    // Supprimer l'offre de la base de données
     await prisma.offre.delete({ where: { id_offre: id } });
-    return NextResponse.json({ success: true, message: "Offre supprimée avec succès" });
+
+    return NextResponse.json({
+      success: true,
+      message: "Offre supprimée avec succès",
+    });
   } catch (error) {
-    return NextResponse.json({ success: false, error: "Erreur serveur lors de la suppression de l'offre" }, { status: 500 });
+    console.error("Erreur suppression:", error);
+    return NextResponse.json(
+      { success: false, error: "Erreur serveur lors de la suppression de l'offre" },
+      { status: 500 }
+    );
   }
 }
