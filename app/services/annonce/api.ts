@@ -1,6 +1,6 @@
 // src/services/publiciteApi.ts
 
-const API_BASE_URL = "/api/annonces";
+const API_BASE_URL = "/api/annonce";
 
 export interface Annonce {
   id_publicite: string;
@@ -15,7 +15,7 @@ export interface Annonce {
 
 // CREATE - Créer une nouvelle publicité
 export async function createPublicite(data: FormData) {
-  const res = await fetch("/api/annonces", {
+  const res = await fetch("/api/annonce", {
     method: "POST",
     body: data, // Pas de JSON.stringify ici
   });
