@@ -8,7 +8,7 @@ import {
   BarChart3,
   FileText,
   Megaphone,
-  Bell,
+  Handshake,
   LogOut,
   Menu,
   Home,
@@ -66,6 +66,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { name: "Textes juridiques", href: "/admin/textes", icon: FileText },
     { name: "Institution", href: "/admin/institutions", icon: Newspaper },
     { name: "SEA", href: "/admin/structures", icon: Briefcase },
+    { name: "Offre & Services", href: "/admin/entreprise", icon: Handshake},
     { name: "Publicité", href: "/admin/publicites", icon: Megaphone },
     { name: "Actualité", href: "/admin/actualite", icon: FileEdit },
   ];

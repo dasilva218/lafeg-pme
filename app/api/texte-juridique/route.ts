@@ -10,34 +10,52 @@ export const config = {
 
 /**
  * @swagger
- * /api/texte-juridique:
+ * /api/textes-juridiques:
  *   get:
+ *     tags:
+ *       - Textes Juridiques
  *     summary: Récupérer la liste des textes juridiques
- *     description: Retourne une liste paginée des textes juridiques avec possibilité de filtrage par catégorie et type
- *     tags: [Textes Juridiques]
+ *     description: |
+ *       Récupère une liste paginée des textes juridiques avec possibilité de filtrage.
+ *       
+ *       **Fonctionnalités disponibles :**
+ *       - Pagination avec métadonnées complètes
+ *       - Filtrage par catégorie juridique (droit civil, commercial, etc.)
+ *       - Filtrage par type de texte (loi, décret, arrêté, etc.)
+ *       - Tri chronologique automatique (plus récent en premier)
+ *       - Gestion d'erreurs avec messages explicites
  *     parameters:
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *           default: 1
- *         description: Numéro de la page
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *           default: 10
- *         description: Nombre d'éléments par page
  *       - in: query
  *         name: categorie
  *         schema:
  *           type: string
- *         description: Filtre par catégorie de texte
+ *           enum: [DROIT_CIVIL, DROIT_COMMERCIAL, DROIT_PENAL, DROIT_ADMINISTRATIF, DROIT_TRAVAIL, DROIT_FISCAL, DROIT_INTERNATIONAL, AUTRES]
+ *         description: Filtrer par catégorie de droit
+ *         example: "DROIT_COMMERCIAL"
  *       - in: query
  *         name: type_texte
  *         schema:
  *           type: string
- *         description: Filtre par type de texte
+ *           enum: [CONSTITUTION, LOI, DECRET, ARRETE, ORDONNANCE, CIRCULAIRE, CODE, REGLEMENT, JURISPRUDENCE]
+ *         description: Filtrer par type de texte juridique
+ *         example: "LOI"
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Numéro de la page (commence à 1)
+ *         example: 1
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 10
+ *         description: Nombre d'éléments par page (max 100)
+ *         example: 20
  *     responses:
  *       200:
  *         description: Liste des textes juridiques récupérée avec succès
@@ -51,21 +69,101 @@ export const config = {
  *                   items:
  *                     $ref: '#/components/schemas/TexteJuridique'
  *                 pagination:
- *                   type: object
- *                   properties:
- *                     page:
- *                       type: integer
- *                     limit:
- *                       type: integer
- *                     total:
- *                       type: integer
- *                     totalPages:
- *                       type: integer
+ *                   $ref: '#/components/schemas/Pagination'
+ *       400:
+ *         description: Paramètres de requête invalides
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Le paramètre 'page' doit être un entier positif"
  *       500:
  *         description: Erreur serveur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur lors de la récupération des textes juridiques"
+ * 
+ * components:
+ *   schemas:
+ *     TexteJuridique:
+ *       type: object
+ *       required:
+ *         - id_texte
+ *         - titre
+ *         - numero_texte
+ *         - categorie
+ *         - type_texte
+ *         - date_parution
+ *         - statut
+ *         - source_officielle
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id_texte:
+ *           type: string
+ *           description: Identifiant unique
+ *         titre:
+ *           type: string
+ *           description: Titre officiel du texte
+ *         numero_texte:
+ *           type: string
+ *           description: Numéro officiel
+ *         categorie:
+ *           type: string
+ *           enum: [DROIT_CIVIL, DROIT_COMMERCIAL, DROIT_PENAL, DROIT_ADMINISTRATIF, DROIT_TRAVAIL, DROIT_FISCAL, DROIT_INTERNATIONAL, AUTRES]
+ *         type_texte:
+ *           type: string
+ *           enum: [CONSTITUTION, LOI, DECRET, ARRETE, ORDONNANCE, CIRCULAIRE, CODE, REGLEMENT, JURISPRUDENCE]
+ *         date_parution:
+ *           type: string
+ *           format: date-time
+ *         date_entree_vigueur:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ *         statut:
+ *           type: string
+ *           enum: [EN_VIGUEUR, ABROGE, SUSPENDU, PROJET, BROUILLON]
+ *         resume:
+ *           type: string
+ *           nullable: true
+ *         source_officielle:
+ *           type: string
+ *         url_source:
+ *           type: string
+ *           format: uri
+ *           nullable: true
+ *         mots_cles:
+ *           type: array
+ *           items:
+ *             type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *     
+ *     Pagination:
+ *       type: object
+ *       properties:
+ *         page:
+ *           type: integer
+ *         limit:
+ *           type: integer
+ *         total:
+ *           type: integer
+ *         totalPages:
+ *           type: integer
  */
-
-// GET - Récupérer tous les textes juridiques
 export async function GET(request: NextRequest) {
   try {
     // Gestion des paramètres de filtrage et pagination
@@ -105,13 +203,24 @@ export async function GET(request: NextRequest) {
   }
 }
 
+
+
 /**
  * @swagger
- * /api/texte-juridique:
+ * /textes-juridiques:
  *   post:
- *     summary: Créer un nouveau texte juridique
- *     description: Crée un nouveau texte juridique avec upload de fichier PDF
- *     tags: [Textes Juridiques]
+ *     tags:
+ *       - Textes Juridiques
+ *       - Upload
+ *     summary: Créer un nouveau texte juridique avec fichier PDF
+ *     description: |
+ *       Crée un nouveau texte juridique en uploadant le fichier PDF correspondant.
+ *       
+ *       **Processus de création :**
+ *       - Validation du type de contenu multipart/form-data
+ *       - Upload sécurisé du fichier PDF dans Supabase Storage
+ *       - Création de l'entrée en base de données avec métadonnées
+ *       - Génération d'une URL publique permanente
  *     requestBody:
  *       required: true
  *       content:
@@ -127,41 +236,61 @@ export async function GET(request: NextRequest) {
  *             properties:
  *               titre:
  *                 type: string
- *                 description: Titre du texte juridique
+ *                 description: Titre officiel du texte juridique
+ *                 example: "Loi relative au commerce électronique"
  *               type_texte:
  *                 type: string
- *                 description: Type de texte (loi, décret, arrêté, etc.)
+ *                 enum: [CONSTITUTION, LOI, DECRET, ARRETE, ORDONNANCE, CIRCULAIRE, CODE, REGLEMENT, JURISPRUDENCE]
+ *                 example: "LOI"
  *               categorie:
  *                 type: string
- *                 description: Catégorie du texte
- *               description:
- *                 type: string
- *                 description: Description du texte (optionnel)
+ *                 enum: [DROIT_CIVIL, DROIT_COMMERCIAL, DROIT_PENAL, DROIT_ADMINISTRATIF, DROIT_TRAVAIL, DROIT_FISCAL, DROIT_INTERNATIONAL, AUTRES]
+ *                 example: "DROIT_COMMERCIAL"
  *               date_parution:
  *                 type: string
  *                 format: date
- *                 description: Date de parution du texte
+ *                 description: Date de publication (YYYY-MM-DD)
+ *                 example: "2024-03-15"
+ *               description:
+ *                 type: string
+ *                 description: Description ou résumé (optionnel)
+ *                 example: "Cette loi encadre les activités de commerce électronique..."
  *               version:
  *                 type: string
  *                 description: Version du texte (optionnel)
+ *                 example: "Version initiale"
  *               fichier:
  *                 type: string
  *                 format: binary
- *                 description: Fichier PDF du texte juridique
+ *                 description: Fichier PDF (obligatoire)
  *     responses:
  *       201:
  *         description: Texte juridique créé avec succès
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/TexteJuridique'
+ *               $ref: '#/components/schemas/TexteJuridiqueCreated'
  *       400:
- *         description: Données invalides ou fichier manquant/incorrect
+ *         description: Erreur de validation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 erreur:
+ *                   type: string
+ *                   example: "Fichier PDF requis"
  *       500:
  *         description: Erreur serveur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erreur lors de la création du texte juridique"
  */
-
-// POST - Créer un nouveau texte juridique avec upload de fichier
 export async function POST(request: NextRequest) {
 
   try {

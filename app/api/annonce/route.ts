@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 /**
  * @swagger
- * /api/publicites:
+ * /api/annonces:
  *   get:
  *     summary: Récupère une liste paginée des publicités
  *     description: Retourne une liste paginée des publicités avec options de filtrage et de tri
@@ -70,7 +70,7 @@ import { NextRequest, NextResponse } from "next/server";
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/Publicitee'
+ *                     $ref: '#/components/schemas/annoncee'
  *                 pagination:
  *                   type: object
  *                   properties:
@@ -146,13 +146,13 @@ export async function GET(request: Request) {
     
     // Exécution des requêtes en parallèle
     const [data, total] = await Promise.all([
-      prisma.publicite.findMany({
+      prisma.annonce.findMany({
         where,
         skip,
         take: limit,
         orderBy: { [sortField]: sortOrder }
       }),
-      prisma.publicite.count({ where })
+      prisma.annonce.count({ where })
     ]);
     
     // Réponse structurée avec données et pagination
@@ -179,7 +179,7 @@ export async function GET(request: Request) {
 
 /**
  * @swagger
- * /api/publicites:
+ * /api/annonces:
  *   post:
  *     summary: Crée une nouvelle publicité
  *     description: Crée une nouvelle publicité avec les données fournies dans le formulaire
@@ -207,7 +207,7 @@ export async function GET(request: Request) {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Publicite'
+ *               $ref: '#/components/schemas/annonce'
  *       400:
  *         description: Erreur de validation des données d'entrée
  *         content:
@@ -256,7 +256,7 @@ export async function POST(request: NextRequest) {
     const timestamp = Date.now();
     const fileExtension = file.name.split('.').pop();
     const FileName = `${timestamp}-${file.name.replace(/\s+/g, '-')}`;
-    const FilePath = `publicites/${FileName}`;
+    const FilePath = `annonces/${FileName}`;
 
     // Upload du fichier vers Supabase Storage
     const { data, error } = await supabase.storage
@@ -282,7 +282,7 @@ export async function POST(request: NextRequest) {
     const nom_structure = formData.get('nom_structure') as string;
 
     // Créer la publicité dans la base de données
-    const publicite = await prisma.publicite.create(
+    const annonce = await prisma.annonce.create(
       {
         data: {
           libelle,
@@ -295,7 +295,7 @@ export async function POST(request: NextRequest) {
       }
     )
 
-    return NextResponse.json(publicite, { status: 201 });
+    return NextResponse.json(annonce, { status: 201 });
 
   } catch (error) {
 
