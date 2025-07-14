@@ -66,10 +66,15 @@ export default function EntreprisesServices() {
   const [rechercheTexte, setRechercheTexte] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // interface Tarif {
-  //   membre: string;
-  //   nonMembre?: string;
-  // }
+
+  const filtrerOffresActivesEtNonExpirees = (offres: Offre[]) => {
+    const now = new Date();
+    return offres.filter(
+      (offre) =>
+        offre.statut === "ACTIF" &&
+        (!offre.date_fin || new Date(offre.date_fin) >= now)
+    );
+  };
 
   // Chargement des entreprises à chaque changement de filtre
   useEffect(() => {
@@ -84,7 +89,10 @@ export default function EntreprisesServices() {
             localisationFiltre !== "toutes" ? localisationFiltre : undefined,
           search: rechercheTexte || undefined,
         });
-        setEntreprises(data.data); // ou data.offres selon ton backend
+        const offresFiltrees = filtrerOffresActivesEtNonExpirees(
+          data.data || []
+        );
+        setEntreprises(offresFiltrees);
       } catch (error: any) {
         setFetchError(error.message || "Erreur inconnue");
       } finally {
@@ -104,16 +112,6 @@ export default function EntreprisesServices() {
     setIsModalOpen(false);
     setSelectedEntreprise(null);
   };
-
-  // {
-  //   !loading && entreprises.length === 0 && (
-  //     <div className="text-center py-12">
-  //       <p className="text-muted-foreground">
-  //         Aucune entreprise ne correspond à vos critères de recherche.
-  //       </p>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -160,16 +158,20 @@ export default function EntreprisesServices() {
 
             <div className="mt-4 text-sm text-gray-800 space-y-2">
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4" /><a href={`tel:${selectedEntreprise.contact}`}>{selectedEntreprise.contact}</a>
-         
+                <Phone className="h-4 w-4" />
+                <a href={`tel:${selectedEntreprise.contact}`}>
+                  {selectedEntreprise.contact}
+                </a>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4" /><a href={`mailto:${selectedEntreprise.email}`}>{selectedEntreprise.email}</a>
-                
+                <Mail className="h-4 w-4" />
+                <a href={`mailto:${selectedEntreprise.email}`}>
+                  {selectedEntreprise.email}
+                </a>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />{selectedEntreprise.localisation}
-                
+                <MapPin className="h-4 w-4" />
+                {selectedEntreprise.localisation}
               </div>
               <div>
                 Site web :{" "}
@@ -263,10 +265,13 @@ export default function EntreprisesServices() {
                     </SelectTrigger>
                     <SelectContent>
                       {entreprises.map((secteur) => (
-                        <SelectItem key={secteur.id_offre} value={secteur.id_offre}>
+                        <SelectItem
+                          key={secteur.id_offre}
+                          value={secteur.id_offre}
+                        >
                           {secteur.type_offre}
                         </SelectItem>
-                      ))} 
+                      ))}
                     </SelectContent>
                   </Select>
 
@@ -386,11 +391,15 @@ export default function EntreprisesServices() {
 
                       <div className="flex items-center gap-2 text-sm text-black/80">
                         <Phone className="h-4 w-4" />
-                        <a href={`tel:${entreprise.contact}`}>{entreprise.contact}</a>
+                        <a href={`tel:${entreprise.contact}`}>
+                          {entreprise.contact}
+                        </a>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-black/80">
                         <Mail className="h-4 w-4" />
-                        <a href={`mailto:${entreprise.email}`}>{entreprise.email}</a>
+                        <a href={`mailto:${entreprise.email}`}>
+                          {entreprise.email}
+                        </a>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-black/80">
                         <MapPin className="h-4 w-4" />

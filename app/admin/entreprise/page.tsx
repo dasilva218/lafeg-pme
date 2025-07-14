@@ -92,21 +92,37 @@ export default function ServicesEntreprisesPage() {
   useEffect(() => {
     fetchServices();
   }, []);
+  const marquerOffresExpirees = (offres: Offre[]): Offre[] => {
+    const now = new Date();
+    return offres.map((offre) => {
+      if (
+        offre.statut === "ACTIF" &&
+        offre.date_fin &&
+        new Date(offre.date_fin) < now
+      ) {
+        return { ...offre, statut: "ARCHIVE" };
+      }
+      return offre;
+    });
+  };
 
   const fetchServices = async () => {
-    try {
-      const response = await fetch("/api/offres");
-      if (response.ok) {
-        const data = await response.json();
-        setServices(data.data || []);
-      }
-    } catch (error) {
-      console.error("Erreur lors du chargement des services:", error);
-      toast.error("Erreur lors du chargement des services");
-    } finally {
-      setLoading(false);
+  try {
+    const response = await fetch("/api/offres");
+    if (response.ok) {
+      const data = await response.json();
+      // 🧠 Mise à jour locale des statuts expirés
+      const offresAvecStatut = marquerOffresExpirees(data.data || []);
+      setServices(offresAvecStatut);
     }
-  };
+  } catch (error) {
+    console.error("Erreur lors du chargement des services:", error);
+    toast.error("Erreur lors du chargement des services");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
@@ -262,20 +278,20 @@ export default function ServicesEntreprisesPage() {
   });
 
   interface StatusBadgeProps {
-    statut: "ACTIF" | "INACTIF" | "EXPIRE" | "BROUILLON" | string;
+    statut: "ACTIF" | "INACTIF" | "ARCHIVE" | string;
   }
 
   const getStatusBadge = (statut: StatusBadgeProps["statut"]): JSX.Element => {
     const variants: Record<string, string> = {
       ACTIF: "default",
       INACTIF: "secondary",
-      EXPIRE: "destructive",
+      ARCHIVE: "destructive",
       BROUILLON: "outline",
     };
     const colors: Record<string, string> = {
       ACTIF: "bg-green-100 text-green-800",
       INACTIF: "bg-gray-100 text-gray-800",
-      EXPIRE: "bg-red-100 text-red-800",
+      ARCHIVE: "bg-red-100 text-red-800",
       BROUILLON: "bg-yellow-100 text-yellow-800",
     };
     return (
@@ -418,7 +434,7 @@ export default function ServicesEntreprisesPage() {
                     <SelectContent>
                       <SelectItem value="ACTIF">Actif</SelectItem>
                       <SelectItem value="INACTIF">Inactif</SelectItem>
-                      <SelectItem value="EXPIRE">Expiré</SelectItem>
+                      <SelectItem value="ARCHIVE">Expiré</SelectItem>
                       <SelectItem value="BROUILLON">Brouillon</SelectItem>
                     </SelectContent>
                   </Select>
@@ -748,7 +764,7 @@ export default function ServicesEntreprisesPage() {
                   <SelectItem value="all">Tous</SelectItem>
                   <SelectItem value="ACTIF">Actif</SelectItem>
                   <SelectItem value="INACTIF">Inactif</SelectItem>
-                  <SelectItem value="EXPIRE">Expiré</SelectItem>
+                  <SelectItem value="ARCHIVE">Expiré</SelectItem>
                   <SelectItem value="BROUILLON">Brouillon</SelectItem>
                 </SelectContent>
               </Select>

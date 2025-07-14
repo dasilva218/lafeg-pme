@@ -52,7 +52,7 @@ import { NextRequest, NextResponse } from "next/server";
  *         name: statut
  *         schema:
  *           type: string
- *           enum: [ACTIF, INACTIF, EXPIRE, BROUILLON]
+ *           enum: [ACTIF, INACTIF, ARCHIVE, BROUILLON]
  *         description: Filtrer par statut de l'offre
  *       - in: query
  *         name: localisation
@@ -156,7 +156,7 @@ import { NextRequest, NextResponse } from "next/server";
  *           format: date-time
  *         statut:
  *           type: string
- *           enum: [ACTIF, INACTIF, EXPIRE, BROUILLON]
+ *           enum: [ACTIF, INACTIF, ARCHIVE, BROUILLON]
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -337,7 +337,7 @@ export async function GET(request: NextRequest) {
  *                 example: "Nous recherchons un développeur expérimenté..."
  *               statut:
  *                 type: string
- *                 enum: [ACTIF, INACTIF, EXPIRE, BROUILLON]
+ *                 enum: [ACTIF, INACTIF, ARCHIVE, BROUILLON]
  *                 default: "INACTIF"
  *                 example: "ACTIF"
  *               image:

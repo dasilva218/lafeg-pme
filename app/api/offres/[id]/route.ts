@@ -185,7 +185,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
  *                 example: "2024-04-15"
  *               statut:
  *                 type: string
- *                 enum: [ACTIF, INACTIF, EXPIRE, BROUILLON]
+ *                 enum: [ACTIF, INACTIF, ARCHIVE, BROUILLON]
  *                 description: Statut de l'offre
  *                 example: "ACTIF"
  *               
@@ -254,7 +254,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
  *                 example: "2024-04-15"
  *               statut:
  *                 type: string
- *                 enum: [ACTIF, INACTIF, EXPIRE, BROUILLON]
+ *                 enum: [ACTIF, INACTIF, ARCHIVE, BROUILLON]
  *                 example: "ACTIF"
  *     responses:
  *       200:
@@ -407,7 +407,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
  *           example: "2024-04-15T00:00:00.000Z"
  *         statut:
  *           type: string
- *           enum: [ACTIF, INACTIF, EXPIRE, BROUILLON]
+ *           enum: [ACTIF, INACTIF, ARCHIVE, BROUILLON]
  *           example: "ACTIF"
  *         createdAt:
  *           type: string

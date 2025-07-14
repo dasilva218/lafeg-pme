@@ -13,7 +13,7 @@ export interface Offre {
   site_web: string;
   date_debut: string;
   date_fin: string;
-  statut: "ACTIF" | "INACTIF" | "EXPIRE" | "BROUILLON";
+  statut: "ACTIF" | "INACTIF" | "ARCHIVE";
   description?: string;
   image_url?: string;
   image_nom?: string;
