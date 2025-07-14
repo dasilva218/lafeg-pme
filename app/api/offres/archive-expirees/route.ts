@@ -1,17 +1,14 @@
-// Fichier : pages/api/offres/archive-expirees.ts
-import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@/lib/prisma"; // Assure-toi que ce chemin est correct selon ton projet
+import { NextResponse } from "next/server";
+import  prisma  from "@/lib/prisma";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Optionnel : sécuriser la route avec une clé API en GET
-  const apiKey = req.headers["x-api-key"];
+export async function POST(req: Request) {
+  const apiKey = req.headers.get("x-api-key");
   if (apiKey !== process.env.MY_SECRET_API_KEY) {
-    return res.status(401).json({ error: "Accès non autorisé" });
+    return NextResponse.json({ error: "Clé API invalide" }, { status: 401 });
   }
 
   try {
     const now = new Date();
-
     const result = await prisma.offre.updateMany({
       where: {
         date_fin: { lt: now },
@@ -22,9 +19,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
 
-    res.status(200).json({ message: `Succès: ${result.count} offres archivées.` });
+    return NextResponse.json({
+      message: "Archivage terminé",
+      nb_offres_archivées: result.count,
+    });
   } catch (error: any) {
-    console.error("Erreur lors de l'archivage automatique:", error);
-    res.status(500).json({ error: "Erreur interne du serveur" });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
